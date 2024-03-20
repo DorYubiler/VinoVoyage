@@ -1,0 +1,20 @@
+﻿body, html {
+    background-color: white;
+}
+
+body {
+    .MainSec
+    {
+        max-width: 50%;
+        margin: 20px auto;
+        overflow: hidden;
+        position: relative;
+    }
+    ul,li,h2,h3,p {
+        color: #7B0323; 
+    }
+
+
+    .mainPic figure {
+        min-width: 100%;
+    }

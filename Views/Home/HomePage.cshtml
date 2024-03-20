@@ -1,0 +1,90 @@
+﻿
+
+@{
+    ViewBag.Title = "VV Home Page";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/&#64;picocss/pico@1/css/pico.min.css">
+
+    <link rel="stylesheet" href="../UI/css/Style.css">
+
+</head>
+<body>
+
+   
+    <nav class="topnav">
+        <ul>
+            <li><strong>VinoVoyage</strong> </li>
+        </ul>
+
+        <form>
+            <input type="text" placeholder="Search.." name="search">
+        </form>
+        <ul>
+            
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#" role="button">Register</a></li>
+            <li><a href="@Url.Action("LoginView","Customer")" role="button" class="button">Login</a> <!-- Login button added here -->
+        </ul>
+    </nav>
+
+  
+    <section class="MainSec">
+        <hgroup>
+            <h2>Welcome to VinoVoyage</h2>
+            <p>Discover our exclusive selection of world-class wines, curated for enthusiasts and connoisseurs alike.</p>
+        </hgroup>
+        <div class="mainPic">
+            <figure>
+                <img src="../UI/img/carousel-wine1.jpg" alt="Wine 1" style="width: 100%; height: auto;">
+            </figure>
+        </div>
+
+    </section>
+
+
+ 
+    <main class="container">
+            <div class="grid">
+                <section>
+                 
+                    
+
+                    <section>
+                        <h2>Our Products</h2>
+                        <div class="grid" style="gap: 20px;">
+                            <div style="text-align:center;">
+                                <img src="https://source.unsplash.com/100x100/?wine1" alt="Wine 1">
+                                <p>Product 1</p>
+                            </div>
+                            <div style="text-align:center;">
+                                <img src="../UI/img/carousel-soldier.jepg" alt="Wine 2">
+                                <p>Product 2</p>
+                            </div>
+                            <div style="text-align:center;">
+                                <img src="../UI/img/carousel-wine1.jpg" alt="Wine 3">
+                                <p>Product 3</p>
+                            </div>
+                        </div>
+                    </section>
+                    <h3>Our Collection</h3>
+                    <p>Browse our diverse collection, featuring wines from renowned vineyards across the globe.</p>
+                    <h3>Why Choose Us?</h3>
+                    <p>With years of expertise and a passion for quality, we bring the best of the wine world to your doorstep.</p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="container">
+            <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a></small>
+        </footer>
+
+    </body>
+</html>
