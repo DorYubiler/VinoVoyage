@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/&#64;picocss/pico@1/css/pico.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="../UI/css/Style.css">
 
@@ -30,8 +31,8 @@
             
             <li><a href="#">Home</a></li>
             <li><a href="#">Shop</a></li>
-            <li><a href="#" role="button">Register</a></li>
-            <li><a href="@Url.Action("LoginView","Customer")" role="button" class="button">Login</a> <!-- Login button added here -->
+            <li><a href="@Url.Action("RegisterView","User")" role="button">Register</a></li>
+            <li><a href="@Url.Action("LoginView","User")" role="button" class="button">Login</a> <!-- Login button added here -->
         </ul>
     </nav>
 
@@ -82,9 +83,7 @@
             </div>
         </main>
 
-        <footer class="container">
-            <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a></small>
-        </footer>
+
 
     </body>
 </html>

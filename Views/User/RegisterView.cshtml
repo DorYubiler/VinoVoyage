@@ -1,11 +1,11 @@
 ﻿@model VinoVoyage.Models.UserModel
 
 @{
-    ViewBag.Title = "LoginView";
+    ViewBag.Title = "RegisterView";
 }
 
-<h2>LoginView</h2>
-<h2>Login</h2>
+<h2>RegisterView</h2>
+
 <head>
     <meta name="viewport" content="width=device-width" />
     <script src="~/Scripts/jquery-3.4.1.js"></script>
@@ -13,7 +13,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 </head>
 <body>
-    @using (Html.BeginForm("SignUp", "Customer", FormMethod.Post))
+    @using (Html.BeginForm("SignUp", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
@@ -28,8 +28,13 @@
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Password)
         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
 
-        <button id="SignUp" name="SignUp" type="submit" class="btn btn-default">Login</button>
+        <button id="SignUp" name="SignUp" type="submit" class="btn btn-default">Register</button>
 
     }
 </body>
