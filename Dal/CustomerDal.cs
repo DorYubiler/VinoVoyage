@@ -15,8 +15,6 @@ namespace VinoVoyage.Dal
             modelBuilder.Entity<UserModel>().ToTable("UsersDB");
         }
         public DbSet<UserModel> Users { get; set; }
-/*        public CustomerDal() : base("name=Data Source=DOR_ZENBOOK;Initial Catalog=VinoVoyage;Integrated Security=True;Encrypt=False")
-        {
-        }*/
+
     }
 }
