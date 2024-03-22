@@ -32,9 +32,12 @@ namespace VinoVoyage.Controllers
                 UserModel user = dal.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
                 if (user != null)
                 {
-
                     FormsAuthentication.SetAuthCookie(model.Username, false);
-                    return RedirectToAction("HomePage", "Home");
+                    if (user.Role == "customer")
+                    {
+                        return RedirectToAction("HomePage", "Home");
+                    }
+                    return RedirectToAction("AdminHomePage", "Home");
                 }
                 else
                 {
