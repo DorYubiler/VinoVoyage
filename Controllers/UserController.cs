@@ -38,9 +38,9 @@ namespace VinoVoyage.Controllers
                 CustomerDal dal = new CustomerDal();
                 dal.Users.Add(user);
                 dal.SaveChanges();
-                return View("HomePage", user);
+                return View("RegisterView", user);
             }
-            return View("HomePage", user);
+            return View("RegisterView", user);
         }
 
     }
