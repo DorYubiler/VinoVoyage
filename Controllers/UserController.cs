@@ -9,10 +9,22 @@ using VinoVoyage.Dal;
 
 namespace VinoVoyage.Controllers
 {
-    public class CustomerController : Controller
+    public class UserController : Controller
     {
-        // GET: Customer
         public ActionResult LoginView()
+        {
+            return View();
+        }
+
+        //public ActionResult Login(string Uname,string pass)
+        //{
+        //    using (var context=new YourDbContext())
+        //    {
+        //        var user=context.Users.FirstOrDefault(u=>u.UserName==user);
+        //    }
+        //}
+        // GET: Customer
+        public ActionResult RegisterView()
         {
             return View();
         }
@@ -20,13 +32,13 @@ namespace VinoVoyage.Controllers
         // השתמשנו בדף לוגין רק כדי לבדוק שנכנס לדטה בייס, לתקן לדף חדש כשהצלחנו 
         public ActionResult SignUp(UserModel user)
         {
-            System.Console.WriteLine("hello");
+            
             if (ModelState.IsValid)
             {
                 CustomerDal dal = new CustomerDal();
                 dal.Users.Add(user);
                 dal.SaveChanges();
-                return View("LoginView", user);
+                return View("HomePage", user);
             }
             return View("HomePage", user);
         }
