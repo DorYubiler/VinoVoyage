@@ -1,7 +1,10 @@
-﻿body, html {
-    background-color: white;
+﻿ html {
+    background-color: black;
 }
 
+data-bs-theme{
+    background-color:black;
+}
 body {
     .MainSec
     {
