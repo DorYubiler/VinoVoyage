@@ -13,16 +13,36 @@ namespace VinoVoyage.Controllers
 {
     public class UserController : Controller
     {
-
-
-/*        public UserController(CustomerDal context)
-        {
-            _context = context;
-        }*/
-
         public ActionResult LoginView()
         {
             return View();
+        }
+
+        //public ActionResult Login(string Uname,string pass)
+        //{
+        //    using (var context=new YourDbContext())
+        //    {
+        //        var user=context.Users.FirstOrDefault(u=>u.UserName==user);
+        //    }
+        //}
+        // GET: Customer
+        public ActionResult RegisterView()
+        {
+            return View();
+        }
+        [HttpPost]
+        // השתמשנו בדף לוגין רק כדי לבדוק שנכנס לדטה בייס, לתקן לדף חדש כשהצלחנו 
+        public ActionResult SignUp(UserModel user)
+        {
+
+            if (ModelState.IsValid)
+            {
+                CustomerDal dal = new CustomerDal();
+                dal.Users.Add(user);
+                dal.SaveChanges();
+                return View("RegisterView", user);
+            }
+            return View("RegisterView", user);
         }
         public ActionResult Login(LoginModel model)
         {
@@ -46,30 +66,5 @@ namespace VinoVoyage.Controllers
             }
             return View();
         }
-        
-        // GET: Customer
-        public ActionResult RegisterView()
-        {
-            return View();
-        }
-        [HttpPost]
-        // השתמשנו בדף לוגין רק כדי לבדוק שנכנס לדטה בייס, לתקן לדף חדש כשהצלחנו 
-        public ActionResult SignUp(UserModel user)
-        {
-
-            if (ModelState.IsValid)
-            {
-                CustomerDal dal = new CustomerDal();
-                dal.Users.Add(user);
-                dal.SaveChanges();
-                return View("HomePage", user);
-            }
-            return View("RegisterView", user);
-        }
-
-       
-
-
-
     }
 }

@@ -1,89 +1,104 @@
-﻿
+﻿@model VinoVoyage.Models.UserModel
 
-@{
-    ViewBag.Title = "VV Home Page";
-
-}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/&#64;picocss/pico@1/css/pico.min.css">
-    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinoVoyage</title>
     <link rel="stylesheet" href="~/UI/css/Style.css">
-
 </head>
 <body>
-    
-   
-    <nav class="topnav">
-        <ul>
-            <li><strong>VinoVoyage</strong> </li>
-        </ul>
+    <div class="topnav">
+        <a href="#vinoVoyage" class="left">VINOVOYAGE</a>
+        <a onclick="toggleSignupPopup()">REGISTER</a>
+        <a onclick="togglePopup()">LOGIN</a>
+        <a class="active" href="#wines">WINES</a>
+        <input type="text" placeholder="SEARCH...">
+    </div>
 
-        <form>
-            <input type="text" placeholder="Search.." name="search">
-        </form>
-        <ul>
-            
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Shop</a></li>
-            <li><a href="@Url.Action("RegisterView","User")" role="button">Register</a></li>
-            <li><a href="@Url.Action("LoginView","User")" role="button" class="button">Login</a> 
-        </ul>
-    </nav>
-
-  
-    <section class="MainSec">
-        <hgroup>
-            <h2>Welcome to VinoVoyage</h2>
-            <p>Discover our exclusive selection of world-class wines, curated for enthusiasts and connoisseurs alike.</p>
-        </hgroup>
-        <div class="mainPic">
-            <figure>
-                <img src="../UI/img/carousel-wine1.jpg" alt="Wine 1" style="width: 100%; height: auto;">
-            </figure>
-        </div>
-
-    </section>
-
-
- 
-    <main class="container">
-            <div class="grid">
-                <section>
-                 
-                    
-
-                    <section>
-                        <h2>Our Products</h2>
-                        <div class="grid" style="gap: 20px;">
-                            <div style="text-align:center;">
-                                <img src="https://source.unsplash.com/100x100/?wine1" alt="Wine 1">
-                                <p>Product 1</p>
-                            </div>
-                            <div style="text-align:center;">
-                                <img src="../UI/img/carousel-soldier.jepg" alt="Wine 2">
-                                <p>Product 2</p>
-                            </div>
-                            <div style="text-align:center;">
-                                <img src="../UI/img/carousel-wine1.jpg" alt="Wine 3">
-                                <p>Product 3</p>
-                            </div>
-                        </div>
-                    </section>
-                    <h3>Our Collection</h3>
-                    <p>Browse our diverse collection, featuring wines from renowned vineyards across the globe.</p>
-                    <h3>Why Choose Us?</h3>
-                    <p>With years of expertise and a passion for quality, we bring the best of the wine world to your doorstep.</p>
-                </section>
+    <div id="loginPopup" class="popup">
+        <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+        {
+            <h1>VINOVOYAGE</h1>
+            <h2>LOGIN TO JOIN OUR VOYAGE</h2>
+            <div class="form-group">
+                <p>USERNAME</p>
+                <input type="text" name="UserName" placeholder="" required />
             </div>
-        </main>
+            <div class="form-group">
+                <p>PASSWORD</p>
+                <input type="password" name="Password" placeholder="" required />
+            </div>
+            <button type="submit">Login</button>
+        }
+    </div>
 
+    <div id="SignupPopup" class="popup">
+        <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        @using (Html.BeginForm("SignUp", "User", FormMethod.Post))
+        {
+            <h1>VINOVOYAGE</h1>
+            <h2>SIGNUP AND START EXPLORING WITH US</h2>
+            <div id="elementContainer">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "custom-label" })
+                    @Html.TextBoxFor(m => m.Username, new { @class = "custom-textbox form-control" })
+                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "custom-validation-message" })
+                </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "custom-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "custom-textbox form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "custom-validation-message" })
+                </div>
 
-    </body>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "custom-label" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "custom-textbox form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "custom-validation-message" })
+                </div>
+                <button id="SignUp" name="SignUp" type="submit" class="btn btn-default">Register</button>
+            </div>
+        }
+    </div>
+
+    <script>
+        // JavaScript function to close all popups
+        function closePopups() {
+            var popups = document.getElementsByClassName("popup");
+            for (var i = 0; i < popups.length; i++) {
+                popups[i].style.display = "none";
+            }
+        }
+        function togglePopup() {
+            closePopups();
+            var popup = document.getElementById("loginPopup");
+            popup.style.display = (popup.style.display === "none") ? "block" : "none";
+        }
+        function toggleSignupPopup() {
+            closePopups();
+            var popup = document.getElementById("SignupPopup");
+            popup.style.display = (popup.style.display === "none") ? "block" : "none";
+        }
+    </script>
+
+    <div id="bthn" lang="en"></div>
+    <script>
+        (function () {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
+            script.setAttribute(
+                "integrity",
+                "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
+            );
+            script.setAttribute("crossorigin", "anonymous");
+            document.getElementsByTagName("head")[0].appendChild(script);
+        })();
+    </script>
+</body>
 </html>
