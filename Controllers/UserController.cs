@@ -13,19 +13,13 @@ namespace VinoVoyage.Controllers
 {
     public class UserController : Controller
     {
+        
         public ActionResult LoginView()
         {
             return View();
         }
 
-        //public ActionResult Login(string Uname,string pass)
-        //{
-        //    using (var context=new YourDbContext())
-        //    {
-        //        var user=context.Users.FirstOrDefault(u=>u.UserName==user);
-        //    }
-        //}
-        // GET: Customer
+        
         public ActionResult RegisterView()
         {
             return View();
@@ -52,12 +46,14 @@ namespace VinoVoyage.Controllers
                 UserModel user = dal.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
                 if (user != null)
                 {
+                    Session["userinfo"] = user;
+                    
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     if (user.Role == "customer")
                     {
                         return RedirectToAction("HomePage", "Home");
                     }
-                    return RedirectToAction("AdminHomePage", "Home");
+                    return RedirectToAction("AdminHomePage", "Admin");
                 }
                 else
                 {

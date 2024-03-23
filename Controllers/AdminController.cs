@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using Org.BouncyCastle.Asn1.X509;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -14,13 +16,20 @@ namespace VinoVoyage.Controllers
     public class AdminController : Controller
     {
         private CustomerDal db = new CustomerDal();
+       
+
 
         // GET: Admin
         public ActionResult AdminHomePage()
         {
-            return View(db.Users.ToList());
+            var user = Session["userinfo"] as UserModel;
+            if (user != null)
+            {
+                ViewBag.Username = user.Username;
+            }
+                return View();
         }
-
+        
         // GET: Admin/Details/5
         public ActionResult Details(string id)
         {

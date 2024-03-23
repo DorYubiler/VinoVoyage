@@ -4,5 +4,47 @@
     ViewBag.Title = "AdminHomePage";
 }
 
-<h2>AdminHomePage</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+</head>
+<body>
+
+    <div class="topnav">
+        <a href="#vinoVoyage" class="left">VINOVOYAGE</a>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="DropDownFunc()">
+                Hey,@ViewBag.Username!
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content" id="myDropdown">
+                <a href=""@Url.Action("HomePage","Home")"">Logout</a>
+                <a href="#">Product management</a>
+                <a href="#">User management</a>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function DropDownFunc() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (e) {
+            if (!e.target.matches('.dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
