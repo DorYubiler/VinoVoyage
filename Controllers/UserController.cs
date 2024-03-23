@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using VinoVoyage.Models;
 using VinoVoyage.Dal;
+using System.Data.Entity;
+
 
 namespace VinoVoyage.Controllers
 {
@@ -32,7 +34,7 @@ namespace VinoVoyage.Controllers
         // השתמשנו בדף לוגין רק כדי לבדוק שנכנס לדטה בייס, לתקן לדף חדש כשהצלחנו 
         public ActionResult SignUp(UserModel user)
         {
-            
+
             if (ModelState.IsValid)
             {
                 CustomerDal dal = new CustomerDal();

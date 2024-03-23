@@ -15,5 +15,6 @@ namespace VinoVoyage.Dal
             modelBuilder.Entity<UserModel>().ToTable("UsersDB");
         }
         public DbSet<UserModel> Users { get; set; }
+
     }
 }
