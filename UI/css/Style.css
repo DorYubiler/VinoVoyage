@@ -1,20 +1,201 @@
-﻿body, html {
-    background-color: white;
+﻿html, body {
+    background-color: #f4e1d2;
 }
 
-body {
-    .MainSec
-    {
-        max-width: 50%;
-        margin: 20px auto;
-        overflow: hidden;
-        position: relative;
-    }
-    ul,li,h2,h3,p {
-        color: #7B0323; 
+h1 {
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-weight: 150;
+    font-size: 16px;
+    color: black;
+    text-transform: uppercase;
+}
+p, .custom-label {
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 14px;
+    color: black;
+    text-transform: uppercase;
+}
+
+.topnav {
+    background-color: #f4e1d2;
+    overflow: hidden;
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+
+.topnav a {
+    float: right;
+    color: #bc5a45;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+ 
+.topnav a:hover {
+    background-color: #bc5a45;
+    color: white;
+}
+
+.topnav a:active {
+    background-color: #bc5a45;
+    color: white;
+}
+
+.topnav a.left {
+    float: left;
+    font-size: 22px;
+}
+
+.topnav a.left:hover {
+    float: left;
+    font-size: 25px;
+    background-color: #f4e1d2;
+    color: #bc5a45;
+}
+
+.topnav input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    background-color:#d08b7c ;
+    color: black;
+}
+.topnav input[type=text]::placeholder{
+    color: #f4e1d2;
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 17px;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav a, .topnav input[type=text] {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
     }
 
-
-    .mainPic figure {
-        min-width: 100%;
+    .topnav input[type=text] {
+        border: 1px solid #ccc;
     }
+}
+
+button {
+    background-color: #bc5a45;
+    color: #f4e1d2;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    border-radius:13px;
+}
+button:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 30px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color:dimgray;
+  cursor: pointer;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4e1d2;
+    border-color: #bc5a45;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    text-align: center;
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+.popup input[type=text]::placeholder, input[type=password]::placeholder, .custom-textbox::placeholder {
+    color: black;
+    background-color: dimgrey;
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 13px;
+    border: none;
+}
+
+.form-group p {
+    display: inline-block;
+    width: 120px;
+    margin: 0;
+}
+
+#elementContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Add margin to create a small gap between each element */
+#elementContainer > * {
+    margin: 5px; 
+
+}
+
+.custom-validation-message {
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 14px;
+    color: black;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span .psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}

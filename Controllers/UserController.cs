@@ -42,6 +42,27 @@ namespace VinoVoyage.Controllers
             }
             return View("RegisterView", user);
         }
-
+        public ActionResult Login(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                CustomerDal dal = new CustomerDal();
+                UserModel user = dal.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Username, false);
+                    if (user.Role == "customer")
+                    {
+                        return RedirectToAction("HomePage", "Home");
+                    }
+                    return RedirectToAction("AdminHomePage", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Inavalid username or password");
+                }
+            }
+            return View();
+        }
     }
 }
