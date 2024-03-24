@@ -25,7 +25,7 @@ namespace VinoVoyage.Controllers
             return View();
         }
         [HttpPost]
-        // השתמשנו בדף לוגין רק כדי לבדוק שנכנס לדטה בייס, לתקן לדף חדש כשהצלחנו 
+ 
         public ActionResult SignUp(UserModel user)
         {
 

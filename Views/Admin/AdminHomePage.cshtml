@@ -16,35 +16,142 @@
     <div class="topnav">
         <a href="#vinoVoyage" class="left">VINOVOYAGE</a>
         <div class="dropdown">
-            <button class="dropbtn" onclick="DropDownFunc()">
-                Hey,@ViewBag.Username!
+            <button class="dropbtn" onclick="DropDownFuncTopNav()">
+                Hey,@ViewBag.Username
                 <i class="fa fa-caret-down"></i>
             </button>
-            <div class="dropdown-content" id="myDropdown">
-                <a href=""@Url.Action("HomePage","Home")"">Logout</a>
-                <a href="#">Product management</a>
-                <a href="#">User management</a>
-                
+            <div class="dropdown-content" id="TopNavDropdown">
+                <a href="@Url.Action("HomePage", "Home")">Logout</a>
+
+
             </div>
         </div>
     </div>
 
-    <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function DropDownFunc() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function (e) {
-            if (!e.target.matches('.dropbtn')) {
-                var myDropdown = document.getElementById("myDropdown");
-                if (myDropdown.classList.contains('show')) {
-                    myDropdown.classList.remove('show');
+    <div class="sidenav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#clients">Clients</a>
+        <a href="#contact">Contact</a>
+        <button class="dropdown-btn">
+            Dropdown
+            <i class="fa fa-caret-downSide"></i>
+        </button>
+        <div class="sidedropdown-container">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+        <a href="#contact">Search</a>
+    </div>
+    <script>
+        //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("sidedropdown-container");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
                 }
-            }
+            });
         }
     </script>
+    <!-- The sidebar -->
+    <!--<div class="sidebar">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="DropDownFuncSideNavProd()">
+                Product management
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content" id="SideNavDropdownProd">
+
+                <a href="#" onclick="showSection('addProducts'); return false;">Add products</a>
+                <a href="#" onclick="showSection('removeProducts'); return false;">Remove products</a>
+                <a href="#">Add products</a>
+                <a href="#">Remove products</a>
+                <a href="#">Manage products</a>
+                <a href="#">Order New/Existing product</a>
+
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn" onclick="DropDownFuncSideNavUser()">
+                User management
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content" id="SideNavDropdownUser">
+
+                <a href="#">Add users</a>
+                <a href="#">Remove users</a>
+                <a href="#">Manage users</a>
+
+            </div>
+        </div>
+
+    </div>-->
+    <!-- Page content -->
+    <div class="content">
+        <div id="addProducts" style="display:none;">
+            <!-- Content for adding products -->
+            <p>Add products here...</p>
+        </div>
+        <div id="removeProducts" style="display:none;">
+            <!-- Content for removing products -->
+            <p>Remove products here...</p>
+        </div>
+    </div>
+
+    @*<script>
+            /* TopNav DropDown Show */
+            function DropDownFuncTopNav() {
+                document.getElementById("TopNavDropdown").classList.toggle("show");
+            }
+            /* SideNav DropDown Show */
+            function DropDownFuncSideNavProd() {
+                document.getElementById("SideNavDropdownProd").classList.toggle("show");
+            }
+
+            function DropDownFuncSideNavUser() {
+                document.getElementById("SideNavDropdownUser").classList.toggle("show");
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function (e) {
+                if (!e.target.matches('.dropbtn')) {
+                    var myDropdown = document.getElementById("TopNavDropdown");
+                    if (myDropdown.classList.contains('show')) {
+                        myDropdown.classList.remove('show');
+                    }
+                }
+            }
+
+            window.onclick = function (e) {
+                if (!e.target.matches('.dropbtn')) {
+                    var myDropdown = document.getElementById("SideNavDropdownProd");
+                    if (myDropdown.classList.contains('show')) {
+                        myDropdown.classList.remove('show');
+                    }
+                }
+            }
+
+            window.onclick = function (e) {
+                if (!e.target.matches('.dropbtn')) {
+                    var myDropdown = document.getElementById("SideNavDropdownUser");
+                    if (myDropdown.classList.contains('show')) {
+                        myDropdown.classList.remove('show');
+                    }
+                }
+            }
+        </script>*@
+
+    <script src="../UI/JS/ShowDiv.js"></script>
+
 </body>
 </html>

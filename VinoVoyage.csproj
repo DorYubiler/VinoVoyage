@@ -218,6 +218,7 @@
     <Content Include="UI\css\Style.css" />
     <Content Include="UI\img\carousel-soldier.jpeg" />
     <Content Include="UI\img\carousel-wine1.jpg" />
+    <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
