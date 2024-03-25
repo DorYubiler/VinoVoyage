@@ -30,29 +30,36 @@
 
 
     <div class="sidenav">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#clients">Clients</a>
-        <a href="#contact">Contact</a>
+
         <button class="dropdown-btn">
-            Dropdown
+            User manegmenet
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#">Add/remove users</a>
+            <a href="#">Manege users</a>
+
         </div>
-        <a href="#contact">Search</a>
+        <button class="dropdown-btn">
+            Product manegmenet
+            <i class="fa fa-caret-downSide"></i>
+        </button>
+        <div class="sidedropdown-container">
+            <a href="#">Add/remove product</a>
+            <a href="#">Manege product</a>
+            <a href="#">Order products</a>
+            <a href="#">Order new product</a>
+
+        </div>
     </div>
     <script>
-        //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-        var dropdown = document.getElementsByClassName("sidedropdown-container");
-        var i;
+        var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
 
-        for (i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function () {
+        for (var i = 0; i < dropdownBtns.length; i++) {
+            dropdownBtns[i].addEventListener("click", function () {
+                // Toggle "active" class on the button
                 this.classList.toggle("active");
+                // This selects the next element sibling, which is the associated dropdown container
                 var dropdownContent = this.nextElementSibling;
                 if (dropdownContent.style.display === "block") {
                     dropdownContent.style.display = "none";
@@ -61,41 +68,9 @@
                 }
             });
         }
+
     </script>
-    <!-- The sidebar -->
-    <!--<div class="sidebar">
-        <div class="dropdown">
-            <button class="dropbtn" onclick="DropDownFuncSideNavProd()">
-                Product management
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="SideNavDropdownProd">
-
-                <a href="#" onclick="showSection('addProducts'); return false;">Add products</a>
-                <a href="#" onclick="showSection('removeProducts'); return false;">Remove products</a>
-                <a href="#">Add products</a>
-                <a href="#">Remove products</a>
-                <a href="#">Manage products</a>
-                <a href="#">Order New/Existing product</a>
-
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dropbtn" onclick="DropDownFuncSideNavUser()">
-                User management
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="SideNavDropdownUser">
-
-                <a href="#">Add users</a>
-                <a href="#">Remove users</a>
-                <a href="#">Manage users</a>
-
-            </div>
-        </div>
-
-    </div>-->
+    
     <!-- Page content -->
     <div class="content">
         <div id="addProducts" style="display:none;">
@@ -108,48 +83,7 @@
         </div>
     </div>
 
-    @*<script>
-            /* TopNav DropDown Show */
-            function DropDownFuncTopNav() {
-                document.getElementById("TopNavDropdown").classList.toggle("show");
-            }
-            /* SideNav DropDown Show */
-            function DropDownFuncSideNavProd() {
-                document.getElementById("SideNavDropdownProd").classList.toggle("show");
-            }
 
-            function DropDownFuncSideNavUser() {
-                document.getElementById("SideNavDropdownUser").classList.toggle("show");
-            }
-
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function (e) {
-                if (!e.target.matches('.dropbtn')) {
-                    var myDropdown = document.getElementById("TopNavDropdown");
-                    if (myDropdown.classList.contains('show')) {
-                        myDropdown.classList.remove('show');
-                    }
-                }
-            }
-
-            window.onclick = function (e) {
-                if (!e.target.matches('.dropbtn')) {
-                    var myDropdown = document.getElementById("SideNavDropdownProd");
-                    if (myDropdown.classList.contains('show')) {
-                        myDropdown.classList.remove('show');
-                    }
-                }
-            }
-
-            window.onclick = function (e) {
-                if (!e.target.matches('.dropbtn')) {
-                    var myDropdown = document.getElementById("SideNavDropdownUser");
-                    if (myDropdown.classList.contains('show')) {
-                        myDropdown.classList.remove('show');
-                    }
-                }
-            }
-        </script>*@
 
     <script src="../UI/JS/ShowDiv.js"></script>
 

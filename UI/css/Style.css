@@ -218,10 +218,10 @@ button:hover {
     z-index: 9999;
     text-align: center;
     overflow: auto;
-    /background-color: rgb(0,0,0);
-    / /* Fallback color */
-    /background-color: rgba(0,0,0,0.4);
-    / /* Black w/ opacity */
+    background-color: rgb(0,0,0);
+     /* Fallback color */
+    background-color: rgba(0,0,0,0.4);
+    /* Black w/ opacity */
     padding-top: 60px;
 }
 
@@ -383,14 +383,19 @@ button:hover {
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .sidedropdown-container {
+    display: none;
     background-color: #262626;
     padding-left: 8px;
 }
+
+    /* Remove the .sidedropdown-container a rule that sets display to none */
+
 .sidedropdown-container a {
     display: block;
 }
 /* Optional: Style the caret down icon */
 .fa-caret-downSide {
+    
     color: azure;
     float: right;
     padding-right: 8px;
