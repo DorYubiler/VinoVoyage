@@ -214,6 +214,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="UI\css\Style.css" />
+    <Content Include="UI\css\testtt.txt" />
     <Content Include="UI\img\carousel-soldier.jpeg" />
     <Content Include="UI\img\carousel-wine1.jpg" />
     <Content Include="UI\img\slideshow\hebrewmistakes.jpeg" />
