@@ -38,6 +38,7 @@ namespace VinoVoyage.Controllers
             }
             return View("RegisterView", user);
         }
+
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
@@ -47,11 +48,11 @@ namespace VinoVoyage.Controllers
                 if (user != null)
                 {
                     Session["userinfo"] = user;
-                    
+
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     if (user.Role == "customer")
                     {
-                        return RedirectToAction("HomePage", "Home");
+                        return RedirectToAction("CustomerHomeView", "Customer");
                     }
                     return RedirectToAction("AdminHomePage", "Admin");
                 }
@@ -62,5 +63,6 @@ namespace VinoVoyage.Controllers
             }
             return View();
         }
+
     }
 }
