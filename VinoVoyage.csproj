@@ -176,6 +176,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dal\CustomerDal.cs" />
@@ -218,6 +219,9 @@
     <Content Include="UI\css\Style.css" />
     <Content Include="UI\img\carousel-soldier.jpeg" />
     <Content Include="UI\img\carousel-wine1.jpg" />
+    <Content Include="UI\img\slideshow\hebrewmistakes.jpeg" />
+    <Content Include="UI\img\slideshow\rose.jpeg" />
+    <Content Include="UI\img\slideshow\vinowine2.jpeg" />
     <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
     <Content Include="Web.config" />
@@ -240,6 +244,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Customer\CustomerHomeView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

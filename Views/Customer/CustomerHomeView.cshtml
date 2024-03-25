@@ -1,0 +1,32 @@
+﻿@model VinoVoyage.Models.UserModel
+
+@{
+    ViewBag.Title = "CustomerHomeView";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- top navigation bar -->
+    <div class="topnav">
+        <a href="#vinoVoyage" class="left"><i class="fa fa-home"></i> VINOVOYAGE</a>
+        @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+            <div class="dropdown-content">
+                <a href="#link1">profile</a>
+                <a href="@Url.Action("Logout", "Customer")">logout</a>
+            </div>
+        </div>
+        <a href="#wines"><i class="fa fa-glass"></i> WINES</a>
+        <a href="#cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+        <a href="#wishlist"><i class="fa fa-heart"></i></a>
+        <input type="text" placeholder="SEARCH...">
+    </div>
+</body>
+</html>
