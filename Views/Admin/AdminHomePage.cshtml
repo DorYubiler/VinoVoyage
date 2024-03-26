@@ -53,22 +53,21 @@
         </div>
     </div>
     <script>
-        var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
 
-        for (var i = 0; i < dropdownBtns.length; i++) {
-            dropdownBtns[i].addEventListener("click", function () {
-                // Toggle "active" class on the button
-                this.classList.toggle("active");
-                // This selects the next element sibling, which is the associated dropdown container
-                var dropdownContent = this.nextElementSibling;
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
+            Array.from(dropdownBtns).forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    // Toggle the dropdown visibility only if the clicked element is the button itself
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+                        dropdownContent.style.display = "block";
+                    } else {
+                        dropdownContent.style.display = "none";
+                    }
+                });
             });
-        }
-
+        });
     </script>
     
     <!-- Page content -->
