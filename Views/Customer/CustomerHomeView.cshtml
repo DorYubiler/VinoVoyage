@@ -1,4 +1,5 @@
-﻿@model VinoVoyage.ViewModel.ProductViewModel
+﻿@model VinoVoyage.ViewModel.UserViewModel
+@using VinoVoyage.Models
 
 @{
     ViewBag.Title = "CustomerHomeView";
@@ -36,11 +37,36 @@
         <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
     </div>
     <div id="Whites" class="tabcontent">
-        <h1>whites</h1>
-        @*@{ 
-            WebGrid obj = new WebGrid(Model.products);
-        }
-        @obj.GetHtml()*@
+         @*------------------------------*@ 
+        <div class="prodRow">
+            <div class="prodCol">
+                <div class="prodCard">
+                    <img src="~/UI/img/products/10.jpg" alt="wine" style="width:100%" />
+                    <div class="prodDesctiption">
+                        <h1>Wine Name</h1>
+                        <h2>Origin</h2>
+                        <p>description</p>
+                        <p><button class="addWineBtn">Add to Cart</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="prodCol">
+                <div class="prodCard">
+                    <img src="~/UI/img/products/11.jpg" alt="wine" style="width:100%" />
+                    <div class="prodDesctiption">
+                        <h1>Wine Name</h1>
+                        <h2>Origin</h2>
+                        <p>description</p>
+                        <p><button class="addWineBtn">Add to Cart</button></p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        @*<table>
+            <tr>
+                <th>ProductID</th>
+                <th>Name</th>
+        </table>*@
     </div>
     <div id="Reds" class="tabcontent">
         <h1>reds</h1>

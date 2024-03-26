@@ -8,7 +8,11 @@ namespace VinoVoyage.Models
 {
     public class ProductModel
     {
-        public static int ProductId = 1;
+        [Key]
+        [Required]
+        [Display(Name = "ProductId")]
+        public int ProductId { get; set; }
+
         [Required]
         [Display(Name = "ProductName")]
         [StringLength(30, MinimumLength = 4)]
@@ -27,18 +31,11 @@ namespace VinoVoyage.Models
         public string Origin { get; set; }
         [Required]
         [Display(Name = "Amount")]
-        [StringLength(500, MinimumLength = 4)]
         public int Amount { get; set; }
 
         [Required]
         [Display(Name = "Price")]
-        [StringLength(500, MinimumLength = 4)]
         public float Price { get; set; }
-
-        public ProductModel() 
-        {
-            ProductId++;
-        }
 
     }
 }

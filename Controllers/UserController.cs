@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using VinoVoyage.Models;
+using VinoVoyage.ViewModel;
 using VinoVoyage.Dal;
 using System.Data.Entity;
 
@@ -48,6 +49,12 @@ namespace VinoVoyage.Controllers
                 if (user != null)
                 {
                     Session["userinfo"] = user;
+                    //ProductDal prodDal = new ProductDal();
+                    //UserViewModel uvm = new UserViewModel();
+                    //ProductModel p = prodDal.Products.FirstOrDefault(u => u.ProductId == 1);
+                    //uvm.user = user;
+                    //uvm.products = products;
+                    //Session["UserViewModel"] = uvm;
 
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     if (user.Role == "customer")
@@ -63,6 +70,8 @@ namespace VinoVoyage.Controllers
             }
             return View();
         }
+
+
 
     }
 }

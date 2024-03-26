@@ -14,7 +14,7 @@ namespace VinoVoyage.Dal
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProductModel>().ToTable("Products");
         }
-        public DbSet<UserModel> Products { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
 
     }
 }
