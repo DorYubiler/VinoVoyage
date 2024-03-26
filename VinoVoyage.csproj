@@ -178,6 +178,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dal\CustomerDal.cs" />
     <Compile Include="Dal\ProductDal.cs" />
+    <Compile Include="Dal\VinoVoyageDb.cs" />
+    <Compile Include="Dal\VVInitializer.cs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

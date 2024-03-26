@@ -6,7 +6,7 @@ using System.Web;
 using VinoVoyage.Models;
 
 namespace VinoVoyage.Dal
-{
+{/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Not necessary!!!!!!! %%%%%%%%%%% */
     public class CustomerDal : DbContext
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

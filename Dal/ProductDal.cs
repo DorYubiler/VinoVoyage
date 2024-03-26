@@ -6,7 +6,7 @@ using System.Web;
 using VinoVoyage.Models;
 
 namespace VinoVoyage.Dal
-{
+{/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Not necessary!!!!!!! %%%%%%%%%%% */
     public class ProductDal : DbContext
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -14,7 +14,7 @@ namespace VinoVoyage.Dal
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProductModel>().ToTable("Products");
         }
-        public DbSet<UserModel> Products { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
 
     }
 }
