@@ -15,12 +15,13 @@ namespace VinoVoyage.Controllers
     public class UserController : Controller
     {/*creating new private db, We will use it for any operation with the database*/
         private VinoVoyageDb db=new VinoVoyageDb();
-        public ActionResult LoginView()
-        {
-            return View();
-        }
 
-        
+        //public ActionResult LoginView()
+        //{
+        //    return View();
+        //}
+
+
         public ActionResult RegisterView()
         {
             return View();
@@ -46,15 +47,10 @@ namespace VinoVoyage.Controllers
             {
                 
                 UserModel user = db.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
+                
                 if (user != null)
                 {
                     Session["userinfo"] = user;
-                    //ProductDal prodDal = new ProductDal();
-                    //UserViewModel uvm = new UserViewModel();
-                    //ProductModel p = prodDal.Products.FirstOrDefault(u => u.ProductId == 1);
-                    //uvm.user = user;
-                    //uvm.products = products;
-                    //Session["UserViewModel"] = uvm;
 
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     if (user.Role == "customer")

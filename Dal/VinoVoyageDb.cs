@@ -18,8 +18,8 @@ namespace VinoVoyage.Dal
 /*here the tables is defined, if we need another table, create it here.*/
         public DbSet<UserModel> Users{ get; set; }
         public DbSet<ProductModel> Products{ get; set; }
-        
-/* prevents the project to create copies of same tables.*/
+
+        /* prevents the project to create copies of same tables.*/
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

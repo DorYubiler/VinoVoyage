@@ -11,6 +11,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- top navigation bar -->
@@ -37,36 +38,29 @@
         <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
     </div>
     <div id="Whites" class="tabcontent">
-         @*------------------------------*@ 
-        <div class="prodRow">
-            <div class="prodCol">
-                <div class="prodCard">
-                    <img src="~/UI/img/products/10.jpg" alt="wine" style="width:100%" />
-                    <div class="prodDesctiption">
-                        <h1>Wine Name</h1>
-                        <h2>Origin</h2>
-                        <p>description</p>
-                        <p><button class="addWineBtn">Add to Cart</button></p>
+        <div class="prodGrid">
+            @foreach (ProductModel prod in Model.products)
+            {
+                <div class="prodRow">
+                    <div class="prodCol">
+                        <div class="prodCard">
+                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" />
+                        <div class="prodDesctiption">
+                            <h1>@prod.ProductName</h1>
+                            <h2>@prod.Origin</h2>
+                            <p>@prod.Description</p>
+                            <div class="productButtons">
+                                <p><button class="addWineBtn">Buy Now</button></p>
+                                <p><button class="addWineBtn"><i class="fas fa-cart-plus"></i></button></p>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
-            <div class="prodCol">
-                <div class="prodCard">
-                    <img src="~/UI/img/products/11.jpg" alt="wine" style="width:100%" />
-                    <div class="prodDesctiption">
-                        <h1>Wine Name</h1>
-                        <h2>Origin</h2>
-                        <p>description</p>
-                        <p><button class="addWineBtn">Add to Cart</button></p>
-                    </div>
-                </div>
-            </div> 
+            }
         </div>
-        @*<table>
-            <tr>
-                <th>ProductID</th>
-                <th>Name</th>
-        </table>*@
     </div>
     <div id="Reds" class="tabcontent">
         <h1>reds</h1>
@@ -95,47 +89,7 @@
             evt.currentTarget.className += " active";
         }
     </script>
-    @*<div class="sidenav">
-        <button class="dropdown-btn">
-            User manegmenet
-        </button>
-        <button class="dropdown-btn">
-            Product manegmenet
-            <i class="fa fa-caret-downSide"></i>
-        </button>
-        <div class="sidedropdown-container">
-            <a href="#">Add/remove product</a>
-            <a href="#">Manege product</a>
-            <a href="#">Order products</a>
-            <a href="#">Order new product</a>
-
-        </div>
-    </div>*@
-    @*<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
-
-            Array.from(dropdownBtns).forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    // Toggle the dropdown visibility only if the clicked element is the button itself
-                    var dropdownContent = this.nextElementSibling;
-                    if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
-                        dropdownContent.style.display = "block";
-                    } else {
-                        dropdownContent.style.display = "none";
-                    }
-                });
-            });
-
-            // Optional: To stop event propagation when clicking on links inside the dropdown
-            var dropdownLinks = document.querySelectorAll(".sidedropdown-container a");
-            dropdownLinks.forEach(function (link) {
-                link.addEventListener("click", function (event) {
-                    event.stopPropagation(); // Prevent the click event from bubbling up to the parent elements
-                });
-            });
-        });
-    </script>*@
+  
 
     <!-- Page content -->
     <div class="content">

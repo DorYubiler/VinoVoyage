@@ -1,7 +1,10 @@
 ﻿html, body {
-    background-color: #f4e1d2;
+    background-color: #f4e1d2; 
 }
 
+body {
+    overflow: auto;
+}
 h1 {
     font-family: Lucida Console;
     font-weight: 200;
@@ -213,14 +216,14 @@ button:hover {
     background-color: #f4e1d2;
     border-color: #bc5a45;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 6px solid #bc5a45;
     /*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
     z-index: 9999;
     text-align: center;
     overflow: auto;
-    background-color: rgb(0,0,0);
-     /* Fallback color */
-    background-color: rgba(0,0,0,0.4);
+    /*    background-color: rgb(0,0,0);*/
+    /* Fallback color */
+    /*    background-color: rgba(0,0,0,0.4);*/
     /* Black w/ opacity */
     padding-top: 60px;
 }
@@ -310,6 +313,7 @@ button:hover {
         }
 .tabcontent {
     display: none;
+    padding-top: 13px;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
@@ -390,14 +394,31 @@ button:hover {
 .slideshow-container {
     position: fixed;
     top: 60px; /* This should be equal to the height of your navigation bar */
-    right: 0;
+    left: 0;
     z-index: 100; /* Ensures it stays on top of other content */
-    width: 60%; /* Makes the container fill half of the screen width */
-    overflow: hidden; /* Ensures no part of the images spills out of the container */
+    width: 100%; /* Makes the container fill half of the screen width */
+    overflow: auto; /* Ensures no part of the images spills out of the container */
 }
 /* Hide the images by default */
 .mySlides {
     display: none;
+}
+
+.element {
+    display: flex; /* Use flexbox to arrange items */
+    align-items: center; /* Center items vertically */
+    
+}
+
+.element img {
+    flex: 0 0 auto; /* Don't allow the image to grow or shrink */
+    width: 70%; /* Set width of image */
+}
+.slideText {
+    flex: 0 0 auto; /* Don't allow the text to grow or shrink */
+    width: 30%; /* Set width of text */
+    text-align: center;
+
 }
 /* Next & previous buttons */
 .prev, .next {
@@ -489,6 +510,7 @@ button:hover {
     width: 20%;
     margin-bottom:16px;
     padding: 0 8px;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 650px) {
@@ -500,11 +522,17 @@ button:hover {
 
 .prodCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 100%; 
+    max-width: 250px; 
+    min-width: 200px; 
+    display: flex; 
+    flex-direction: column; 
 }
 
 
 .prodDesctiption {
     padding: 0 16px;
+    flex-grow: 1;
 }
 /* Clear floats */
 .prodDesctiption::after, .row::after {
@@ -512,8 +540,29 @@ button:hover {
     clear: both;
     display: table;
 }
+.productButtons {
+    overflow: hidden;
+    text-align: center;
+}
 
-.addWineBtn {
+    .productButtons button {
+        /* Add some margin between buttons for spacing */
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: auto;
+        margin: 0 5px;
+    }
+
+    .productButtons p {
+        display: inline-block;
+    }
+/*.addWineBtn {
     border: none;
     outline: 0;
     display: inline-block;
@@ -523,7 +572,7 @@ button:hover {
     text-align: center;
     cursor: pointer;
     width: 100%;
-}
-.addWineBtn:hover {
+}*/
+/*.addWineBtn:hover {
     background-color: #555;
-}
+}*/

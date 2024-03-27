@@ -220,6 +220,8 @@
     <Content Include="UI\img\carousel-soldier.jpeg" />
     <Content Include="UI\img\carousel-wine1.jpg" />
     <Content Include="UI\img\products\10.jpg" />
+    <Content Include="UI\img\products\SalomonsDaughter.jpg" />
+    <Content Include="UI\img\products\DavidsSon.jpg" />
     <Content Include="UI\img\products\11.jpg" />
     <Content Include="UI\img\slideshow\hebrewmistakes.jpeg" />
     <Content Include="UI\img\slideshow\rose.jpeg" />
