@@ -342,8 +342,8 @@ button:hover {
         cursor: pointer;
         outline: none;
     }
-        /* On mouse-over */
-        .sidenav a:hover, .sidenav .dropdown-btn:hover {
+        /* On mouse-over 
+*/        .sidenav a:hover, .sidenav .dropdown-btn:hover {
             color: #f1f1f1;
             
         }
