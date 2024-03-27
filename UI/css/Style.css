@@ -1,7 +1,7 @@
 ﻿html, body {
     background-color: #f4e1d2; 
 }
-
+/* --------------- basic fonts --------------- */
 body {
     overflow: auto;
 }
@@ -29,28 +29,28 @@ p, .custom-label {
     color: black;
     text-transform: uppercase;
 }
+/* --------------------------------------------------------------- */
 
-
-/* -------------- dropdown buttons -------------- */
+/* --------------- dropdown for top navigation bar --------------- */
 .dropdown {
     float: right;
     overflow: hidden;
 }
 
-    .dropdown:hover .dropbtn {
-        color: white;
-    }
+.dropdown:hover .dropbtn {
+    color: white;
+}
 
-    .dropdown button:hover {
-        background-color: #bc5a45;
-        color: white;
-    }
+.dropdown button:hover {
+    background-color: #bc5a45;
+    color: white;
+}
 
-    .dropdown:hover .dropdown-content {
-        display: block;
-        background-color: #bc5a45;
-        color: white;
-    }
+.dropdown:hover .dropdown-content {
+    display: block;
+    background-color: #bc5a45;
+    color: white;
+}
 
     .dropdown .dropbtn i {
         display: inline;
@@ -98,7 +98,8 @@ p, .custom-label {
 .show {
     display: block;
 }
-
+/* --------------------------------------------------- */
+/* ---------------  top navigation bar --------------- */
 .topnav {
     background-color: #f4e1d2;
     overflow: hidden;
@@ -168,7 +169,8 @@ p, .custom-label {
         border: 1px solid #ccc;
     }
 }
-
+/* ----------------------------------------------- */
+/* ---------------  general button --------------- */
 button {
     background-color: #bc5a45;
     color: #f4e1d2;
@@ -188,12 +190,9 @@ button:hover {
         display: block;
         float: none;
     }
-
-    .cancelbtn {
-        width: 100%;
-    }
 }
-
+/* ------------------------------------------------------- */
+/* ---------------  close button for popup --------------- */
 .close {
     position: absolute;
     right: 25px;
@@ -207,6 +206,8 @@ button:hover {
   color:dimgray;
   cursor: pointer;
 }
+/* --------------------------------------------- */
+/* ---------------  popup window --------------- */
 .popup {
     display: none;
     position: fixed;
@@ -250,7 +251,7 @@ button:hover {
     align-items: center;
 }
 
-/* Add margin to create a small gap between each element */
+
 #elementContainer > * {
     margin: 5px; 
 
@@ -263,20 +264,8 @@ button:hover {
     color: black;
 }
 
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span .psw {
-        display: block;
-        float: none;
-    }
-
-    .cancelbtn {
-        width: 100%;
-    }
-}
-
-
-/* sidebar buttons */
+/* ---------------------------------------- */
+/* ---------------  sidebar --------------- */
 .tab {
     height: 100%;
     position: fixed;
@@ -296,8 +285,8 @@ button:hover {
         padding: 6px 8px 6px 16px;
         transition: 0.3s;
         font-size: 20px;
-        width: 100%; /* Make the buttons full-width */
-        text-align: left; /* Align text to the left */
+        width: 100%; 
+        text-align: left; 
         text-decoration: none;
         color: #818181;
         display: block;
@@ -317,9 +306,9 @@ button:hover {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-    margin-left: 200px; /* Adjust the margin to the left */
+    margin-left: 200px; 
 }
-/* Fixed sidenav, full height */
+
 .sidenav {
     height: 100%;
     width: 200px;
@@ -332,7 +321,7 @@ button:hover {
     padding-top: 20px;
 }
 
-    /* Style the sidenav links and the dropdown button */
+
     .sidenav a, .dropdown-btn {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
@@ -352,7 +341,8 @@ button:hover {
             
         }
 
-/* Main content */
+/* --------------------------------------------------- */
+/* --------------- main content window --------------- */
 .main {
     margin-left: 200px; /* Same as the width of the sidenav */
     font-size: 20px; /* Increased text to enable scrolling */
@@ -365,19 +355,17 @@ button:hover {
     color: white;
 }
 
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+/* Dropdown container (hidden by default).*/
 .sidedropdown-container {
     display: none;
     background-color: #262626;
     padding-left: 8px;
 }
 
-    /* Remove the .sidedropdown-container a rule that sets display to none */
-
 .sidedropdown-container a {
     display: block;
 }
-/* Optional: Style the caret down icon */
+
 .fa-caret-downSide {
     
     color: azure;
@@ -385,7 +373,8 @@ button:hover {
     padding-right: 8px;
 }
 
-/* -------------- slideshow styles -------------- */
+/* ------------------------------------------ */
+/* ---------------  slideshow --------------- */
 * {
     box-sizing: border-box
 }
@@ -395,28 +384,28 @@ button:hover {
     position: fixed;
     top: 60px; /* This should be equal to the height of your navigation bar */
     left: 0;
-    z-index: 100; /* Ensures it stays on top of other content */
-    width: 100%; /* Makes the container fill half of the screen width */
-    overflow: auto; /* Ensures no part of the images spills out of the container */
+    z-index: 100;
+    width: 100%; 
+    overflow: auto; 
 }
-/* Hide the images by default */
+
 .mySlides {
     display: none;
 }
 
 .element {
-    display: flex; /* Use flexbox to arrange items */
-    align-items: center; /* Center items vertically */
+    display: flex; 
+    align-items: center; 
     
 }
 
 .element img {
-    flex: 0 0 auto; /* Don't allow the image to grow or shrink */
-    width: 70%; /* Set width of image */
+    flex: 0 0 auto; 
+    width: 70%; 
 }
 .slideText {
-    flex: 0 0 auto; /* Don't allow the text to grow or shrink */
-    width: 30%; /* Set width of text */
+    flex: 0 0 auto; 
+    width: 30%; 
     text-align: center;
 
 }
@@ -435,17 +424,17 @@ button:hover {
     border-radius: 0 3px 3px 0;
     user-select: none;
 }
-/* Position the "next button" to the right */
+
 .next {
     right: 0;
     border-radius: 3px 0 0 3px;
 }
-    /* On hover, add a black background color with a little bit see-through */
+
     .prev:hover, .next:hover {
         background-color: rgba(0,0,0,0.8);
     }
 
-/* Caption text */
+
 .textSlideShow {
     color: black;
     padding: 8px 12px;
@@ -461,9 +450,6 @@ button:hover {
     text-transform: uppercase;
 }
 
-
-
-/* Number text (1/3 etc) */
 .numbertext {
     color: #f2f2f2;
     font-size: 12px;
@@ -472,7 +458,6 @@ button:hover {
     top: 0;
 }
 
-/* The dots/bullets/indicators */
 .dot {
     cursor: pointer;
     height: 15px;
@@ -488,7 +473,6 @@ button:hover {
         background-color: #717171;
     }
 
-/* Fading animation */
 .fade {
     animation-name: fade;
     animation-duration: 1.5s;
@@ -503,8 +487,8 @@ button:hover {
         opacity: 1
     }
 }
-
-/* products item style */
+/* ------------------------------------------------ */
+/* ---------------  products styles --------------- */
 .prodCol {
     float: left;
     width: 20%;
@@ -562,17 +546,3 @@ button:hover {
     .productButtons p {
         display: inline-block;
     }
-/*.addWineBtn {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-}*/
-/*.addWineBtn:hover {
-    background-color: #555;
-}*/
