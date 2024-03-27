@@ -16,17 +16,15 @@ namespace VinoVoyage.Controllers
         public ActionResult CustomerHomeView()
         {
             var user = Session["userinfo"] as UserModel;
+            UserViewModel uvm = new UserViewModel();
+            uvm.user = user;
+            uvm.users = db.Users.ToList<UserModel>();
+            uvm.products = db.Products.ToList<ProductModel>();
             if (user != null)
             {
                 ViewBag.Username = user.Username;
-                UserViewModel uvm = new UserViewModel();
-                uvm.user = user;
-                uvm.users = db.Users.ToList<UserModel>();
-                uvm.products = db.Products.ToList<ProductModel>();
-
-                return View("CustomerHomeView", uvm);
             }
-            return View();
+            return View("CustomerHomeView", uvm);
         }
 
         public ActionResult Logout()

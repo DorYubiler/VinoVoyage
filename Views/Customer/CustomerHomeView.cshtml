@@ -37,28 +37,34 @@
         <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
         <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
     </div>
+    <!-- this is the new version not working yet -->
     <div id="Whites" class="tabcontent">
         <div class="prodGrid">
             @foreach (ProductModel prod in Model.products)
             {
-                <div class="prodRow">
-                    <div class="prodCol">
-                        <div class="prodCard">
-                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" />
+                <div class="prodCol">
+                    <div class="prodCard">
+                        <div class="imageContainer">
+                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
+                            <div class="desctiprionLayer">
+                                <div class="desctiprionLayerText">@prod.Description</div>
+                            </div>
+                        </div>
+
                         <div class="prodDesctiption">
                             <h1>@prod.ProductName</h1>
-                            <h2>@prod.Origin</h2>
-                            <p>@prod.Description</p>
+                            <div class="originPrice">
+                                <h2>@prod.Origin</h2>
+                                <h2>@(prod.Price)₪</h2>
+                            </div>
+                            
                             <div class="productButtons">
-                                <p><button class="addWineBtn">Buy Now</button></p>
-                                <p><button class="addWineBtn"><i class="fas fa-cart-plus"></i></button></p>
+                                <button class="addWineBtn">Buy Now</button>
+                                <button class="addWineBtn"><i class="fas fa-cart-plus"></i></button>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-            </div>
             }
         </div>
     </div>
@@ -70,9 +76,9 @@
     </div>
     <div id="Specials" class="tabcontent">
         <h1> Specials </h1>
-    </div> 
+    </div>
     <script>
-        
+
     </script>
     <script>
         function openWindow(evt, wineName) {
@@ -89,23 +95,21 @@
             evt.currentTarget.className += " active";
         }
     </script>
-  
-
-    <!-- Page content -->
-    <div class="content">
-        <div id="addProducts" style="display:none;">
-            <!-- Content for adding products -->
-            <p>Add products here...</p>
-        </div>
-        <div id="removeProducts" style="display:none;">
-            <!-- Content for removing products -->
-            <p>Remove products here...</p>
-        </div>
-    </div>
-
-
-
     <script src="../UI/JS/ShowDiv.js"></script>
-
+    <!-- bring them back now -->
+    <div id="bthn" lang="en"></div>
+    <script>
+        (function () {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
+            script.setAttribute(
+                "integrity",
+                "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
+            );
+            script.setAttribute("crossorigin", "anonymous");
+            document.getElementsByTagName("head")[0].appendChild(script);
+        })();
+    </script>
 </body>
 </html>

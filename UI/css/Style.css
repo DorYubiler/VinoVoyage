@@ -5,6 +5,7 @@
 body {
     overflow: auto;
 }
+
 h1 {
     font-family: Lucida Console;
     font-weight: 200;
@@ -22,6 +23,7 @@ h2 {
     color: black;
     text-transform: uppercase;
 }
+
 p, .custom-label {
     font-family: Lucida Console;
     font-weight: 200;
@@ -29,8 +31,8 @@ p, .custom-label {
     color: black;
     text-transform: uppercase;
 }
-/* --------------------------------------------------------------- */
 
+/* --------------------------------------------------------------- */
 /* --------------- dropdown for top navigation bar --------------- */
 .dropdown {
     float: right;
@@ -98,6 +100,7 @@ p, .custom-label {
 .show {
     display: block;
 }
+
 /* --------------------------------------------------- */
 /* ---------------  top navigation bar --------------- */
 .topnav {
@@ -169,6 +172,7 @@ p, .custom-label {
         border: 1px solid #ccc;
     }
 }
+
 /* ----------------------------------------------- */
 /* ---------------  general button --------------- */
 button {
@@ -191,6 +195,7 @@ button:hover {
         float: none;
     }
 }
+
 /* ------------------------------------------------------- */
 /* ---------------  close button for popup --------------- */
 .close {
@@ -206,6 +211,7 @@ button:hover {
   color:dimgray;
   cursor: pointer;
 }
+
 /* --------------------------------------------- */
 /* ---------------  popup window --------------- */
 .popup {
@@ -250,7 +256,6 @@ button:hover {
     justify-content: center;
     align-items: center;
 }
-
 
 #elementContainer > * {
     margin: 5px; 
@@ -506,34 +511,26 @@ button:hover {
 
 .prodCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 100%; 
-    max-width: 250px; 
-    min-width: 200px; 
-    display: flex; 
-    flex-direction: column; 
+    width: 100%;
+    max-width: 250px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
 }
-
 
 .prodDesctiption {
-    padding: 0 16px;
+    padding: 16px;
     flex-grow: 1;
+    overflow-y: auto;
 }
-/* Clear floats */
-.prodDesctiption::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
+
 .productButtons {
-    overflow: hidden;
     text-align: center;
 }
 
     .productButtons button {
-        /* Add some margin between buttons for spacing */
         border: none;
         outline: 0;
-        display: inline-block;
         padding: 8px;
         color: white;
         background-color: #000;
@@ -543,6 +540,51 @@ button:hover {
         margin: 0 5px;
     }
 
-    .productButtons p {
-        display: inline-block;
+.prodImage {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.desctiprionLayer {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    overflow-y: auto;
+    max-height: 200px;
+    max-width:inherit;
+}
+.productButtons p {
+    display: inline-block;
+}
+
+.desctiprionLayerText {
+    background-color: transparent;
+    color: black;
+    font-size: 16px;
+    padding: 16px 32px;
+    overflow: auto;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+}
+    .imageContainer:hover .prodImage {
+        opacity: 0.5;
     }
+    .imageContainer:hover .desctiprionLayer{
+        opacity: 1;
+    }
+.originPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* ------------------------------------------------ */
