@@ -32,12 +32,41 @@
     </div>
     <!-- side navigation bar -->
     <div class="tab">
+        <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
         <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
         <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
         <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
         <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
     </div>
-    <!-- this is the new version not working yet -->
+
+    <div id="AllWines" class="tabcontent">
+        <div class="prodGrid">
+            @foreach (ProductModel prod in Model.products)
+            {
+                    <div class="prodCard">
+                        <div class="imageContainer">
+                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
+                            <div class="desctiprionLayer">
+                                <div class="desctiprionLayerText">@prod.Description</div>
+                            </div>
+                        </div>
+
+                        <div class="prodDesctiption">
+                            <h1>@prod.ProductName</h1>
+                            <div class="originPrice">
+                                <h2>@prod.Origin</h2>
+                                <h2>@(prod.Price)₪</h2>
+                            </div>
+
+                            <div class="productButtons">
+                                <button class="addWineBtn">Buy Now</button>
+                                <button class="addWineBtn"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
     <div id="Whites" class="tabcontent">
         <div class="prodGrid">
             @foreach (ProductModel prod in Model.products)
@@ -57,7 +86,7 @@
                                 <h2>@prod.Origin</h2>
                                 <h2>@(prod.Price)₪</h2>
                             </div>
-                            
+
                             <div class="productButtons">
                                 <button class="addWineBtn">Buy Now</button>
                                 <button class="addWineBtn"><i class="fas fa-cart-plus"></i></button>

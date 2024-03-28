@@ -32,10 +32,7 @@ namespace VinoVoyage.Controllers
             Session.Clear();
             return RedirectToAction("HomePage", "Home");
         }
-/*
-        public int Testt()
-        {
 
-        }*/
+
     }
 }
