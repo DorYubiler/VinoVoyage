@@ -92,24 +92,15 @@ namespace VinoVoyage.Controllers
             return View();
         }
 
-        // POST: Admin/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Username,Password,Email,Role")] UserModel userModel)
+        public ActionResult AddUser(UserModel user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(userModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(userModel);
+            db.Users.Add(user);
+            db.SaveChanges();
+            return RedirectToAction("AdminHomePage");
         }
-
-        
 
         // POST: Admin/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
