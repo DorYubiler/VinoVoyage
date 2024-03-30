@@ -51,8 +51,7 @@ namespace VinoVoyage.Controllers
                 return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult UpdateUser(UserModel model)
+        public ActionResult UpdateUser(UserModel model)
         {
             try
             {
@@ -87,22 +86,7 @@ namespace VinoVoyage.Controllers
             }
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserModel userModel = db.Users.Find(id);
-            if (userModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userModel);
-        }
-
-        // GET: Admin/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -125,63 +109,17 @@ namespace VinoVoyage.Controllers
             return View(userModel);
         }
 
-        // GET: Admin/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserModel userModel = db.Users.Find(id);
-            if (userModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userModel);
-        }
+        
 
         // POST: Admin/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Username,Password,Email,Role")] UserModel userModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(userModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(userModel);
-        }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(string id)
+ /*       public ActionResult EditUser(List<string> userd)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserModel userModel = db.Users.Find(id);
-            if (userModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userModel);
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            UserModel userModel = db.Users.Find(id);
-            db.Users.Remove(userModel);
-            db.SaveChanges();
-            return Json(new { success = true });
-        }
-           
+            UserModel um= new UserModel();
+            
+        }    */
 
         protected override void Dispose(bool disposing)
         {
