@@ -1,4 +1,4 @@
-﻿
+﻿@model VinoVoyage.ViewModel.UserViewModel
 
 @{
     ViewBag.Title = "AdminHomePage";
@@ -31,13 +31,13 @@
 
     <div class="sidenav">
 
-        <button class="dropdown-btn"> 
+        <button class="dropdown-btn">
             User manegmenet
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a href="#">Add/remove users</a>
-            <a href="#">Manege users</a>
+            <a onclick="showSection('AddRemoveUsers')">Add/remove users</a>
+            <a onclick="showSection('ManegeUsers')">Manege users</a>
 
         </div>
         <button class="dropdown-btn">
@@ -45,66 +45,210 @@
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a href="#" onclick="showSection('addRemoveProducts'); return false;">Add/remove products</a>
-            <a href="#">Manege product</a>
-            <a href="#">Order products</a>
-            <a href="#">Order new product</a>
+            <a onclick="showSection('AddRemoveProducts')">Add/remove products</a>
+            <a onclick="showSection('ManegeProducts')">Manege product</a>
+            <a onclick="showSection('OrderProducts')">Order products</a>
+            <a onclick="showSection('OrderNewProduct')">Order new product</a>
+
+
 
         </div>
     </div>
-    <script>
 
-      /*  document.addEventListener('DOMContentLoaded', function() {
-    var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
 
-    Array.from(dropdownBtns).forEach(function(button) {
-        button.addEventListener("click", function(event) {
-            // Toggle the dropdown visibility only if the clicked element is the button itself
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
-                dropdownContent.style.display = "block";
-            } else {
-                dropdownContent.style.display = "none";
-            }
-        });
-    });
-
-    // Optional: To stop event propagation when clicking on links inside the dropdown
-    var dropdownLinks = document.querySelectorAll(".sidedropdown-container a");
-    dropdownLinks.forEach(function(link) {
-        link.addEventListener("click", function(event) {
-            event.stopPropagation(); // Prevent the click event from bubbling up to the parent elements
-        });
-    });
-});
-    
-    function showSection(AddRemoveProducts) {
-    // Hide all sections
-    document.querySelectorAll('.content div').forEach(function(div) {
-        div.style.display = 'none';
-    });
-
-    // Show the selected section
-    document.getElementById(sectionId).style.display = 'block';
-}*/
-
-    </script>
-    
     <!-- Page content -->
     <div class="content">
+        <div id="AddRemoveUsers" style="display:none;">
+            <!-- Content for adding Users -->
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+            
+            <table>
+
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                </tr>
+                @foreach (VinoVoyage.Models.UserModel us in Model.users)
+                {
+                    <tr>
+
+                        <td>@us.Username</td>
+                        <td>@us.Password</td>
+                        <td>@us.Role</td>
+                        <td>@us.Email</td>
+                        <td>
+                            <button onclick="editRow(this)">Edit</button>
+                            <button onclick="deleteRow(this)">Delete</button>
+
+                        </td>
+
+
+                    </tr>
+                }
+               
+            
+            </table>
+            <script>
+             function deleteRow(button) {
+                 if (confirm('Are you sure you want to delete this user?')) {
+                     var row = button.closest('tr');
+                     console.log(row);
+                     var usernameTd = row.querySelector('td');
+                     var username = usernameTd.innerHTML;
+                     console.log(username);
+                     
+                     $.ajax({
+                         url: '@Url.Action("DeleteUser","Admin")', 
+                         type: 'POST',
+                        
+                         data: { usern: username },
+                         success: function (response) {
+                             if (response.success) {
+                                 row.remove();
+                             } else {
+                                 alert('Error deleting user.');
+                             }
+                         },
+                         error: function (xhr, status, error) { }
+                     });
+                 }
+             }
+            </script>
+        </div>
+
+        <div id="ManegeUsers" style="display:none;">
+            <!-- Content for maneg users -->
+            <p>manege users here...</p>
+            <h1>DDDDDDDDFGHJGHJGJGHGF</h1>
+        </div>
+
+
+
+
+
+
+
+
+
         <div id="AddRemoveProducts" style="display:none;">
             <!-- Content for adding products -->
             <p>Add products here...</p>
             <h1>DDDDDDDDFGHJGHJGJGHGF</h1>
         </div>
-        <div id="removeProducts" style="display:none;">
+
+        <div id="ManegeProducts" style="display:none;">
             <!-- Content for removing products -->
-            <p>Remove products here...</p>
+            <p>Manege products here...</p>
+        </div>
+
+        <div id="OrderProducts" style="display:none;">
+            <!-- Content for removing products -->
+            <p>Order products here...</p>
+        </div>
+
+        <div id="OrderNewProduct" style="display:none;">
+            <!-- Content for removing products -->
+            <p>Order new products here...</p>
         </div>
     </div>
+    @*
+    script of JS and Ajax for editing the table     
+    *@
+<script>
+
+       
+
+        function attachEventHandlers() {
+            // Initial binding for edit buttons
+            $('.editBtn').on('click', function () {
+                editRow(this);
+            });
+        }
+
+
+        function editRow(button) {
+            var row = $(button).closest('tr');
+            // Start looping from the 1st index to skip the UserName field
+            row.find('td:not(:last-child)').each(function (index) {
+                if (index > 0) { // Skip the first column (Username)
+                    var text = $(this).text();
+                    $(this).html('<input type="text" value="' + text + '" />');
+                }
+            });
+
+            // Change "Edit" button to "Save"
+            $(button).text('Save').attr('onclick', 'saveRow(this)');
+            //$(button).text('Save').off('click').on('click', function () {
+            //    saveRow(this);
+
+        }
+
+        function saveRow(button) {
+            var row = $(button).closest('tr');
+
+            var userData = {
+
+                UserName: row.data('td:eq(1) input').val(),
+                Password: row.find('td:eq(1) input').val(),
+                Role: row.find('td:eq(2) input').val(),
+                Email: row.find('td:eq(3) input').val(),
+            };
+
+            // AJAX call to update user data in the database
+            $.ajax({
+                url: '/Admin/UpdateUser', // Adjust URL as needed
+                type: 'POST',
+                data: JSON.stringify({ userData }),
+                contentType: "application/json; charset=utf-8", // This should match the expected content type on the server
+                dataType: "json", // Expecting JSON in response
+
+                success: function (response) {
+                    if (response.success) {
+                        // Convert input fields back to text for all but the first column
+                        row.find('td:not(:last-child)').each(function (index) {
+                            if (index > 0) {
+                                var input = $(this).find('input');
+                                $(this).text(input.val());
+                            }
+                        });
+
+                        // Change "Save" button back to "Edit"
+                        $(button).text('Edit').attr('onclick', 'editRow(this)');
+                    } else {
+                        console.error("Server error: " + error);
+                        alert("An error occurred. Please try again or contact support if the problem persists.");
+
+                    }
+                }
+            });
+        }
+
+
+        /*  removing row!!!*/
 
 
 
+</script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="../UI/JS/ShowDiv.js"></script>
 
 </body>

@@ -15,11 +15,13 @@ namespace VinoVoyage.Dal
         public VinoVoyageDb() : base("VinoVoyage")
         {
         }
-/*here the tables is defined, if we need another table, create it here.*/
-        public DbSet<UserModel> Users{ get; set; }
-        public DbSet<ProductModel> Products{ get; set; }
-        
-/* prevents the project to create copies of same tables.*/
+        /*here the tables is defined, if we need another table, create it here.*/
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
+
+        /*    public DbSet<VVModel> VVModels { get; set; }*/
+
+        /* prevents the project to create copies of same tables.*/
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

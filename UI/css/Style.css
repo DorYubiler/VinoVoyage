@@ -308,6 +308,7 @@ button:hover {
 
 /* Main content */
 .main {
+    position:fixed;
     margin-left: 200px; /* Same as the width of the sidenav */
     font-size: 20px; /* Increased text to enable scrolling */
     padding: 0px 10px;
@@ -440,3 +441,24 @@ button:hover {
         opacity: 1
     }
 }
+
+.content {
+    padding-left:220px;
+
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
