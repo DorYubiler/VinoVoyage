@@ -41,22 +41,23 @@
             <div id="mySidenav" class="sidenavCart">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <div class="listCart">
-                    @*@foreach (OrderModel order in Model.cart)*@
-                    @foreach (ProductModel prod in Model.products)
+                    @foreach (OrderModel order in Model.cart)
                     {
                         <div class="cartItem">
-                            <div class="prodCartImage">
-                                <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%"/>
-                            </div>
-                            @*<h1>@order.ProductID</h1>*@
-
-                            <div class="name">Name</div>
-                            <div class="prodPrice">@prod.Price</div>
-                            <div class="quantity">
-                                <span class="minus"><</span>
-                                <span class="num" style="color:black">1</span>
-                                <span class="plus">></span>
-                            </div>
+                            @if (Model.products != null)
+                            {
+                                var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                                <div class="prodCartImage">
+                                    <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
+                                </div>
+                                <div class="name">@product.ProductName</div>
+                                <div class="prodPrice">@product.Price</div>
+                                <div class="quantity">
+                                    <span class="minus"><</span>
+                                    <span class="num" style="color:black">@order.Quantity</span>
+                                    <span class="plus">></span>
+                                </div>
+                            }
                         </div>
                     }
                 </div>
@@ -125,14 +126,16 @@
                                     
                                     <script>
                                         function addToCart(ProductId) {
-                                            console.log("ProductId:", ProductId);
-                                            $.ajax({
-                                                url: '@Url.Action("AddToCart", "Customer")',
-                                                type: 'POST',
-                                                data: { prodId: ProductId },
-                                                success: function (response) { },
-                                                error: function (xhr, status, error) { }
-                                            });
+                                            if (confirm("product added")) {
+                                                $.ajax({
+                                                    url: '@Url.Action("AddToCart", "Customer")',
+                                                    type: 'POST',
+                                                    data: { prodId: ProductId },
+                                                    success: function (response) { },
+                                                    error: function (xhr, status, error) { }
+                                                });
+                                            }
+                                            
                                         }
                                     </script>
                                 </div>
