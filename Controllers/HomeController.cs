@@ -10,6 +10,7 @@ namespace VinoVoyage.Controllers
     {
         public ActionResult HomePage()
         {
+
             return View();
         }
 

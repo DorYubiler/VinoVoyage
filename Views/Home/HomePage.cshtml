@@ -25,18 +25,25 @@
     <div class="slideshow-container">
         <div class="mySlides fade">
             <div class="numbertext">1 / 3</div>
-            <img src="~/UI/img/slideshow/hebrewmistakes.jpeg" style="width:100%">
-            <div class="textSlideShow">VINO VOYAGE for IDF!</div>
+            <div class="element">
+                <img src="~/UI/img/slideshow/hebrewmistakes.jpeg" alt="Slide Image">
+                <div class="slideText">VINO VOYAGE for IDF!</div>
+            </div>
+
         </div>
         <div class="mySlides fade">
             <div class="numbertext">2 / 3</div>
-            <img src="~/UI/img/slideshow/rose.jpeg" style="width:100%">
-            <div class="textSlideShow">On wednesday we wear pink</div>
+            <div class="element">
+                <img src="~/UI/img/slideshow/rose.jpeg" style="width:100%">
+                <div>On wednesday we wear pink</div>
+            </div>
         </div>
         <div class="mySlides fade">
             <div class="numbertext">3 / 3</div>
-            <img src="~/UI/img/slideshow/vinowine2.jpeg" style="width:100%">
-            <div class="textSlideShow">Try our private collection</div>
+            <div class="element">
+                <img src="~/UI/img/slideshow/vinowine2.jpeg" style="width:100%">
+                <div>Try our private collection</div>
+            </div>
         </div>
 
         <!-- Next and previous buttons -->
@@ -107,7 +114,7 @@
                 <p>PASSWORD</p>
                 <input type="password" name="Password" placeholder="" required />
             </div>
-            <button type="submit">Login</button>
+            <button class="popUpButton" type="submit">Login</button>
         }
     </div>
 
@@ -136,7 +143,7 @@
                     @Html.TextBoxFor(m => m.Email, new { @class = "custom-textbox form-control" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "custom-validation-message" })
                 </div>
-                <button id="SignUp" name="SignUp" type="submit" class="btn btn-default">Register</button>
+                <button id="SignUp" name="SignUp" type="submit" class="popUpButton">Register</button>
             </div>
         }
     </div>
@@ -165,7 +172,7 @@
 
 
 
-
+    <!-- bring them back now -->
     <div id="bthn" lang="en"></div>
     <script>
         (function () {

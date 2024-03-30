@@ -11,5 +11,6 @@ namespace VinoVoyage.ViewModel
         public UserModel user {  get; set; }
         public List<UserModel> users { get; set; }
         public List<ProductModel> products { get; set; }
+        public List<OrderModel> cart {  get; set; }
     }
 }

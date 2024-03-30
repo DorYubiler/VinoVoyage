@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using VinoVoyage.Models;
+using VinoVoyage.ViewModel;
 using VinoVoyage.Dal;
 using System.Data.Entity;
 
@@ -14,12 +15,13 @@ namespace VinoVoyage.Controllers
     public class UserController : Controller
     {/*creating new private db, We will use it for any operation with the database*/
         private VinoVoyageDb db=new VinoVoyageDb();
-        public ActionResult LoginView()
-        {
-            return View();
-        }
 
-        
+        //public ActionResult LoginView()
+        //{
+        //    return View();
+        //}
+
+
         public ActionResult RegisterView()
         {
             return View();
@@ -45,6 +47,7 @@ namespace VinoVoyage.Controllers
             {
                 
                 UserModel user = db.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
+                
                 if (user != null)
                 {
                     Session["userinfo"] = user;
@@ -63,6 +66,8 @@ namespace VinoVoyage.Controllers
             }
             return View();
         }
+
+
 
     }
 }
