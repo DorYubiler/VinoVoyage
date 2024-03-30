@@ -19,6 +19,8 @@ namespace VinoVoyage.Dal
         public DbSet<UserModel> Users{ get; set; }
         public DbSet<ProductModel> Products{ get; set; }
 
+        public DbSet<OrderModel> Orders { get; set; }
+
         /* prevents the project to create copies of same tables.*/
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -12,133 +12,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel=" stylesheet" href="./UI/css/Style.css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-    <!-- top navigation bar -->
-    <div class="topnav">
-        <a href="#vinoVoyage" class="left"><i class="fa fa-home"></i> VINOVOYAGE</a>
-        @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
-            <div class="dropdown-content">
-                <a href="#link1">profile</a>
-                <a href="@Url.Action("Logout", "Customer")">logout</a>
+    <div id="main">
+        <!-- top navigation bar -->
+        <div class="topnav" id="myTopnav">
+
+            <!-- user info nav -->
+            <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+            @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+                <div class="dropdown-content">
+                    <a href="#link1">profile</a>
+                    <a href="@Url.Action("Logout", "Customer")">logout</a>
+                </div>
+            </div>
+
+            <!-- wines nav -->
+            <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
+
+            <!-- cart nav -->
+            <div id="mySidenav" class="sidenavCart">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="listCart">
+                    @*@foreach (OrderModel order in Model.cart)*@
+                    @foreach (ProductModel prod in Model.products)
+                    {
+                        <div class="cartItem">
+                            <div class="prodCartImage">
+                                <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%"/>
+                            </div>
+                            @*<h1>@order.ProductID</h1>*@
+
+                            <div class="name">Name</div>
+                            <div class="prodPrice">@prod.Price</div>
+                            <div class="quantity">
+                                <span class="minus"><</span>
+                                <span class="num" style="color:black">1</span>
+                                <span class="plus">></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="totalPrice">total price: 200$</div>
+                <div class="cartActions">
+                    <a href="#">checkout</a>
+                    <a href="#">empty cart</a>
+                </div>
+            </div>
+
+            <a class="split"><span onclick="openNav()"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+
+            <script>
+                function openNav() {
+                    document.getElementById("mySidenav").style.width = "250px";
+                    document.getElementById("main").style.marginRight = "250px";
+                }
+
+                function closeNav() {
+                    document.getElementById("mySidenav").style.width = "0";
+                    document.getElementById("main").style.marginRigh = "0";
+                    document.getElementById("myTopnav").style.marginRight = "0";
+                }
+                function openSide() {
+                    document.getElementById("sideWineMenu").style.visibility = "visible";
+                }
+            </script>
+
+            <!-- wishlist nav -->
+            <a  href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
+        </div>
+
+        <div class="main-content">
+            <!-- side navigation bar -->
+            <div class="tab" id="sideWineMenu">
+                <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
+                <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
+                <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
+                <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
+                <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
+            </div>
+
+            <div id="AllWines" class="tabcontent">
+                <div class="prodGrid">
+                    @foreach (ProductModel prod in Model.products)
+                    {
+                        <div class="prodCard">
+                            <div class="imageContainer">
+                                <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <div class="desctiprionLayer">
+                                    <div class="desctiprionLayerText">@prod.Description</div>
+                                </div>
+                            </div>
+
+                            <div class="prodDesctiption">
+                                <h1>@prod.ProductName</h1>
+                                <div class="originPrice">
+                                    <h2>@prod.Origin</h2>
+                                    <h2>@(prod.Price)₪</h2>
+                                </div>
+
+                                <div class="productButtons">
+
+                                    <button class="addWineBtn">Buy Now</button>
+                                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    
+                                    <script>
+                                        function addToCart(ProductId) {
+                                            console.log("ProductId:", ProductId);
+                                            $.ajax({
+                                                url: '@Url.Action("AddToCart", "Customer")',
+                                                type: 'POST',
+                                                data: { prodId: ProductId },
+                                                success: function (response) { },
+                                                error: function (xhr, status, error) { }
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="Whites" class="tabcontent">
+            </div>
+            <div id="Reds" class="tabcontent"></div>
+            <div id="Roses" class="tabcontent">
+                <h1>Roses</h1>
+            </div>
+            <div id="Specials" class="tabcontent">
+                <h1> Specials </h1>
             </div>
         </div>
-        <a href="#wines"><i class="fa fa-glass"></i> WINES</a>
-        <a href="#cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
-        <a href="#wishlist"><i class="fa fa-heart"></i></a>
-        <input type="text" placeholder="SEARCH...">
-    </div>
-    <!-- side navigation bar -->
-    <div class="tab">
-        <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
-        <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
-        <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
-        <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
-        <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
-    </div>
-
-    <div id="AllWines" class="tabcontent">
-        <div class="prodGrid">
-            @foreach (ProductModel prod in Model.products)
-            {
-                    <div class="prodCard">
-                        <div class="imageContainer">
-                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
-                            <div class="desctiprionLayer">
-                                <div class="desctiprionLayerText">@prod.Description</div>
-                            </div>
-                        </div>
-
-                        <div class="prodDesctiption">
-                            <h1>@prod.ProductName</h1>
-                            <div class="originPrice">
-                                <h2>@prod.Origin</h2>
-                                <h2>@(prod.Price)₪</h2>
-                            </div>
-
-                            <div class="productButtons">
-                                <button class="addWineBtn">Buy Now</button>
-                                <button class="addWineBtn"><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
             }
-        </div>
-    </div>
-    <div id="Whites" class="tabcontent">
-        <div class="prodGrid">
-            @foreach (ProductModel prod in Model.products)
-            {
-                <div class="prodCol">
-                    <div class="prodCard">
-                        <div class="imageContainer">
-                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
-                            <div class="desctiprionLayer">
-                                <div class="desctiprionLayerText">@prod.Description</div>
-                            </div>
-                        </div>
-
-                        <div class="prodDesctiption">
-                            <h1>@prod.ProductName</h1>
-                            <div class="originPrice">
-                                <h2>@prod.Origin</h2>
-                                <h2>@(prod.Price)₪</h2>
-                            </div>
-
-                            <div class="productButtons">
-                                <button class="addWineBtn">Buy Now</button>
-                                <button class="addWineBtn"><i class="fas fa-cart-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </script>
+        <script>
+            function openWindow(evt, wineName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(wineName).style.display = "block";
+                evt.currentTarget.className += " active";
             }
-        </div>
-    </div>
-    <div id="Reds" class="tabcontent">
-        <h1>reds</h1>
-    </div>
-    <div id="Roses" class="tabcontent">
-        <h1>Roses</h1>
-    </div>
-    <div id="Specials" class="tabcontent">
-        <h1> Specials </h1>
-    </div>
-    <script>
+        </script>
 
-    </script>
-    <script>
-        function openWindow(evt, wineName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(wineName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-    </script>
-    <script src="../UI/JS/ShowDiv.js"></script>
-    <!-- bring them back now -->
-    <div id="bthn" lang="en"></div>
-    <script>
-        (function () {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
-            script.setAttribute(
-                "integrity",
-                "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
-            );
-            script.setAttribute("crossorigin", "anonymous");
-            document.getElementsByTagName("head")[0].appendChild(script);
-        })();
-    </script>
+        <script src="../UI/JS/ShowDiv.js"></script>
+        <!-- bring them back now -->
+        <div id="bthn" lang="en"></div>
+        <script>
+            (function () {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
+                script.setAttribute(
+                    "integrity",
+                    "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
+                );
+                script.setAttribute("crossorigin", "anonymous");
+                document.getElementsByTagName("head")[0].appendChild(script);
+            })();
+        </script>
+    </div>
 </body>
 </html>

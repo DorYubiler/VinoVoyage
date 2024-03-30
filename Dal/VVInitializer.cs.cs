@@ -14,6 +14,7 @@ namespace VinoVoyage.Dal{
             var users = new List<UserModel>
             {
                 new UserModel { Username = "dorimon", Password = "1234567", Role = "admin", Email = "dori199791@gmail.com" },
+                new UserModel { Username = "shanik", Password = "1111111", Role = "customer", Email = "shaniriven@gmail.com" },
                 new UserModel { Username = "dorimo", Password = "12345678", Role = "customer", Email = "dor199791@gmail.com" },
                 new UserModel { Username = "dorim", Password = "123456789", Role = "customer", Email = "dori1997@gmail.com" },
             };
@@ -26,6 +27,12 @@ namespace VinoVoyage.Dal{
                 new ProductModel {ProductID=2,ProductName="DavidsSon",Type="white",Description="The primary flavors of DavidsSon whith wine are good,very good,very very good, flowers, citrus, and some other bullshit, with a pleasant crunchy green flavor on the finish similar to celery or rhubarb. Of course, depending on the type of grape the  wine is made with will greatly vary the flavor.",
                 Origin="Israel",Amount=100,Price=200}};
             products.ForEach(s=> context.Products.Add(s));
+            context.SaveChanges();
+            var orders = new List<OrderModel>
+            {
+                new OrderModel{ ProductID=1, Username="shanik", Quantity=2}
+            };
+            orders.ForEach(s=> context.Orders.Add(s));
             context.SaveChanges();
         }
             

@@ -20,9 +20,11 @@ namespace VinoVoyage.Controllers
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();
             uvm.products = db.Products.ToList<ProductModel>();
+            uvm.cart = new List<OrderModel>();
             if (user != null)
             {
                 ViewBag.Username = user.Username;
+                uvm.cart = db.Orders.Where(order => order.Username == user.Username).ToList();
             }
             return View("CustomerHomeView", uvm);
         }
@@ -33,6 +35,13 @@ namespace VinoVoyage.Controllers
             return RedirectToAction("HomePage", "Home");
         }
 
+        [HttpPost]
+        public ActionResult AddToCart(int prodId)
+        {
+            System.Console.WriteLine(prodId);
+
+            return Json(new { success = true, message = "Product added to cart successfully." });
+        }
 
     }
 }
