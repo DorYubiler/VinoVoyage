@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,11 +11,12 @@ namespace VinoVoyage.Models
 {
     public class ProductModel
     {
-       
+        
         [Required]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name ="ProductID")]
-        public int ProductID { get; set; }
+        public int ProductID { get; set ; }
         
         [Required]
         [Display(Name = "ProductName")]

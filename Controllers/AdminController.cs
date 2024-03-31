@@ -87,13 +87,6 @@ namespace VinoVoyage.Controllers
             }
         }
 
-        
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-       
 
         [HttpPost]
         public ActionResult AddUser(UserModel user)
@@ -103,16 +96,65 @@ namespace VinoVoyage.Controllers
             return RedirectToAction("AdminHomePage");
         }
 
-        // POST: Admin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 
- /*       public ActionResult EditUser(List<string> userd)
+        [HttpPost]
+        public ActionResult DeleteProduct(string prod)
         {
-            UserModel um= new UserModel();
-            
-        }    */
+            try
+            {
+                ProductModel product = db.Products.Find(int.Parse(prod));
+                var tempCart = db.Orders.Where(order=>order.ProductID==product.ProductID).ToList();
+                if (tempCart.Any())
+                {
+                    db.Orders.RemoveRange(tempCart);
+                }
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+        }
 
+       
+
+        
+
+        [HttpPost]
+        public ActionResult UpdateProduct(ProductModel pmodel)
+        {
+            try
+            {
+                ProductModel prodUpdate = db.Products.Find(pmodel.ProductID);
+                if (prodUpdate != null)
+                {
+                    prodUpdate.ProductName= pmodel.ProductName;
+                    prodUpdate.Type = pmodel.Type;
+                    prodUpdate.Description = pmodel.Description;
+                    prodUpdate.Origin = pmodel.Origin;
+                    prodUpdate.Amount = pmodel.Amount;
+                    prodUpdate.Price = pmodel.Price;
+                    prodUpdate.NewPrice = pmodel.NewPrice;
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddProduct(ProductModel product)
+        {
+            db.Products.Add(product);
+            db.SaveChanges();
+            return RedirectToAction("AdminHomePage");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -190,6 +190,10 @@
     <Compile Include="Migrations\202403310918539_AddNewPriceToProduct.Designer.cs">
       <DependentUpon>202403310918539_AddNewPriceToProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403311430552_AddProductIDIdentity.cs" />
+    <Compile Include="Migrations\202403311430552_AddProductIDIdentity.Designer.cs">
+      <DependentUpon>202403311430552_AddProductIDIdentity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -275,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403310918539_AddNewPriceToProduct.resx">
       <DependentUpon>202403310918539_AddNewPriceToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403311430552_AddProductIDIdentity.resx">
+      <DependentUpon>202403311430552_AddProductIDIdentity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

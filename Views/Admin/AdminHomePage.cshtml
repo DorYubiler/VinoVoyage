@@ -46,9 +46,8 @@
         </button>
         <div class="sidedropdown-container">
             <a onclick="showSection('EditRemoveProducts')">edit/remove products</a>
-            <a onclick="showSection('ManegeProducts')">Manege product</a>
             <a onclick="showSection('OrderProducts')">Order products</a>
-            <a onclick="showSection('OrderNewProduct')">Order new product</a>
+            <a onclick="showSection('AddNewProduct')">Add new product</a>
 
 
 
@@ -95,8 +94,8 @@
                         <td>@us.Role</td>
                         <td>@us.Email</td>
                         <td>
-                            <button onclick="editRow(this)">Edit</button>
-                            <button onclick="deleteRow(this)">Delete</button>
+                            <button class="userEditButton" onclick="editRowUser(this)">Edit</button>
+                            <button class="userDeleteButton" onclick="deleteRowUser(this)">Delete</button>
                         </td>
                     </tr>
                 }
@@ -127,7 +126,7 @@
                         display: grid;
                     }
                 </style>
-                <button type="submit" >Add user</button>
+                <button type="submit">Add user</button>
             }
         </div>
 
@@ -139,24 +138,27 @@
                     border-collapse: collapse;
                     width: 100%;
                 }
+
                 td, th {
                     border: 1px solid #dddddd;
                     text-align: left;
                     padding: 8px;
                 }
+
                 tr:nth-child(even) {
                     background-color: #dddddd;
                 }
             </style>
             <table>
                 <tr>
-                    <th>ProductID</th>
-                    <th>ProductName</th>
+                    <th>Product ID</th>
+                    <th>Product name</th>
                     <th>Type</th>
                     <th>Description</th>
                     <th>Origin</th>
                     <th>Amount</th>
                     <th>Price</th>
+                    <th>New price</th>
                 </tr>
                 @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
                 {
@@ -165,60 +167,145 @@
                         <td>@pr.ProductName</td>
                         <td>@pr.Type</td>
                         <td>@pr.Description</td>
-                        <td>@</td>
+                        <td>@pr.Origin</td>
+                        <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
+                        <td>@pr.Price</td>
+                        <td>@pr.NewPrice</td>
                         <td>
-                            <button onclick="editRow(this)">Edit</button>
-                            <button onclick="deleteRow(this)">Delete</button>
+                            <button onclick="editRowProduct(this)">Edit</button>
+                            <button onclick="deleteRowProduct(this)">Delete</button>
                         </td>
                     </tr>
                 }
             </table>
         </div>
 
-        <div id="ManegeProducts" style="display:none;">
-            <!-- Content for removing products -->
-            <p>Manege products here...</p>
-        </div>
 
         <div id="OrderProducts" style="display:none;">
-            <!-- Content for removing products -->
-            <p>Order products here...</p>
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+            <form id="orderform">
+                <table>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product name</th>
+                        <th>Amount</th>
+                        <th style="font-size:20px;">quantity</th>
+                    </tr>
+                    @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
+                    {
+                        <tr>
+                            <td>@pr.ProductID</td>
+                            <td>@pr.ProductName</td>
+                            <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
+                            <td><input type="number" id="oq" name="orderQuantity[@pr.ProductID]" min="0" value="0"></td>
+                        </tr>
+                    }
+                </table>
+                <button style="width:10%" type="button" id="sendorder">Send order</button>
+            </form>
         </div>
 
-        <div id="OrderNewProduct" style="display:none;">
-            <!-- Content for removing products -->
-            <p>Order new products here...</p>
+        <div id="AddNewProduct" style="display:none;">
+
+            <p>Please fill in this form to add now product to VV.</p>
+
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post))
+            {
+                <style  >
+                    label, input, select,option {
+                        margin-left: auto;
+                        padding: 10px 50px;
+                        font-size: 22px;
+                        margin:inherit;
+                       
+                    }
+                </style>
+                <label for="ProductName">Product name:</label>
+                <input type="text" id="ProductName" name="ProductName" placeholder="ProductName" required>
+
+                <label for="Type">Type</label>
+                <select id="Type" name="Type" required>
+                    <option value="White">White</option>
+                    <option value="Red">Red</option>
+                    <option value="Rose">Rose</option>
+                </select>
+
+                <label for="Description">Description:</label>
+                <input type="text" id="Description" name="Description" placeholder="write your description here" required>
+
+                <label for="Origin">Origin:</label>
+                <input type="text" id="Origin" name="Origin" placeholder="Origin" required>
+
+                <label for="Amount">Amount:</label>
+                <input type="number" id="Amount" name="Amount" value="1" min="1" required>
+
+                <label for="Price">Price:</label>
+                <input type="number" id="Price" name="Price" value="1" min="1" required>
+
+                <label for="NewPrice">NewPrice:</label>
+                <input type="number" id="NewPrice" name="NewPrice" value="1" min="0" required>
+                <style>
+                    label, select, button {
+                        
+                    }
+                </style>
+                <button type="submit" onclick="productshowmessage()">Add Product</button>
+            }
+           
         </div>
     </div>
+    
+    
 
 
 <script>
-        function deleteRow(button) {
-    if (confirm('Are you sure you want to delete this user?')) {
-        var row = button.closest('tr');
+    
+    function deleteRowUser(button) {
+         if (confirm('Are you sure you want to delete this user?')) {
+            var row = button.closest('tr')
+            var usernameTd = row.querySelector('td');
+            var username = usernameTd.innerHTML;
 
-        var usernameTd = row.querySelector('td');
-        var username = usernameTd.innerHTML;
 
 
-        $.ajax({
-            url: '@Url.Action("DeleteUser","Admin")',
-            type: 'POST',
-            data: { usern: username },
-            success: function (response) {
-                if (response.success) {
-                    row.remove();
-                } else {
-                    alert('Error deleting user.');
-                }
-            },
-            error: function (xhr, status, error) { }
-        });
+            $.ajax({
+                url: '@Url.Action("DeleteUser","Admin")',
+                type: 'POST',
+                data: { usern: username },
+                success: function (response) {
+                    if (response.success) {
+                        row.remove();
+                        
+                    } else {
+                        alert('Error deleting user.');
+
+                    }
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
     }
-}
 
-function editRow(button) {
+function editRowUser(button) {
     var row = $(button).closest('tr');
+    var deleteButton = row.find(".deleteButton"); // Assuming you've added a 'deleteButton' class to your delete buttons
+    deleteButton.css('display', 'none'); // Hide the delete button
     // Start looping from the 1st index to skip the UserName field
     row.find('td:not(:last-child)').each(function (index) {
         if (index > 0) { // Skip the first column (Username)
@@ -226,15 +313,16 @@ function editRow(button) {
             $(this).html('<input type="text" value="' + text + '" />');
         }
     });
-
+ 
     // Change "Edit" button to "Save"
-    $(button).text('Save').attr('onclick', 'saveRow(this)');
-
-
+    $(button).text('Save').attr('onclick', 'saveRowUser(this)');
+     
 }
 
-function saveRow(button) {
+function saveRowUser(button) {
     var row = $(button).closest('tr');
+    var deleteButton = row.find(".deleteButton"); // Assuming you've added a 'deleteButton' class to your delete buttons
+    deleteButton.css('display', ''); // Hide the delete button
     var username = row.find('td:eq(0)').text();
     var password = row.find('td:eq(1) input').val();
     var role = row.find('td:eq(2) input').val();
@@ -256,6 +344,7 @@ function saveRow(button) {
         success: function (response) {
             if (response.success) {
                 // Convert input fields back to text for all but the first column
+                
                 row.find('td:not(:last-child)').each(function (index) {
                     if (index > 0) {
                         var input = $(this).find('input');
@@ -264,7 +353,7 @@ function saveRow(button) {
                 });
 
                 // Change "Save" button back to "Edit"
-                $(button).text('Edit').attr('onclick', 'editRow(this)');
+                $(button).text('Edit').attr('onclick', 'editRowUser(this)');
             } else {
                 console.error("Server error: " + error);
                 alert("An error occurred. Please try again or contact support if the problem persists.");
@@ -278,8 +367,128 @@ function saveRow(button) {
 }
 
 
+    function deleteRowProduct(button) {
+         if (confirm('Are you sure you want to delete this product?')) {
+              var row = button.closest('tr');
+
+        var prodidTd = row.querySelector('td');
+        var prodid = prodidTd.innerHTML;
+        
 
 
+            $.ajax({
+                url: '@Url.Action("DeleteProduct","Admin")',
+                type: 'POST',
+                data: { prod: prodid},
+                success: function (response) {
+                    if (response.success) {
+                        row.remove();
+                    } else {
+                        alert('Error deleting product.');
+                    }
+                },
+                error: function (xhr, status, error) { }
+            });
+        }
+    }
+
+function editRowProduct(button) {
+    var row = $(button).closest('tr');
+    // Start looping from the 1st index to skip the ProductID field
+    row.find('td:not(:last-child)').each(function (index) {
+        if (index > 0) { // Skip the first column (ProductID)
+            var text = $(this).text();
+            $(this).html('<input type="text" value="' + text + '" />');
+        }
+    });
+
+    // Change "Edit" button to "Save"
+    $(button).text('Save').attr('onclick', 'saveRowProduct(this)');
+
+
+}
+
+
+
+
+
+function saveRowProduct(button) {
+    var row = $(button).closest('tr');
+    var productID = row.find('td:eq(0)').text();
+    var productName = row.find('td:eq(1) input').val();
+    var type = row.find('td:eq(2) input').val();
+    var description = row.find('td:eq(3) input').val();
+    var origin = row.find('td:eq(4) input').val();
+    var amount = row.find('td:eq(5) input').val();
+    var Price = row.find('td:eq(6) input').val();
+    var newPrice = row.find('td:eq(7) input').val();
+
+    var prodData = {
+        ProductID:productID,
+        ProductName:productName,
+        Type:type,
+        Description:description,
+        Origin:origin,
+        Amount:amount,
+        Price:Price,
+        NewPrice:newPrice,
+    };
+    console.log(prodData);
+
+    $.ajax({
+        url: '@Url.Action("UpdateProduct","Admin")',
+        type: 'POST',
+        data: { pmodel: prodData },
+
+        success: function (response) {
+            if (response.success) {
+                // Convert input fields back to text for all but the first column
+                row.find('td:not(:last-child)').each(function (index) {
+                    if (index > 0) {
+                        var input = $(this).find('input');
+                        $(this).text(input.val());
+                    }
+                });
+
+                // Change "Save" button back to "Edit"
+                $(button).text('Edit').attr('onclick', 'editRowProduct(this)');
+            } else {
+                console.error("Server error: " + error);
+                alert("An error occurred. Please try again or contact support if the problem persists.");
+
+            }
+        },
+
+        error: function (xhr, status, error) { }
+    });
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('sendorder').addEventListener('click', sendOrder);
+});
+function sendOrder(){
+    var orderForm = document.getElementById('orderform');
+    var inputValues = Array.from(orderForm.querySelectorAll('input')).map(input => Number(input.value));
+    var oneFilled =false;
+    console.log((inputValues));
+        inputValues.forEach(input => {
+            if (input != 0) {
+                oneFilled = true;
+            }
+        });
+     if (!oneFilled) {
+        alert('Please fill in at least one quantity with a number greater than 0.');
+        return;
+     }
+    alert("Your order has been submitted successfully!\n delivery time: 12 business days.");
+    window.location.reload();
+    
+}
+
+function productshowmessage(){
+    alert("The product has been successfully added")
+} 
 </script>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
