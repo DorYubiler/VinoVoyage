@@ -39,7 +39,10 @@
 
             <!-- cart nav -->
             <div id="mySidenav" class="sidenavCart">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="topCart">
+                    <h1>Shopping Cart</h1>
+                    <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
+                </div>
                 <div class="listCart">
                     @foreach (OrderModel order in Model.cart)
                     {
@@ -63,8 +66,8 @@
                 </div>
                 <div class="totalPrice">total price: 200$</div>
                 <div class="cartActions">
-                    <a href="#">checkout</a>
-                    <a href="#">empty cart</a>
+                    <a href="#" class="cartActionsBtn">checkout</a>
+                    <a href="#" class="cartActionsBtn"">empty cart</a>
                 </div>
             </div>
 

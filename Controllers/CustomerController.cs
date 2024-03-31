@@ -17,7 +17,9 @@ namespace VinoVoyage.Controllers
         // GET: Customer
         public ActionResult CustomerHomeView()
         {
-            var user = Session["userinfo"] as UserModel;
+            var user = db.Users.Find("shanik");
+            Session["userinfo"] = user as UserModel;
+            //var user = Session["userinfo"] as UserModel;
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();
@@ -69,7 +71,7 @@ namespace VinoVoyage.Controllers
                         db.SaveChanges();
                         var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
                         temp.Quantity += 1;
-                        return Json(new { success = true, message = "Product added to cart successfully." });
+                        return Json(new { success = true, message = "Product added to cart successfully."});
                     }
                 }
             }
