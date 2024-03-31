@@ -23,8 +23,9 @@ namespace VinoVoyage.Controllers
 
         // GET: Admin
         public ActionResult AdminHomePage()
-        {   
-            var user = Session["userinfo"] as UserModel;
+        {
+            var user = db.Users.Find("dorimon");
+            Session["userinfo"]=user as UserModel;
             UserViewModel uvm = new UserViewModel();
             //creating new uvm, copy all of the users and removing the current admin
             UserViewModel uvmA = new UserViewModel();

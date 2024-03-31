@@ -45,7 +45,7 @@
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a onclick="showSection('AddRemoveProducts')">Add/remove products</a>
+            <a onclick="showSection('EditRemoveProducts')">edit/remove products</a>
             <a onclick="showSection('ManegeProducts')">Manege product</a>
             <a onclick="showSection('OrderProducts')">Order products</a>
             <a onclick="showSection('OrderNewProduct')">Order new product</a>
@@ -107,7 +107,7 @@
 
 
             <h1>Add user</h1>
-            <p>Please fill in this form to create an account.</p>
+            <p>Please fill in this form to create user.</p>
 
             @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post))
             {
@@ -131,10 +131,48 @@
             }
         </div>
 
-        <div id="AddRemoveProducts" style="display:none;">
-            <!-- Content for adding products -->
-            <p>Add products here...</p>
-            <h1>DDDDDDDDFGHJGHJGJGHGF</h1>
+
+        <div id="EditRemoveProducts" style="display:none;">
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+            <table>
+                <tr>
+                    <th>ProductID</th>
+                    <th>ProductName</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Origin</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                </tr>
+                @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
+                {
+                    <tr>
+                        <td>@pr.ProductID</td>
+                        <td>@pr.ProductName</td>
+                        <td>@pr.Type</td>
+                        <td>@pr.Description</td>
+                        <td>@</td>
+                        <td>
+                            <button onclick="editRow(this)">Edit</button>
+                            <button onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
 
         <div id="ManegeProducts" style="display:none;">
@@ -152,49 +190,48 @@
             <p>Order new products here...</p>
         </div>
     </div>
-    @*
-        script of JS and Ajax for editing the table
-    *@
-    <script>
-     function deleteRow(button) {
-         if (confirm('Are you sure you want to delete this user?')) {
-             var row = button.closest('tr');
-
-             var usernameTd = row.querySelector('td');
-             var username = usernameTd.innerHTML;
 
 
-             $.ajax({
-                 url: '@Url.Action("DeleteUser","Admin")',
-                 type: 'POST',
-                 data: { usern: username },
-                 success: function (response) {
-                     if (response.success) {
-                         row.remove();
-                     } else {
-                         alert('Error deleting user.');
-                     }
-                 },
-                 error: function (xhr, status, error) { }
-             });
-         }
-        }
+<script>
+        function deleteRow(button) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        var row = button.closest('tr');
 
-    function editRow(button) {
-        var row = $(button).closest('tr');
-        // Start looping from the 1st index to skip the UserName field
-        row.find('td:not(:last-child)').each(function (index) {
-            if (index > 0) { // Skip the first column (Username)
-                var text = $(this).text();
-                $(this).html('<input type="text" value="' + text + '" />');
-            }
+        var usernameTd = row.querySelector('td');
+        var username = usernameTd.innerHTML;
+
+
+        $.ajax({
+            url: '@Url.Action("DeleteUser","Admin")',
+            type: 'POST',
+            data: { usern: username },
+            success: function (response) {
+                if (response.success) {
+                    row.remove();
+                } else {
+                    alert('Error deleting user.');
+                }
+            },
+            error: function (xhr, status, error) { }
         });
-
-        // Change "Edit" button to "Save"
-        $(button).text('Save').attr('onclick', 'saveRow(this)');
-
-
     }
+}
+
+function editRow(button) {
+    var row = $(button).closest('tr');
+    // Start looping from the 1st index to skip the UserName field
+    row.find('td:not(:last-child)').each(function (index) {
+        if (index > 0) { // Skip the first column (Username)
+            var text = $(this).text();
+            $(this).html('<input type="text" value="' + text + '" />');
+        }
+    });
+
+    // Change "Edit" button to "Save"
+    $(button).text('Save').attr('onclick', 'saveRow(this)');
+
+
+}
 
 function saveRow(button) {
     var row = $(button).closest('tr');
@@ -218,19 +255,19 @@ function saveRow(button) {
 
         success: function (response) {
             if (response.success) {
-            // Convert input fields back to text for all but the first column
-            row.find('td:not(:last-child)').each(function (index) {
-            if (index > 0) {
-                var input = $(this).find('input');
-                $(this).text(input.val());
-            }
-        });
+                // Convert input fields back to text for all but the first column
+                row.find('td:not(:last-child)').each(function (index) {
+                    if (index > 0) {
+                        var input = $(this).find('input');
+                        $(this).text(input.val());
+                    }
+                });
 
-        // Change "Save" button back to "Edit"
-        $(button).text('Edit').attr('onclick', 'editRow(this)');
-        } else {
-            console.error("Server error: " + error);
-            alert("An error occurred. Please try again or contact support if the problem persists.");
+                // Change "Save" button back to "Edit"
+                $(button).text('Edit').attr('onclick', 'editRow(this)');
+            } else {
+                console.error("Server error: " + error);
+                alert("An error occurred. Please try again or contact support if the problem persists.");
 
             }
         },
@@ -243,8 +280,7 @@ function saveRow(button) {
 
 
 
-
-    </script>
+</script>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="../UI/JS/ShowDiv.js"></script>
