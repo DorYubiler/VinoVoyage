@@ -71,7 +71,8 @@ namespace VinoVoyage.Controllers
                         db.SaveChanges();
                         var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
                         temp.Quantity += 1;
-                        return Json(new { success = true, message = "Product added to cart successfully."});
+                        Session["userCart"] = tempCart;
+                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity });
                     }
                 }
             }
@@ -89,8 +90,51 @@ namespace VinoVoyage.Controllers
             // add to db
             db.Orders.Add(newOrder);
             db.SaveChanges();
-            return Json(new { success = true, message = "Product added to cart successfully." });
+            Session["userCart"] = tempCart;
+            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1});
         }
 
+        [HttpPost]
+        public ActionResult DeleteFromCart(int prodId)
+        {
+            // find product in db and change amount
+            ProductModel stockItems = db.Products.Find(prodId);
+            if (stockItems == null)
+            {
+                return HttpNotFound();
+            }
+            stockItems.Amount += 1;
+            db.SaveChanges();
+
+            // get user info
+            var tempCart = Session["userCart"] as List<OrderModel>;
+            var user = Session["userinfo"] as UserModel;
+            OrderModel cartOrder = tempCart.FirstOrDefault(order => order.ProductID == prodId);
+            var dbOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
+            //var dbOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
+
+
+
+            // if user has more then 1 product
+            if (cartOrder.Quantity > 1)
+            {
+                cartOrder.Quantity -= 1;
+                dbOrder.Quantity -= 1;
+                db.SaveChanges();
+                Session["userCart"] = tempCart;
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity });
+            }
+
+            else
+            {
+
+                tempCart.RemoveAll(order => order.ProductID == cartOrder.ProductID);
+                db.Orders.Remove(dbOrder);
+                db.SaveChanges();
+                Session["userCart"] = tempCart;
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0 });
+            }
+
+        }
     }
 }

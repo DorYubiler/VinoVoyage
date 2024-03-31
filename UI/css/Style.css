@@ -386,8 +386,9 @@ button {
     background-color: #c48a7d;
     overflow-x: hidden;
     transition: 0.5s;
+    color: black;
     /*padding-top: 20px;*/
-    grid-template-rows: 50px 1fr 70px;
+    /*grid-template-rows: 50px 1fr 70px;*/
 }
 
     .sidenavCart h1 {
@@ -400,11 +401,11 @@ button {
     width: 50px;
 }
 .sidenavCart .cartActions {
-    display: grid;
     bottom: 0;
     width: 100%;
     position: absolute;
-    grid-template-columns: repeat(2,1fr);
+    display: flex;
+    justify-content: space-around;
 }
 
     .sidenavCart .cartActions .cartActionsBtn {
@@ -414,8 +415,8 @@ button {
         font-weight: 300;
     }
 .sidenavCart .topCart {
-    display: flex;
-    justify-content: space-between;
+/*    display: flex;
+    justify-content: space-between;*/
     align-items: center;
 }
 .sidenavCart a {
@@ -438,19 +439,17 @@ button {
         position: absolute;
         top: 0;
         right: 5%;
-        /*right: 15px;*/
-        /*margin-left: 60px;*/
+        margin: 0 0 60px 60px;
         color: black;
-        right: 0;
         font-size: 15px;
         font-weight: bold;
     }
     .sidenavCart .listCart .cartItem .prodCartImage img {
-        width: 200px;
+        width: inherit;
     }
     .sidenavCart .listCart .cartItem {
         display: grid;
-        grid-template-columns: 50px 30px 30px 1fr;
+        grid-template-columns: 50px 100px 30px 1fr;
         text-align:center;
         align-items:center;
     }
@@ -458,25 +457,34 @@ button {
         font-size: 12px;
         font-weight:300;
     }
+        .sidenavCart .listCart .cartItem .prodPrice {
+            font-size: 12px;
+            font-weight: 300;
+        }
 
 .listCart {
     overflow-y: auto;
 }
-.listCart .quantity span {
-    display: inline-block;
-/*    width:7px;
-    height: 7px;
-    background-color: gray;*/
-/*    color: black;*/
-    border-radius: 50%;
-    cursor: pointer;
+    .listCart .quantity span {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: grey;
+        color: black;
+        padding: 0 0 13px 0;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 200;
+    }
+.productsAmount .quantity .minus, .productsAmount .quantity .plus {
+    font-size: 12px;
 }
-
-.listCart .quantity span:nth-child(2){
-    background-color:transparent;
+.productsAmount .quantity span:nth-child(2) {
+    background-color: transparent;
     color: #eee;
 }
-.listCart .cartItem:nth-child(even) {
+.cartList .cartItem:nth-child(even) {
     background-color: lightgray;
 }
 #main {
