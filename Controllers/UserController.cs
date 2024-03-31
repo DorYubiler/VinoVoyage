@@ -33,7 +33,7 @@ namespace VinoVoyage.Controllers
             /* change the customerDal to db (importent!!! I created in line 16 db from VinoVoyageDb. we use it in every use of Db.)*/
             if (ModelState.IsValid)
             {
-                
+
                 db.Users.Add(user);
                 db.SaveChanges();
                 return View("RegisterView", user);

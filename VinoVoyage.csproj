@@ -177,17 +177,25 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Dal\CustomerDal.cs" />
-    <Compile Include="Dal\ProductDal.cs" />
     <Compile Include="Dal\VinoVoyageDb.cs" />
     <Compile Include="Dal\VVInitializer.cs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403301837405_InitialCreate.cs" />
+    <Compile Include="Migrations\202403301837405_InitialCreate.Designer.cs">
+      <DependentUpon>202403301837405_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403310918539_AddNewPriceToProduct.cs" />
+    <Compile Include="Migrations\202403310918539_AddNewPriceToProduct.Designer.cs">
+      <DependentUpon>202403310918539_AddNewPriceToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\VVModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
@@ -229,6 +237,7 @@
     <Content Include="UI\img\slideshow\vinowine2.jpeg" />
     <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
+    <Content Include="UI\JS\UserTable.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -259,6 +268,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202403301837405_InitialCreate.resx">
+      <DependentUpon>202403301837405_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403310918539_AddNewPriceToProduct.resx">
+      <DependentUpon>202403310918539_AddNewPriceToProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

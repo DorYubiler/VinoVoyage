@@ -1,4 +1,4 @@
-﻿
+﻿@model VinoVoyage.ViewModel.UserViewModel
 
 @{
     ViewBag.Title = "AdminHomePage";
@@ -31,13 +31,13 @@
 
     <div class="sidenav">
 
-        <button class="dropdown-btn"> 
+        <button class="dropdown-btn">
             User manegmenet
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a href="#">Add/remove users</a>
-            <a href="#">Manege users</a>
+            <a onclick="showSection('EditRemoveUsers')">Edit/remove users</a>
+            <a onclick="showSection('AddUsers')"> Add users</a>
 
         </div>
         <button class="dropdown-btn">
@@ -45,67 +45,247 @@
             <i class="fa fa-caret-downSide"></i>
         </button>
         <div class="sidedropdown-container">
-            <a href="#" onclick="showSection('addRemoveProducts'); return false;">Add/remove products</a>
-            <a href="#">Manege product</a>
-            <a href="#">Order products</a>
-            <a href="#">Order new product</a>
+            <a onclick="showSection('EditRemoveProducts')">edit/remove products</a>
+            <a onclick="showSection('ManegeProducts')">Manege product</a>
+            <a onclick="showSection('OrderProducts')">Order products</a>
+            <a onclick="showSection('OrderNewProduct')">Order new product</a>
+
+
 
         </div>
     </div>
-    <script>
 
-      /*  document.addEventListener('DOMContentLoaded', function() {
-    var dropdownBtns = document.getElementsByClassName("sidedropdown-container");
 
-    Array.from(dropdownBtns).forEach(function(button) {
-        button.addEventListener("click", function(event) {
-            // Toggle the dropdown visibility only if the clicked element is the button itself
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
-                dropdownContent.style.display = "block";
-            } else {
-                dropdownContent.style.display = "none";
-            }
-        });
-    });
-
-    // Optional: To stop event propagation when clicking on links inside the dropdown
-    var dropdownLinks = document.querySelectorAll(".sidedropdown-container a");
-    dropdownLinks.forEach(function(link) {
-        link.addEventListener("click", function(event) {
-            event.stopPropagation(); // Prevent the click event from bubbling up to the parent elements
-        });
-    });
-});
-    
-    function showSection(AddRemoveProducts) {
-    // Hide all sections
-    document.querySelectorAll('.content div').forEach(function(div) {
-        div.style.display = 'none';
-    });
-
-    // Show the selected section
-    document.getElementById(sectionId).style.display = 'block';
-}*/
-
-    </script>
-    
     <!-- Page content -->
     <div class="content">
-        <div id="AddRemoveProducts" style="display:none;">
-            <!-- Content for adding products -->
-            <p>Add products here...</p>
-            <h1>DDDDDDDDFGHJGHJGJGHGF</h1>
+        <div id="EditRemoveUsers" style="display:none;">
+            <!-- Content for adding Users -->
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+
+            <table>
+
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                </tr>
+                @foreach (VinoVoyage.Models.UserModel us in Model.users)
+                {
+                    <tr>
+
+                        <td>@us.Username</td>
+                        <td>@us.Password</td>
+                        <td>@us.Role</td>
+                        <td>@us.Email</td>
+                        <td>
+                            <button onclick="editRow(this)">Edit</button>
+                            <button onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
-        <div id="removeProducts" style="display:none;">
+
+        <div id="AddUsers" style="display:none;">
+
+
+            <h1>Add user</h1>
+            <p>Please fill in this form to create user.</p>
+
+            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post))
+            {
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="password" required>
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="customer">Customer</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="exmaple@gmail.com" required>
+                <style>
+                    label, select, button {
+                        display: grid;
+                    }
+                </style>
+                <button type="submit" >Add user</button>
+            }
+        </div>
+
+
+        <div id="EditRemoveProducts" style="display:none;">
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+            <table>
+                <tr>
+                    <th>ProductID</th>
+                    <th>ProductName</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Origin</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                </tr>
+                @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
+                {
+                    <tr>
+                        <td>@pr.ProductID</td>
+                        <td>@pr.ProductName</td>
+                        <td>@pr.Type</td>
+                        <td>@pr.Description</td>
+                        <td>@</td>
+                        <td>
+                            <button onclick="editRow(this)">Edit</button>
+                            <button onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div id="ManegeProducts" style="display:none;">
             <!-- Content for removing products -->
-            <p>Remove products here...</p>
+            <p>Manege products here...</p>
+        </div>
+
+        <div id="OrderProducts" style="display:none;">
+            <!-- Content for removing products -->
+            <p>Order products here...</p>
+        </div>
+
+        <div id="OrderNewProduct" style="display:none;">
+            <!-- Content for removing products -->
+            <p>Order new products here...</p>
         </div>
     </div>
 
 
+<script>
+        function deleteRow(button) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        var row = button.closest('tr');
 
+        var usernameTd = row.querySelector('td');
+        var username = usernameTd.innerHTML;
+
+
+        $.ajax({
+            url: '@Url.Action("DeleteUser","Admin")',
+            type: 'POST',
+            data: { usern: username },
+            success: function (response) {
+                if (response.success) {
+                    row.remove();
+                } else {
+                    alert('Error deleting user.');
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+}
+
+function editRow(button) {
+    var row = $(button).closest('tr');
+    // Start looping from the 1st index to skip the UserName field
+    row.find('td:not(:last-child)').each(function (index) {
+        if (index > 0) { // Skip the first column (Username)
+            var text = $(this).text();
+            $(this).html('<input type="text" value="' + text + '" />');
+        }
+    });
+
+    // Change "Edit" button to "Save"
+    $(button).text('Save').attr('onclick', 'saveRow(this)');
+
+
+}
+
+function saveRow(button) {
+    var row = $(button).closest('tr');
+    var username = row.find('td:eq(0)').text();
+    var password = row.find('td:eq(1) input').val();
+    var role = row.find('td:eq(2) input').val();
+    var email = row.find('td:eq(3) input').val();
+
+    var userData = {
+        UserName: username,
+        Password: password,
+        Role: role,
+        Email: email,
+    };
+    console.log(userData);
+
+    $.ajax({
+        url: '@Url.Action("UpdateUser","Admin")',
+        type: 'POST',
+        data: { model: userData },
+
+        success: function (response) {
+            if (response.success) {
+                // Convert input fields back to text for all but the first column
+                row.find('td:not(:last-child)').each(function (index) {
+                    if (index > 0) {
+                        var input = $(this).find('input');
+                        $(this).text(input.val());
+                    }
+                });
+
+                // Change "Save" button back to "Edit"
+                $(button).text('Edit').attr('onclick', 'editRow(this)');
+            } else {
+                console.error("Server error: " + error);
+                alert("An error occurred. Please try again or contact support if the problem persists.");
+
+            }
+        },
+
+        error: function (xhr, status, error) { }
+    });
+
+}
+
+
+
+
+</script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="../UI/JS/ShowDiv.js"></script>
+
+
 
 </body>
 </html>
