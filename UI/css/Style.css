@@ -706,3 +706,8 @@ button {
 .content{
     padding-left:220px;
 }
+.scrollable {
+    height: 100px; 
+    overflow: auto;
+    padding: 5px;
+}

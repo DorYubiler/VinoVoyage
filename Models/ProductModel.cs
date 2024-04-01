@@ -13,16 +13,22 @@ namespace VinoVoyage.Models
     {
         
         [Required]
-        [Key]
+        [Key,Column(Order =0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name ="ProductID")]
         public int ProductID { get; set ; }
         
         [Required]
+        [Key, Column(Order = 1)]
         [Display(Name = "ProductName")]
         [StringLength(30, MinimumLength = 4)]
         public string ProductName {  get; set; }
-        
+
+        [Required]
+        [Display(Name = "Winery")]
+        [StringLength(30, MinimumLength = 2)]
+        public string Winery{ get; set; }
+
         [Required]
         [Display(Name = "Type")]
         [StringLength(30, MinimumLength = 4)]

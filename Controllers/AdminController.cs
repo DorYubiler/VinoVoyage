@@ -92,6 +92,7 @@ namespace VinoVoyage.Controllers
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
+            
             db.Users.Add(user);
             db.SaveChanges();
             return RedirectToAction("AdminHomePage");
@@ -104,7 +105,7 @@ namespace VinoVoyage.Controllers
             try
             {
                 ProductModel product = db.Products.Find(int.Parse(prod));
-                var tempCart = db.Orders.Where(order=>order.ProductID==product.ProductID).ToList();
+                var tempCart = db.Orders.Where(order => order.ProductID == product.ProductID).ToList();
                 if (tempCart.Any())
                 {
                     db.Orders.RemoveRange(tempCart);
@@ -128,16 +129,18 @@ namespace VinoVoyage.Controllers
         {
             try
             {
-                ProductModel prodUpdate = db.Products.Find(pmodel.ProductID);
+                ProductModel prodUpdate = db.Products.Find(pmodel.ProductID,pmodel.ProductName);
                 if (prodUpdate != null)
                 {
-                    prodUpdate.ProductName= pmodel.ProductName;
+                    
+                    prodUpdate.Winery=pmodel.Winery;
                     prodUpdate.Type = pmodel.Type;
                     prodUpdate.Description = pmodel.Description;
                     prodUpdate.Origin = pmodel.Origin;
                     prodUpdate.Amount = pmodel.Amount;
                     prodUpdate.Price = pmodel.Price;
                     prodUpdate.NewPrice = pmodel.NewPrice;
+                    
                     db.SaveChanges();
                 }
 

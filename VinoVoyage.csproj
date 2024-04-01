@@ -194,6 +194,18 @@
     <Compile Include="Migrations\202403311430552_AddProductIDIdentity.Designer.cs">
       <DependentUpon>202403311430552_AddProductIDIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404011203005_ProductIdType.cs" />
+    <Compile Include="Migrations\202404011203005_ProductIdType.Designer.cs">
+      <DependentUpon>202404011203005_ProductIdType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404011237060_AddProductWinery.cs" />
+    <Compile Include="Migrations\202404011237060_AddProductWinery.Designer.cs">
+      <DependentUpon>202404011237060_AddProductWinery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404011335115_wineryFix.cs" />
+    <Compile Include="Migrations\202404011335115_wineryFix.Designer.cs">
+      <DependentUpon>202404011335115_wineryFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -282,6 +294,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403311430552_AddProductIDIdentity.resx">
       <DependentUpon>202403311430552_AddProductIDIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404011203005_ProductIdType.resx">
+      <DependentUpon>202404011203005_ProductIdType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404011237060_AddProductWinery.resx">
+      <DependentUpon>202404011237060_AddProductWinery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404011335115_wineryFix.resx">
+      <DependentUpon>202404011335115_wineryFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
