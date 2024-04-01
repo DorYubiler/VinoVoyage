@@ -33,63 +33,130 @@
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
             </div>
-
-            <!-- wines nav -->
             <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
+            <a class="split"><span onclick="openNav()"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+            <a href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
+        </div>
 
-            <!-- cart nav -->
-            <div id="mySidenav" class="sidenavCart">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <div class="listCart">
+        <div id="cartWindow" class="sidenavCart">
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                    font-size: 14px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+                table button {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background-color: grey;
+                    color: black;
+                    padding: 0 0 13px 0;
+                    cursor: pointer;
+                    font-size: 15px;
+                    font-weight: 200;
+                }
+                table h1 {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    color: black;
+                    padding: 0 0 13px 0;
+                    font-size: 15px;
+                    font-weight: 200;
+                }
+            </style>
+            <div class="cartList">
+                <div class="topCart">
+                    <h1>Shopping Cart</h1>
+                    <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
+                </div>
+                <table>
                     @foreach (OrderModel order in Model.cart)
                     {
-                        <div class="cartItem">
-                            @if (Model.products != null)
-                            {
-                                var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-                                <div class="prodCartImage">
-                                    <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
-                                </div>
-                                <div class="name">@product.ProductName</div>
-                                <div class="prodPrice">@product.Price</div>
-                                <div class="quantity">
-                                    <span class="minus"><</span>
-                                    <span class="num" style="color:black">@order.Quantity</span>
-                                    <span class="plus">></span>
-                                </div>
-                            }
-                        </div>
+                        var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                        <tr data-productid="@order.ProductID">
+                            <td class="prodCartImage">
+                                <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
+                            </td>
+                            <td class="name">@product.ProductID </td>
+                            <td class="prodPrice">@product.Price </td>
+                            <td class="quantity">
+                                <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
+                                <h1>@order.Quantity</h1>
+                                <button onclick="plusBtn(this)" class="plus">></button>
+                            </td>
+                        </tr>
                     }
-                </div>
-                <div class="totalPrice">total price: 200$</div>
-                <div class="cartActions">
-                    <a href="#">checkout</a>
-                    <a href="#">empty cart</a>
-                </div>
-            </div>
+                </table>
 
-            <a class="split"><span onclick="openNav()"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+            </div>
+            <div class="cartActions">
+                <a href="#" class="cartActionsBtn">checkout</a>
+                <a href="#" class="cartActionsBtn">empty cart</a>
+            </div>
 
             <script>
                 function openNav() {
-                    document.getElementById("mySidenav").style.width = "250px";
+                    document.getElementById("cartWindow").style.width = "250px";
                     document.getElementById("main").style.marginRight = "250px";
                 }
 
                 function closeNav() {
-                    document.getElementById("mySidenav").style.width = "0";
+                    document.getElementById("cartWindow").style.width = "0";
                     document.getElementById("main").style.marginRigh = "0";
                     document.getElementById("myTopnav").style.marginRight = "0";
                 }
                 function openSide() {
                     document.getElementById("sideWineMenu").style.visibility = "visible";
                 }
+                function plusBtn(button){
+                    var row = $(button).closest('tr');
+                    var pID = row.data('productid');
+                    $.ajax({
+                        url: '@Url.Action("AddToCart", "Customer")',
+                        type: 'POST',
+                        data: { prodId: pID },
+                        success: function(response) { 
+                            var updatedAmount = response.newQuantity;
+                            row.find('h1').text(updatedAmount);
+                        },
+                        error: function(xhr, status, error) { }
+                    });
+                }
+                function minusBtn(button){
+                    var row = $(button).closest('tr');
+                    var pID = row.data('productid');
+                    $.ajax({
+                        url: '@Url.Action("DeleteFromCart","Customer")',
+                        type: 'POST',
+                        data: { prodId: pID },
+                        success: function(response) {
+                            var updatedAmount = response.newQuantity;
+                            if (updatedAmount == 0) {
+                                row.remove();
+                            }
+                            else {
+                                row.find('h1').text(updatedAmount);
+                            }
+                        },
+                        error: function(xhr, status, error) { }
+                    });
+                }
+
             </script>
-
-            <!-- wishlist nav -->
-            <a  href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
         </div>
-
         <div class="main-content">
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
@@ -123,7 +190,7 @@
 
                                     <button class="addWineBtn">Buy Now</button>
                                     <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    
+
                                     <script>
                                         function addToCart(ProductId) {
                                             if (confirm("product added")) {
@@ -131,11 +198,11 @@
                                                     url: '@Url.Action("AddToCart", "Customer")',
                                                     type: 'POST',
                                                     data: { prodId: ProductId },
-                                                    success: function (response) { },
+                                                    success: function (response) {  },
                                                     error: function (xhr, status, error) { }
                                                 });
                                             }
-                                            
+
                                         }
                                     </script>
                                 </div>

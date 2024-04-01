@@ -12,15 +12,27 @@
 </head>
 <body>
     <!-- top navigation bar -->
-    <div class="topnav">
-        <a href="#vinoVoyage" class="left"><i class="fa fa-home"></i> VINOVOYAGE</a>
+    <div class="topnav" id="myTopnav">
+        <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
         <a onclick="toggleSignupPopup()"><i class="fa fa-user-plus"></i> REGISTER</a>
         <a onclick="togglePopup()"><i class="fa fa-sign-in"></i> LOGIN</a>
         <a href="#wines"><i class="fa fa-glass"></i> WINES</a>
         <a href="#wishlist"><i class="fa fa-heart"></i></a>
-        <input type="text" placeholder="SEARCH...">
+        @*<input type="text" placeholder="SEARCH...">*@
     </div>
-
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
     <!-- photo slideshow -->
     <div class="slideshow-container">
         <div class="mySlides fade">
