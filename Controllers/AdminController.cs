@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -149,10 +150,27 @@ namespace VinoVoyage.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddProduct(ProductModel product)
+        public ActionResult AddProduct(string ProductName, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
         {
+            ProductModel product=new ProductModel();
+            product.ProductName= ProductName;
+            product.Type= Type;
+            product.Description= Description;
+            product.Origin= Origin;
+            product.Amount= Amount;
+            product.Price= Price;
+            product.NewPrice= NewPrice;
             db.Products.Add(product);
             db.SaveChanges();
+            if (ProductImage != null && ProductImage.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(ProductImage.FileName);
+                // Ensure the "img" directory exists in the server path where you want to save the image
+                var path = Path.Combine(Server.MapPath("../UI/img/"), fileName);
+
+                // Save the image in the specified path
+                ProductImage.SaveAs(path);
+            }
             return RedirectToAction("AdminHomePage");
         }
         protected override void Dispose(bool disposing)

@@ -12,7 +12,7 @@
 
 </head>
 <body>
-
+    <img src="~/UI/img/download.jpg" alt="Italian Trulli">
     <div class="topnav">
         <a href="#vinoVoyage" class="left">VINOVOYAGE</a>
         <div class="dropdown">
@@ -94,8 +94,8 @@
                         <td>@us.Role</td>
                         <td>@us.Email</td>
                         <td>
-                            <button class="userEditButton" onclick="editRowUser(this)">Edit</button>
-                            <button class="userDeleteButton" onclick="deleteRowUser(this)">Delete</button>
+                            <button class="userEditButton" id="userEditButton@(us.Username)" onclick="editRowUser(this)">Edit</button>
+                            <button class="userDeleteButton" id="userDeleteButton@(us.Username)" onclick="deleteRowUser(this)">Delete</button>
                         </td>
                     </tr>
                 }
@@ -213,7 +213,7 @@
                             <td>@pr.ProductID</td>
                             <td>@pr.ProductName</td>
                             <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
-                            <td><input type="number" id="oq" name="orderQuantity[@pr.ProductID]" min="0" value="0"></td>
+                            <td><input type="number" name="orderQuantity[@pr.ProductID]" min="0" value="0"></td>
                         </tr>
                     }
                 </table>
@@ -225,15 +225,14 @@
 
             <p>Please fill in this form to add now product to VV.</p>
 
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post))
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <style  >
-                    label, input, select,option {
+                <style>
+                    label, input, select, option {
                         margin-left: auto;
                         padding: 10px 50px;
                         font-size: 22px;
-                        margin:inherit;
-                       
+                        margin: inherit;
                     }
                 </style>
                 <label for="ProductName">Product name:</label>
@@ -260,52 +259,26 @@
 
                 <label for="NewPrice">NewPrice:</label>
                 <input type="number" id="NewPrice" name="NewPrice" value="1" min="0" required>
-                <style>
-                    label, select, button {
-                        
-                    }
-                </style>
+
+                <label for="ProductImage">Product Image:</label>
+                <input type="file" id="ProductImage" name="ProductImage" required>
+
+               
                 <button type="submit" onclick="productshowmessage()">Add Product</button>
             }
-           
+
         </div>
     </div>
-    
-    
-
-
-<script>
-    
-    function deleteRowUser(button) {
-         if (confirm('Are you sure you want to delete this user?')) {
-            var row = button.closest('tr')
-            var usernameTd = row.querySelector('td');
-            var username = usernameTd.innerHTML;
 
 
 
-            $.ajax({
-                url: '@Url.Action("DeleteUser","Admin")',
-                type: 'POST',
-                data: { usern: username },
-                success: function (response) {
-                    if (response.success) {
-                        row.remove();
-                        
-                    } else {
-                        alert('Error deleting user.');
 
-                    }
-                },
-                error: function (xhr, status, error) { }
-            });
-        }
-    }
-
+    <script>
 function editRowUser(button) {
     var row = $(button).closest('tr');
-    var deleteButton = row.find(".deleteButton"); // Assuming you've added a 'deleteButton' class to your delete buttons
-    deleteButton.css('display', 'none'); // Hide the delete button
+    var username = row.find('td:eq(0)').text();
+    var deleteButton = document.getElementById('userDeleteButton' + username); // Assuming you've added a 'deleteButton' class to your delete buttons
+    deleteButton.disabled = true; // Hide the delete button
     // Start looping from the 1st index to skip the UserName field
     row.find('td:not(:last-child)').each(function (index) {
         if (index > 0) { // Skip the first column (Username)
@@ -313,17 +286,18 @@ function editRowUser(button) {
             $(this).html('<input type="text" value="' + text + '" />');
         }
     });
- 
+
     // Change "Edit" button to "Save"
     $(button).text('Save').attr('onclick', 'saveRowUser(this)');
-     
+
 }
 
 function saveRowUser(button) {
     var row = $(button).closest('tr');
-    var deleteButton = row.find(".deleteButton"); // Assuming you've added a 'deleteButton' class to your delete buttons
-    deleteButton.css('display', ''); // Hide the delete button
     var username = row.find('td:eq(0)').text();
+    var deleteButton = document.getElementById('userDeleteButton' + username); // Assuming you've added a 'deleteButton' class to your delete buttons
+    deleteButton.disabled = false;// Hide the delete button
+
     var password = row.find('td:eq(1) input').val();
     var role = row.find('td:eq(2) input').val();
     var email = row.find('td:eq(3) input').val();
@@ -344,7 +318,7 @@ function saveRowUser(button) {
         success: function (response) {
             if (response.success) {
                 // Convert input fields back to text for all but the first column
-                
+
                 row.find('td:not(:last-child)').each(function (index) {
                     if (index > 0) {
                         var input = $(this).find('input');
@@ -366,6 +340,31 @@ function saveRowUser(button) {
 
 }
 
+function deleteRowUser(button) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        var row = button.closest('tr')
+        var usernameTd = row.querySelector('td');
+        var username = usernameTd.innerHTML;
+
+
+
+        $.ajax({
+            url: '@Url.Action("DeleteUser","Admin")',
+            type: 'POST',
+            data: { usern: username },
+            success: function (response) {
+                if (response.success) {
+                    row.remove();
+
+                } else {
+                    alert('Error deleting user.');
+
+                }
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+}
 
     function deleteRowProduct(button) {
          if (confirm('Are you sure you want to delete this product?')) {
@@ -373,7 +372,7 @@ function saveRowUser(button) {
 
         var prodidTd = row.querySelector('td');
         var prodid = prodidTd.innerHTML;
-        
+
 
 
             $.ajax({
@@ -483,16 +482,17 @@ function sendOrder(){
      }
     alert("Your order has been submitted successfully!\n delivery time: 12 business days.");
     window.location.reload();
-    
+
 }
 
 function productshowmessage(){
     alert("The product has been successfully added")
-} 
-</script>
+}
+    </script>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="../UI/JS/ShowDiv.js"></script>
+   
 
 
 
