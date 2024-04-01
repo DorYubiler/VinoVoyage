@@ -12,8 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel=" stylesheet" href="./UI/css/Style.css" />
+    <link rel=" stylesheet" href="~/UI/css/Style.css">
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/UI/JS/CostumerScript.js"></script>
 </head>
 <body>
     <div id="main">
@@ -49,8 +50,9 @@
                 td, th {
                     border: 1px solid #dddddd;
                     text-align: left;
-                    padding: 8px;
+/*                    padding: 8px;*/
                     font-size: 14px;
+                    white-space: nowrap;
                 }
 
                 tr:nth-child(even) {
@@ -83,22 +85,24 @@
                     <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
                 </div>
                 <table>
-                    @foreach (OrderModel order in Model.cart)
-                    {
-                        var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-                        <tr data-productid="@order.ProductID">
-                            <td class="prodCartImage">
-                                <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
-                            </td>
-                            <td class="name">@product.ProductID </td>
-                            <td class="prodPrice">@product.Price </td>
-                            <td class="quantity">
-                                <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
-                                <h1>@order.Quantity</h1>
-                                <button onclick="plusBtn(this)" class="plus">></button>
-                            </td>
-                        </tr>
-                    }
+                    <tbody class="cartItem">
+                        @foreach (OrderModel order in Model.cart)
+                        {
+                            var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                            <tr data-productid="@order.ProductID">
+                                <td class="prodCartImage">
+                                    <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
+                                </td>
+                                <td class="name">@product.ProductID </td>
+                                <td class="prodPrice">@product.Price </td>
+                                <td class="quantity">
+                                    <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
+                                    <h1>@order.Quantity</h1>
+                                    <button onclick="plusBtn(this)" class="plus">></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
 
             </div>
@@ -168,53 +172,83 @@
             </div>
 
             <div id="AllWines" class="tabcontent">
-
+                
+            </div>
+            <div id="Whites" class="tabcontent">
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
                     {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    <h2>@(prod.Price)₪</h2>
-                                </div>
-
-                                <div class="productButtons">
-
-                                    <button class="addWineBtn">Buy Now</button>
-                                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-
-                                    <script>
-                                        function addToCart(ProductId) {
-                                            if (confirm("product added")) {
-                                                $.ajax({
-                                                    url: '@Url.Action("AddToCart", "Customer")',
-                                                    type: 'POST',
-                                                    data: { prodId: ProductId },
-                                                    success: function (response) {  },
-                                                    error: function (xhr, status, error) { }
-                                                });
-                                            }
-
-                                        }
-                                    </script>
-                                </div>
+                    <div class="prodCard">
+                        <div class="imageContainer">
+                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
+                            <div class="desctiprionLayer">
+                                <div class="desctiprionLayerText">@prod.Description</div>
                             </div>
                         </div>
+
+                        <div class="prodDesctiption">
+                            <h1>@prod.ProductName</h1>
+                            <div class="originPrice">
+                                <h2>@prod.Origin</h2>
+                                <h2>@(prod.Price)₪</h2>
+                            </div>
+
+                            <div class="productButtons">
+
+                                <button class="addWineBtn">Buy Now</button>
+                                <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+
+                                <script>
+                                    function addToCart(ProductId) {
+                                        $.ajax({
+                                            url: '@Url.Action("AddToCart", "Customer")',
+                                            type: 'POST',
+                                            data: { prodId: ProductId },
+                                            success: function (response) {                 // Update cart table
+                                                updateCart(ProductId, response);
+                                                alert("Product added to cart successfully!");
+                                            },
+                                            error: function (xhr, status, error) { }
+                                        });
+
+                                    }
+                                    function updateCart(id, response) {
+                                        var $row = $('tr[data-productid="' + id + '"]');
+                                        if ($row.length) {
+                                            // Update the quantity in the cart table
+                                            var quantity = parseInt($row.find('.quantity h1').text());
+                                            quantity++;
+                                            $row.find('.quantity h1').text(quantity);
+                                        } else {
+                                            var newProduct = response.prod;
+                                            var quantity = response.newQuantity;
+
+                                            // Construct HTML for the table row
+                                            var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
+                                                        '<td class="prodCartImage">' + '<img src="/UI/img/products/' + newProduct.ProductName + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                                                        '<td class="name">' + newProduct.ProductName + '</td>' +
+                                                        '<td class="prodPrice">' + newProduct.Price + '</td>' +
+                                                        '<td class="quantity">' +
+                                                            '<button onclick="minusBtn(this)" class="minus"><</button>' +
+                                                            '<h1>' + quantity + '</h1>' +
+                                                            '<button onclick="plusBtn(this)" class="plus">></button>' +
+                                                        '</td>' +
+                '                                       </tr>';
+
+                                                        // Append the new row to the cart table body
+                                            $('.cartItem').append(newRow);
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
-            <div id="Whites" class="tabcontent">
+            <div id="Reds" class="tabcontent">
+                
             </div>
-            <div id="Reds" class="tabcontent"></div>
             <div id="Roses" class="tabcontent">
                 <h1>Roses</h1>
             </div>
@@ -231,8 +265,6 @@
                     x.className = "topnav";
                 }
             }
-        </script>
-        <script>
             function openWindow(evt, wineName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");

@@ -72,7 +72,7 @@ namespace VinoVoyage.Controllers
                         var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
                         temp.Quantity += 1;
                         Session["userCart"] = tempCart;
-                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity });
+                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity, prod = stockItems });
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace VinoVoyage.Controllers
             db.Orders.Add(newOrder);
             db.SaveChanges();
             Session["userCart"] = tempCart;
-            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1});
+            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1, prod = stockItems });
         }
 
         [HttpPost]
@@ -122,7 +122,7 @@ namespace VinoVoyage.Controllers
                 dbOrder.Quantity -= 1;
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity });
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems });
             }
 
             else
@@ -132,7 +132,7 @@ namespace VinoVoyage.Controllers
                 db.Orders.Remove(dbOrder);
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0 });
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0, prod = stockItems });
             }
 
         }
