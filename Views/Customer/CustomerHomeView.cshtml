@@ -124,7 +124,6 @@
                 function plusBtn(button){
                     var row = $(button).closest('tr');
                     var pID = row.data('productid');
-                    console.log("Product ID: ", pID);
                     $.ajax({
                         url: '@Url.Action("AddToCart", "Customer")',
                         type: 'POST',
