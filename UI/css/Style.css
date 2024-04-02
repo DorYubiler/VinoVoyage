@@ -858,3 +858,9 @@ p, .custom-label {
     text-transform: uppercase;
     text-align: center;
 }
+}
+.scrollable {
+    height: 100px; 
+    overflow: auto;
+    padding: 5px;
+}

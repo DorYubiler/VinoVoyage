@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -91,6 +92,7 @@ namespace VinoVoyage.Controllers
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
+            
             db.Users.Add(user);
             db.SaveChanges();
             return RedirectToAction("AdminHomePage");
@@ -98,18 +100,19 @@ namespace VinoVoyage.Controllers
 
 
         [HttpPost]
-        public ActionResult DeleteProduct(string prod)
+        public ActionResult DeleteProduct(string prod, string prodn)
         {
             try
             {
-                ProductModel product = db.Products.Find(int.Parse(prod));
-                var tempCart = db.Orders.Where(order=>order.ProductID==product.ProductID).ToList();
+                ProductModel product = db.Products.Find(int.Parse(prod),prodn);
+                var tempCart = db.Orders.Where(order => order.ProductID == product.ProductID).ToList();
                 if (tempCart.Any())
                 {
                     db.Orders.RemoveRange(tempCart);
                 }
                 db.Products.Remove(product);
                 db.SaveChanges();
+                
                 return Json(new { success = true });
             }
             catch
@@ -127,16 +130,18 @@ namespace VinoVoyage.Controllers
         {
             try
             {
-                ProductModel prodUpdate = db.Products.Find(pmodel.ProductID);
+                ProductModel prodUpdate = db.Products.Find(pmodel.ProductID,pmodel.ProductName);
                 if (prodUpdate != null)
                 {
-                    prodUpdate.ProductName= pmodel.ProductName;
+                    
+                    prodUpdate.Winery=pmodel.Winery;
                     prodUpdate.Type = pmodel.Type;
                     prodUpdate.Description = pmodel.Description;
                     prodUpdate.Origin = pmodel.Origin;
                     prodUpdate.Amount = pmodel.Amount;
                     prodUpdate.Price = pmodel.Price;
                     prodUpdate.NewPrice = pmodel.NewPrice;
+                    
                     db.SaveChanges();
                 }
 
@@ -149,10 +154,29 @@ namespace VinoVoyage.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddProduct(ProductModel product)
+        public ActionResult AddProduct(string ProductName,string Winery, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
         {
+            ProductModel product=new ProductModel();
+            product.ProductName= ProductName;
+            product.Winery= Winery;
+            product.Type= Type;
+            product.Description= Description;
+            product.Origin= Origin;
+            product.Amount= Amount;
+            product.Price= Price;
+            product.NewPrice= NewPrice;
             db.Products.Add(product);
             db.SaveChanges();
+            if (ProductImage != null && ProductImage.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(ProductImage.FileName);
+                var newFileName = ProductName + product.ProductID.ToString()+".jpg";
+                var directoryPath = Server.MapPath("~/UI/img/wines/"); // For ASP.NET MVC
+                var fullPath = Path.Combine(directoryPath, newFileName);
+
+                // Save the file to the new path
+                ProductImage.SaveAs(fullPath);
+            }
             return RedirectToAction("AdminHomePage");
         }
         protected override void Dispose(bool disposing)
