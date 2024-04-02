@@ -813,7 +813,8 @@ p, .custom-label {
     padding-left:220px;
 }
 
-.checkout {
+
+.checkoutSideColor {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -839,5 +840,21 @@ p, .custom-label {
         height: 100vh; /* Adjust height as needed */
     }
 
-
-
+.checkoutDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: blue;
+}
+.desElement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-family: Lucida Console;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+}

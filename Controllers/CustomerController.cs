@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -142,6 +143,35 @@ namespace VinoVoyage.Controllers
         }
 
         [HttpPost]
+        public ActionResult EmptyCart()
+        {
+            var allorders = Session["userCart"] as List<OrderModel>;
+            
+            foreach (OrderModel order in allorders)
+            {
+                // add product to stock
+                ProductModel stockItems = db.Products.Find(order.ProductID);
+                if (stockItems == null)
+                {
+                    return HttpNotFound();
+                }
+                stockItems.Amount += order.Quantity;
+                db.SaveChanges();
+
+                // delete from orders db
+                var orderToDelete = db.Orders.FirstOrDefault(o => o.ProductID == order.ProductID && o.Username == order.Username);
+                db.Orders.Remove(orderToDelete);
+                db.SaveChanges();
+            }
+
+            // reset user's cart session
+            Session["cartTotal"] = 0;
+            allorders.Clear();
+            Session["userCart"] = allorders; 
+            return Json(new { success = true, message = "cart is empty"});
+        }
+
+        [HttpPost]
         public ActionResult DeleteFromCart(int prodId)
         {
             // find product in db and change amount
@@ -181,7 +211,7 @@ namespace VinoVoyage.Controllers
                 dbOrder.Quantity -= 1;
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems, total = Session["cartTotal"] });
+                return Json(new { success = true, message = "Product deleted to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems, total = Session["cartTotal"] });
             }
 
             else
@@ -191,7 +221,7 @@ namespace VinoVoyage.Controllers
                 db.Orders.Remove(dbOrder);
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
+                return Json(new { success = true, message = "Product deleted to cart successfully.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
             }
 
         }

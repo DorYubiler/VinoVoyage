@@ -242,7 +242,6 @@
     <Content Include="UI\JS\CostumerScript.js" />
     <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
-    <Content Include="UI\JS\UserTable.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

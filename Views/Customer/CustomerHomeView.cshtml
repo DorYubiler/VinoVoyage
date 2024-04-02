@@ -120,11 +120,24 @@
                 </div>
                 @{ TempData["UserVieModel"] = Model; }
                 <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
-
-                <a href="#" class="cartActionsBtn">empty cart</a>
+                <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
 
             <script>
+                function emptyCart(){
+                    let text = "Are you sure you want to delete all the products in your cart?";
+                    if (confirm(text) == true) {
+                        $.ajax({
+                            url: '@Url.Action("EmptyCart", "Customer")',
+                            type: 'POST',
+                            success: function(response) {
+                                $('.cartTotal').text('total price: 0');
+                                $('.cartItem').empty();
+                            },
+                            error: function (xhr, status, error) { }
+                        });
+                    }
+                }
                 function openNav() {
                     document.getElementById("cartWindow").style.width = "330px";
                     document.getElementById("main").style.marginRight = "330px";
@@ -134,9 +147,6 @@
                     document.getElementById("cartWindow").style.width = "0";
                     document.getElementById("main").style.marginRight = "0";
 
-                }
-                function openSide() {
-                    document.getElementById("sideWineMenu").style.visibility = "visible";
                 }
                 function plusBtn(button){
                     var row = $(button).closest('tr');
@@ -224,7 +234,6 @@
                                             data: { prodId: ProductId },
                                             success: function (response) {                 // Update cart table
                                                 updateCart(ProductId, response);
-                                                alert("Product added to cart successfully!");
                                             },
                                             error: function (xhr, status, error) { }
                                         });
