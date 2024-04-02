@@ -104,6 +104,59 @@
                                 <td class="name">@product.ProductName </td>
                                 <td class="prodPrice">@(product.Price) ₪</td>
                                 <td class="quantity">
+                                    <script>
+                                        function plusBtn(button) {
+                                            var row = $(button).closest('tr');
+                                            var pID = row.data('productid');
+                                            $.ajax({
+                                                url: '@Url.Action("AddToCart", "Customer")',
+                                                type: 'POST',
+                                                data: { prodId: pID },
+                                                success: function (response) {
+                                                    var updatedAmount = response.newQuantity;
+                                                    var updatedTotalPrice = response.total;
+                                                    row.find('h1').text(updatedAmount);
+                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                                                },
+                                                error: function (xhr, status, error) { }
+                                            });
+                                        }
+                                        function minusBtn(button) {
+                                            var row = $(button).closest('tr');
+                                            var pID = row.data('productid');
+                                            $.ajax({
+                                                url: '@Url.Action("DeleteFromCart","Customer")',
+                                                type: 'POST',
+                                                data: { prodId: pID },
+                                                success: function (response) {
+                                                    var updatedAmount = response.newQuantity;
+                                                    var updatedTotalPrice = response.total;
+                                                    if (updatedAmount == 0) {
+                                                        row.remove();
+                                                    }
+                                                    else {
+                                                        row.find('h1').text(updatedAmount);
+                                                    }
+                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                                                },
+                                                error: function (xhr, status, error) { }
+                                            });
+                                        }
+                                        function emptyCart() {
+                                            let text = "Are you sure you want to delete all the products in your cart?";
+                                            if (confirm(text) == true) {
+                                                $.ajax({
+                                                    url:  '@Url.Action("EmptyCart", "Customer")',
+                                                    type: 'POST',
+                                                    success: function (response) {
+                                                        $('.cartTotal').text('total price: 0');
+                                                        $('.cartItem').empty();
+                                                    },
+                                                    error: function (xhr, status, error) { }
+                                                });
+                                            }
+                                        }                    
+                                    </script>
                                     <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
                                     <h1>@order.Quantity</h1>
                                     <button onclick="plusBtn(this)" class="plus">></button>
@@ -122,72 +175,6 @@
                 <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
-
-            <script>
-                function emptyCart(){
-                    let text = "Are you sure you want to delete all the products in your cart?";
-                    if (confirm(text) == true) {
-                        $.ajax({
-                            url: '@Url.Action("EmptyCart", "Customer")',
-                            type: 'POST',
-                            success: function(response) {
-                                $('.cartTotal').text('total price: 0');
-                                $('.cartItem').empty();
-                            },
-                            error: function (xhr, status, error) { }
-                        });
-                    }
-                }
-                function openNav() {
-                    document.getElementById("cartWindow").style.width = "330px";
-                    document.getElementById("main").style.marginRight = "330px";
-                }
-
-                function closeNav() {
-                    document.getElementById("cartWindow").style.width = "0";
-                    document.getElementById("main").style.marginRight = "0";
-
-                }
-                function plusBtn(button){
-                    var row = $(button).closest('tr');
-                    var pID = row.data('productid');
-                    $.ajax({
-                        url: '@Url.Action("AddToCart", "Customer")',
-                        type: 'POST',
-                        data: { prodId: pID },
-                        success: function(response) { 
-                            var updatedAmount = response.newQuantity;
-                            var updatedTotalPrice = response.total;
-                            row.find('h1').text(updatedAmount);
-                            $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                        },
-
-                        error: function(xhr, status, error) { }
-                    });
-                }
-                function minusBtn(button){
-                    var row = $(button).closest('tr');
-                    var pID = row.data('productid');
-                    $.ajax({
-                        url: '@Url.Action("DeleteFromCart","Customer")',
-                        type: 'POST',
-                        data: { prodId: pID },
-                        success: function(response) {
-                            var updatedAmount = response.newQuantity;
-                            var updatedTotalPrice = response.total;
-                            if (updatedAmount == 0) {
-                                row.remove();
-                            }
-                            else {
-                                row.find('h1').text(updatedAmount);
-                            }
-                            $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                        },
-                        error: function(xhr, status, error) { }
-                    });
-                }
-
-            </script>
         </div>
         <div class="main-content">
             <!-- side navigation bar -->
