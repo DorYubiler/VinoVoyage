@@ -34,14 +34,60 @@ p, .custom-label {
 
 /* --------------------------------------------------------------- */
 /* --------------- dropdown for top navigation bar --------------- */
+
+.topnav .aDropdown {
+    flex-flow: column;
+    cursor: pointer;
+    
+}
+    .topnav .aDropdown .dropA {
+        color: black;
+        min-width: 107px;
+    }
+
+
+    .topnav .aDropdown:hover .dropA {
+        color: black;
+        background-color: #bc5a45
+    }
+
+    .topnav .aDropdown:hover .dropContent {
+        display: block;
+        background-color: #bc5a45;
+        color: black;
+    }
+    .topnav .aDropdown .dropContent :hover {
+        display: block;
+        /*background-color: #bc5a45;*/
+        color: white;
+    }
+
+    .topnav .aDropdown .dropContent {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        margin: 30px 0 0 141px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+    }
+        .topnav .aDropdown .dropContent a {
+            float: none;
+            color: black;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            padding: 3px;
+            margin: 3px;
+            width: 100px;
+        }
 .dropdown {
     float: right;
     overflow: hidden;
 }
 
-    .dropdown:hover .dropbtn {
-        color: white;
-    }
+.dropdown:hover .dropbtn {
+    color: white;
+}
 
     .dropdown button:hover {
         background-color: #bc5a45;
@@ -122,9 +168,9 @@ p, .custom-label {
         font-size: 14px;
     }
 
-        .topnav a:hover, .dropdown:hover, .dropbtn {
-            background-color: #bc5a45;
-            color: white;
+        .topnav a:hover, .aDropdown:hover {
+            /*background-color: #bc5a45;*/
+            color: #bc5a45;
         }
 
         .topnav a:active {
@@ -205,18 +251,20 @@ p, .custom-label {
     }
 }*/
 
-/* ----------------------------------------------- */
-/* ---------------  general button --------------- */
-button {
-    background-color: #bc5a45;
-    color: #f4e1d2;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 50%;
-    border-radius: 13px;
-}
+
+
+    /* ----------------------------------------------- */
+    /* ---------------  general button --------------- */
+    button {
+        background-color: #bc5a45;
+        color: #f4e1d2;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 50%;
+        border-radius: 13px;
+    }
 
     button:hover {
         opacity: 0.8;
@@ -303,24 +351,26 @@ button {
 .tab {
     height: 100%;
     position: fixed;
-    width: 200px;
+    width: 140px;
     top: auto;
     overflow: hidden;
     float:left;
     background-color: #111;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 10px;
     visibility: hidden;
+    left:24px;
+    margin-top:1px;
+    transition: 0.5s;
     
 }
     .tab button {
         background-color: inherit;
         border: none;
         outline: none;
-        cursor: pointer;
-        padding: 6px 8px 6px 16px;
+        padding: 6px 0 6px 22px;
         transition: 0.3s;
-        font-size: 20px;
+        font-size: 14px;
         width: 100%; 
         text-align: left; 
         text-decoration: none;
@@ -329,12 +379,16 @@ button {
         background: none;
         text-align: left;
         cursor: pointer;
+        font-family:'Lucida Console';
+        text-transform:uppercase;
     }
         .tab button:hover {
             color: #f1f1f1;
         }
         .tab button.active {
-            background-color: #ccc;
+            color: #c48a7d;
+            font-size: 16px;
+            font-weight:400;
         }
 .tabcontent {
     display: none;
@@ -389,6 +443,7 @@ button {
     overflow-x: hidden;
     transition: 0.5s;
     color: black;
+    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.2);
 }
 
     .sidenavCart h1 {
@@ -401,22 +456,37 @@ button {
     width: 60px;
 }
 
+.sidenavCart .quantity{
+
+}
+.cartItem .prodCartImage {
+    width: 60px;
+}
+.sidenavCart .cartList {
+    position:relative
+}
     .sidenavCart .cartActions {
         bottom: 0;
         width: 100%;
         position: absolute;
-        display: flex;
         justify-content: space-around;
-        padding: 0 0 10px 0;
-        background-color: antiquewhite;
+        padding: 10px 0 10px 0;
+        font-family: 'Lucida Console';
+        text-transform: uppercase;
+        padding: 10px
     }
 
-    .sidenavCart .cartActions .cartActionsBtn {
-        color:black;
-        text-align: center;
-        font-size: 16px;
-        font-weight: 300;
-    }
+        .sidenavCart .cartActions .cartActionsBtn, .sidenavCart .cartActions .cartTotal {
+            color: black;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 15px 15px 15px;
+            /*            background-color: #B07C70*/
+        }
+        .sidenavCart .cartActions .cartActionsBtn:hover {
+            background-color: #B07C70
+        }
 
 .sidenavCart a {
     /*padding: 8px 8px 8px 32px;*/
@@ -426,21 +496,52 @@ button {
     display: block;
     transition: 0.3s;
 }
-    .sidenavCart .name, .sidenavCart .prodPrice, .sidenavCart .totalPrice {
-        font-size: 14px;
+    .sidenavCart .name, .sidenavCart .prodPrice {
+        font-size: 13px;
+        padding: 14px 10px 0 0;
     }
 
+.sidenavCart .topCart .cartTitle {
+    font-family: Lucida Console;
+    font-weight: 200;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    text-transform: uppercase;
+    margin: 30px 0 30px 0;
+    text-align: center;
+}
 
-
-    .sidenavCart .topCart .closebtnCart {
-        position: absolute;
-        top: 0;
-        right: 5%;
-        margin: 0 0 60px 60px;
+.tableCheckout .cartList {
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+}
+    .tableCheckout .cartList .cartTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        font-family: Lucida Console;
+        font-weight: 200;
+        font-size: 20px;
+        font-weight: 500;
         color: black;
-        font-size: 15px;
-        font-weight: bold;
+        text-transform: uppercase;
+        margin: 30px 0 30px 0;
+        text-align: center;
     }
+
+
+.sidenavCart .closebtnCart {
+    text-align:right;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0 0;
+    color: black;
+    font-size: 20px;
+    font-weight: bolder;
+}
 
 .listCart {
     overflow-y: auto;
@@ -711,3 +812,32 @@ button {
 .content{
     padding-left:220px;
 }
+
+.checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Adjust as needed */
+    background-color: #c48a7d;
+}
+
+.centerCheckout {
+    width: 70vh; /* Adjust width as needed */
+    height: 100vh; /* Adjust height as needed */
+    background-color: #B07C70;
+    text-align: center;
+    line-height: 200px; /* Match height to vertically center content */
+    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.9);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .centerCheckout .tableCheckout {
+        width: 300px;
+        width: 50vh; /* Adjust width as needed */
+        height: 100vh; /* Adjust height as needed */
+    }
+
+
+

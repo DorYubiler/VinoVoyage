@@ -29,15 +29,50 @@ namespace VinoVoyage.Controllers
             {
                 ViewBag.Username = user.Username;
                 uvm.cart = db.Orders.Where(order => order.Username == user.Username).ToList();
+
             }
             Session["userCart"] = uvm.cart;
+            CalcCartTotal(uvm.cart);
             return View("CustomerHomeView", uvm);
+        }
+
+        public ActionResult CheckoutView()
+        {
+            var user = db.Users.Find("shanik");
+            Session["userinfo"] = user as UserModel;
+            UserViewModel uvm = new UserViewModel();
+            uvm.user = user;
+            uvm.users = db.Users.ToList<UserModel>();
+            uvm.products = db.Products.ToList<ProductModel>();
+            uvm.cart = new List<OrderModel>();
+            if (user != null)
+            {
+                ViewBag.Username = user.Username;
+                uvm.cart = db.Orders.Where(order => order.Username == user.Username).ToList();
+            }
+            Session["userCart"] = uvm.cart;
+            CalcCartTotal(uvm.cart);
+            return View("CheckoutView", uvm);
         }
 
         public ActionResult Logout()
         {
             Session.Clear();
             return RedirectToAction("HomePage", "Home");
+        }
+
+        public ActionResult Checkout()
+        {
+
+            UserViewModel uvm = TempData["UserVieModel"] as UserViewModel;
+            if (uvm != null)
+            {
+                if (uvm.cart.Count > 0)
+                {
+                    return View("CheckoutView", uvm);
+                }
+            }
+            return View("CustomerHomeView");
         }
 
         [HttpPost]
@@ -51,7 +86,19 @@ namespace VinoVoyage.Controllers
             }
             stockItems.Amount -= 1;
             db.SaveChanges();
-            
+
+            // update cart total
+            var cartTotal = (int)Session["cartTotal"];
+            if (stockItems.NewPrice != 0)
+            {
+                cartTotal += stockItems.NewPrice;
+            }
+            else
+            {
+                cartTotal += stockItems.Price;
+            }
+            Session["cartTotal"] = cartTotal;
+
             // get user info
             var tempCart = Session["userCart"] as List<OrderModel>;
             var user = Session["userinfo"] as UserModel;
@@ -72,7 +119,7 @@ namespace VinoVoyage.Controllers
                         var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
                         temp.Quantity += 1;
                         Session["userCart"] = tempCart;
-                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity, prod = stockItems });
+                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity, prod = stockItems, total = Session["cartTotal"] });
                     }
                 }
             }
@@ -91,7 +138,7 @@ namespace VinoVoyage.Controllers
             db.Orders.Add(newOrder);
             db.SaveChanges();
             Session["userCart"] = tempCart;
-            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1, prod = stockItems });
+            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1, prod = stockItems, total = Session["cartTotal"] });
         }
 
         [HttpPost]
@@ -105,6 +152,18 @@ namespace VinoVoyage.Controllers
             }
             stockItems.Amount += 1;
             db.SaveChanges();
+
+            // update cart total
+            var cartTotal = (int)Session["cartTotal"];
+            if (stockItems.NewPrice != 0)
+            {
+                cartTotal -= stockItems.NewPrice;
+            }
+            else
+            {
+                cartTotal -= stockItems.Price;
+            }
+            Session["cartTotal"] = cartTotal;
 
             // get user info
             var tempCart = Session["userCart"] as List<OrderModel>;
@@ -122,7 +181,7 @@ namespace VinoVoyage.Controllers
                 dbOrder.Quantity -= 1;
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems });
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems, total = Session["cartTotal"] });
             }
 
             else
@@ -132,9 +191,29 @@ namespace VinoVoyage.Controllers
                 db.Orders.Remove(dbOrder);
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
-                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0, prod = stockItems });
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
             }
 
         }
+        private void CalcCartTotal(List<OrderModel> userCart)
+        {
+            int total = 0;
+            if (userCart.Count > 0)
+            {
+                foreach (OrderModel order in userCart)
+                {
+                    var p = db.Products.Find(order.ProductID);
+                    var price = p.Price;
+                    if (p.NewPrice != 0)
+                    {
+                        price = p.NewPrice;
+                    }
+                    var amount = order.Quantity;
+                    total += price * amount;
+                }  
+            }
+            Session["cartTotal"] = total;
+        }
+
     }
 }

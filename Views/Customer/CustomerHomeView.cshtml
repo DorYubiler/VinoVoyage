@@ -27,9 +27,9 @@
                 <i class="fa fa-bars"></i>
             </a>
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
-            <div class="dropdown">
-                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
-                <div class="dropdown-content">
+            <div class="aDropdown">
+                <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
+                <div class="dropContent">
                     <a href="#link1">profile</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
@@ -39,50 +39,58 @@
             <a href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
         </div>
 
+        <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
             <style>
                 table {
-                    font-family: arial, sans-serif;
                     border-collapse: collapse;
                     width: 100%;
+                    font-family: Lucida Console;
+                    font-weight: 200;
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: black;
+                    text-transform: uppercase;
                 }
 
                 td, th {
-                    border: 1px solid #dddddd;
-                    text-align: left;
+                    text-align: center;
 /*                    padding: 8px;*/
                     font-size: 14px;
                     white-space: nowrap;
                 }
-
+                td .prodCartImage {
+                    width: 60px;
+                }
                 tr:nth-child(even) {
-                    background-color: #dddddd;
+                    background-color: #C9958A;
                 }
                 table button {
                     display: inline-block;
-                    width: 10px;
-                    height: 10px;
-                    background-color: grey;
-                    color: black;
-                    padding: 0 0 13px 0;
+                    width: 13px;
+                    height: 13px;
+                    background-color: black;
+                    color: #f4e1d2;
+                    padding: 0 0 0 0;
                     cursor: pointer;
-                    font-size: 15px;
-                    font-weight: 200;
+                    font-size: 10px;
+                    font-weight: 400;
                 }
                 table h1 {
                     display: inline-block;
                     width: 10px;
                     height: 10px;
                     color: black;
-                    padding: 0 0 13px 0;
-                    font-size: 15px;
+                    padding: 0 0 0px 0;
+                    font-size: 13px;
                     font-weight: 200;
+                    font-family: 'Lucida Console';
                 }
             </style>
             <div class="cartList">
+                <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
                 <div class="topCart">
-                    <h1>Shopping Cart</h1>
-                    <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
+                    <div class="cartTitle">Shopping Cart</div>
                 </div>
                 <table>
                     <tbody class="cartItem">
@@ -93,8 +101,8 @@
                                 <td class="prodCartImage">
                                     <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
                                 </td>
-                                <td class="name">@product.ProductID </td>
-                                <td class="prodPrice">@product.Price </td>
+                                <td class="name">@product.ProductName </td>
+                                <td class="prodPrice">@(product.Price) ₪</td>
                                 <td class="quantity">
                                     <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
                                     <h1>@order.Quantity</h1>
@@ -107,20 +115,25 @@
 
             </div>
             <div class="cartActions">
-                <a href="#" class="cartActionsBtn">checkout</a>
+                <div class="cartTotal">
+                    total price: @(Session["cartTotal"])
+                </div>
+                @{ TempData["UserVieModel"] = Model; }
+                <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
+
                 <a href="#" class="cartActionsBtn">empty cart</a>
             </div>
 
             <script>
                 function openNav() {
-                    document.getElementById("cartWindow").style.width = "250px";
-                    document.getElementById("main").style.marginRight = "250px";
+                    document.getElementById("cartWindow").style.width = "330px";
+                    document.getElementById("main").style.marginRight = "330px";
                 }
 
                 function closeNav() {
                     document.getElementById("cartWindow").style.width = "0";
-                    document.getElementById("main").style.marginRigh = "0";
-                    document.getElementById("myTopnav").style.marginRight = "0";
+                    document.getElementById("main").style.marginRight = "0";
+
                 }
                 function openSide() {
                     document.getElementById("sideWineMenu").style.visibility = "visible";
@@ -134,8 +147,11 @@
                         data: { prodId: pID },
                         success: function(response) { 
                             var updatedAmount = response.newQuantity;
+                            var updatedTotalPrice = response.total;
                             row.find('h1').text(updatedAmount);
+                            $('.cartTotal').text('total price: ' + updatedTotalPrice);
                         },
+
                         error: function(xhr, status, error) { }
                     });
                 }
@@ -148,12 +164,14 @@
                         data: { prodId: pID },
                         success: function(response) {
                             var updatedAmount = response.newQuantity;
+                            var updatedTotalPrice = response.total;
                             if (updatedAmount == 0) {
                                 row.remove();
                             }
                             else {
                                 row.find('h1').text(updatedAmount);
                             }
+                            $('.cartTotal').text('total price: ' + updatedTotalPrice);
                         },
                         error: function(xhr, status, error) { }
                     });
@@ -238,6 +256,8 @@
                                                         // Append the new row to the cart table body
                                             $('.cartItem').append(newRow);
                                         }
+                                        var updatedTotalPrice = response.total;
+                                        $('.cartTotal').text('total price: ' + updatedTotalPrice);
                                     }
                                 </script>
                             </div>
@@ -259,9 +279,13 @@
         <script>
             function myFunction() {
                 var x = document.getElementById("myTopnav");
-                if (x.className === "topnav") {
+                if (x.className == "topnav") {
                     x.className += " responsive";
-                } else {
+                }
+                if (x.className == "aDropdown") {
+                    x.className += " responsive";
+                }
+                else {
                     x.className = "topnav";
                 }
             }

@@ -1,0 +1,27 @@
+﻿@model VinoVoyage.ViewModel.UserViewModel
+@using VinoVoyage.Models
+
+@{
+    ViewBag.Title = "CheckoutView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/UI/css/Style.css">
+</head>
+    <body>
+        <div class="checkout">
+            <div class="centerCheckout">
+                <div class="tableCheckout">   
+                    <div class="cartList">
+                        <div class="cartTitle">@(Model.user.Username) Shopping Cart</div>
+
+
+                    </div>                    
+                </div>
+            </div>           
+        </div>
+    </body>
+</html>
+
