@@ -31,7 +31,7 @@ namespace VinoVoyage.Models
 
         [Required]
         [Display(Name = "Type")]
-        [StringLength(30, MinimumLength = 4)]
+        [StringLength(30)]
         public string Type { get; set; }
         
         [Required]

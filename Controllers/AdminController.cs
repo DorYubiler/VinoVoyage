@@ -100,11 +100,11 @@ namespace VinoVoyage.Controllers
 
 
         [HttpPost]
-        public ActionResult DeleteProduct(string prod)
+        public ActionResult DeleteProduct(string prod, string prodn)
         {
             try
             {
-                ProductModel product = db.Products.Find(int.Parse(prod));
+                ProductModel product = db.Products.Find(int.Parse(prod),prodn);
                 var tempCart = db.Orders.Where(order => order.ProductID == product.ProductID).ToList();
                 if (tempCart.Any())
                 {
@@ -112,6 +112,7 @@ namespace VinoVoyage.Controllers
                 }
                 db.Products.Remove(product);
                 db.SaveChanges();
+                
                 return Json(new { success = true });
             }
             catch
@@ -153,10 +154,11 @@ namespace VinoVoyage.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddProduct(string ProductName, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
+        public ActionResult AddProduct(string ProductName,string Winery, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
         {
             ProductModel product=new ProductModel();
             product.ProductName= ProductName;
+            product.Winery= Winery;
             product.Type= Type;
             product.Description= Description;
             product.Origin= Origin;
@@ -168,11 +170,12 @@ namespace VinoVoyage.Controllers
             if (ProductImage != null && ProductImage.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(ProductImage.FileName);
-                // Ensure the "img" directory exists in the server path where you want to save the image
-                var path = Path.Combine(Server.MapPath("../UI/img/"), fileName);
+                var newFileName = ProductName + product.ProductID.ToString()+".jpg";
+                var directoryPath = Server.MapPath("~/UI/img/wines/"); // For ASP.NET MVC
+                var fullPath = Path.Combine(directoryPath, newFileName);
 
-                // Save the image in the specified path
-                ProductImage.SaveAs(path);
+                // Save the file to the new path
+                ProductImage.SaveAs(fullPath);
             }
             return RedirectToAction("AdminHomePage");
         }
