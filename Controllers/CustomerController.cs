@@ -60,7 +60,7 @@ namespace VinoVoyage.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("HomePage", "Home");
+            return RedirectToAction("HomePage", "User");
         }
 
         public ActionResult Checkout()

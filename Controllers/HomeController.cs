@@ -8,11 +8,11 @@ namespace VinoVoyage.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult HomePage()
+/*        public ActionResult HomePage()
         {
 
             return View();
-        }
+        }*/
 
         public ActionResult About()
         {

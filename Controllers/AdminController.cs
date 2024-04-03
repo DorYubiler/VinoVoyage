@@ -187,5 +187,11 @@ namespace VinoVoyage.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("HomePage", "User");
+        }
     }
 }
