@@ -33,6 +33,7 @@ namespace VinoVoyage.Controllers
 
             }
             Session["userCart"] = uvm.cart;
+
             CalcCartTotal(uvm.cart);
             return View("CustomerHomeView", uvm);
         }
@@ -80,7 +81,7 @@ namespace VinoVoyage.Controllers
         public ActionResult AddToCart(int prodId)
         {
             // find product in db and change amount
-            ProductModel stockItems = db.Products.Find(prodId);
+            ProductModel stockItems = db.Products.FirstOrDefault(p => p.ProductID == prodId);
             if (stockItems == null)
             {
                 return HttpNotFound();
@@ -150,7 +151,7 @@ namespace VinoVoyage.Controllers
             foreach (OrderModel order in allorders)
             {
                 // add product to stock
-                ProductModel stockItems = db.Products.Find(order.ProductID);
+                ProductModel stockItems = db.Products.FirstOrDefault(p => p.ProductID == order.ProductID);
                 if (stockItems == null)
                 {
                     return HttpNotFound();
@@ -175,7 +176,7 @@ namespace VinoVoyage.Controllers
         public ActionResult DeleteFromCart(int prodId)
         {
             // find product in db and change amount
-            ProductModel stockItems = db.Products.Find(prodId);
+            ProductModel stockItems = db.Products.FirstOrDefault(p => p.ProductID == prodId);
             if (stockItems == null)
             {
                 return HttpNotFound();
@@ -232,15 +233,16 @@ namespace VinoVoyage.Controllers
             {
                 foreach (OrderModel order in userCart)
                 {
-                    var p = db.Products.Find(order.ProductID);
-                    var price = p.Price;
-                    if (p.NewPrice != 0)
+                    var prod = db.Products.FirstOrDefault(p =>  p.ProductID == order.ProductID);
+                    //var p = db.Products.FirstOrDefaultAsync(product => product.ProductID == order.ProductID);
+                    var price = prod.Price;
+                    if (prod.NewPrice != 0)
                     {
-                        price = p.NewPrice;
+                        price = prod.NewPrice;
                     }
                     var amount = order.Quantity;
                     total += price * amount;
-                }  
+                }
             }
             Session["cartTotal"] = total;
         }

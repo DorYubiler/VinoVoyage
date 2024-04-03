@@ -12,12 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel=" stylesheet" href="~/UI/css/Style.css">
+    <link rel=" stylesheet" href="~/UI/css/Style.css"/>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/UI/JS/CostumerScript.js"></script>
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="window">
         <!-- top navigation bar -->
         <div class="topnav" id="myTopnav">
 
@@ -51,20 +51,24 @@
                     font-weight: 300;
                     color: black;
                     text-transform: uppercase;
+                    overflow-y: auto;
                 }
 
                 td, th {
                     text-align: center;
-/*                    padding: 8px;*/
+                    /*                    padding: 8px;*/
                     font-size: 14px;
                     white-space: nowrap;
                 }
-                td .prodCartImage {
-                    width: 60px;
-                }
+
+                    td .prodCartImage {
+                        width: 60px;
+                    }
+
                 tr:nth-child(even) {
                     background-color: #C9958A;
                 }
+
                 table button {
                     display: inline-block;
                     width: 13px;
@@ -76,6 +80,7 @@
                     font-size: 10px;
                     font-weight: 400;
                 }
+
                 table h1 {
                     display: inline-block;
                     width: 10px;
@@ -99,7 +104,7 @@
                             var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
                             <tr data-productid="@order.ProductID">
                                 <td class="prodCartImage">
-                                    <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
+                                    <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" style="width:100%" />
                                 </td>
                                 <td class="name">@product.ProductName </td>
                                 <td class="prodPrice">@(product.Price) ₪</td>
@@ -155,7 +160,7 @@
                                                     error: function (xhr, status, error) { }
                                                 });
                                             }
-                                        }                    
+                                        }
                                     </script>
                                     <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
                                     <h1>@order.Quantity</h1>
@@ -175,7 +180,9 @@
                 <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
+
         </div>
+
         <div class="main-content">
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
@@ -187,33 +194,30 @@
             </div>
 
             <div id="AllWines" class="tabcontent">
-                
-            </div>
-            <div id="Whites" class="tabcontent">
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
                     {
-                    <div class="prodCard">
-                        <div class="imageContainer">
-                            <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
-                            <div class="desctiprionLayer">
-                                <div class="desctiprionLayerText">@prod.Description</div>
-                            </div>
-                        </div>
-
-                        <div class="prodDesctiption">
-                            <h1>@prod.ProductName</h1>
-                            <div class="originPrice">
-                                <h2>@prod.Origin</h2>
-                                <h2>@(prod.Price)₪</h2>
+                        <div class="prodCard">
+                            <div class="imageContainer">
+                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <div class="desctiprionLayer">
+                                    <div class="desctiprionLayerText">@prod.Description</div>
+                                </div>
                             </div>
 
-                            <div class="productButtons">
+                            <div class="prodDesctiption">
+                                <h1>@prod.ProductName</h1>
+                                <div class="originPrice">
+                                    <h2>@prod.Origin</h2>
+                                    <h2>@(prod.Price)₪</h2>
+                                </div>
 
-                                <button class="addWineBtn">Buy Now</button>
-                                <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                <div class="productButtons">
 
-                                <script>
+                                    <button class="addWineBtn">Buy Now</button>
+                                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+
+                                    <script>
                                     function addToCart(ProductId) {
                                         $.ajax({
                                             url: '@Url.Action("AddToCart", "Customer")',
@@ -236,10 +240,9 @@
                                         } else {
                                             var newProduct = response.prod;
                                             var quantity = response.newQuantity;
-
                                             // Construct HTML for the table row
                                             var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
-                                                        '<td class="prodCartImage">' + '<img src="/UI/img/products/' + newProduct.ProductName + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                                                '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
                                                         '<td class="name">' + newProduct.ProductName + '</td>' +
                                                         '<td class="prodPrice">' + newProduct.Price + '</td>' +
                                                         '<td class="quantity">' +
@@ -247,7 +250,7 @@
                                                             '<h1>' + quantity + '</h1>' +
                                                             '<button onclick="plusBtn(this)" class="plus">></button>' +
                                                         '</td>' +
-                '                                       </tr>';
+                                                        '</tr>';
 
                                                         // Append the new row to the cart table body
                                             $('.cartItem').append(newRow);
@@ -255,15 +258,17 @@
                                         var updatedTotalPrice = response.total;
                                         $('.cartTotal').text('total price: ' + updatedTotalPrice);
                                     }
-                                </script>
+                                    </script>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                 </div>
             </div>
+            <div id="Whites" class="tabcontent">
+            </div>
             <div id="Reds" class="tabcontent">
-                
+
             </div>
             <div id="Roses" class="tabcontent">
                 <h1>Roses</h1>
