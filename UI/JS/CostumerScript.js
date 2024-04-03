@@ -1,6 +1,6 @@
-﻿function openSide() {
-    document.getElementById("sideWineMenu").style.visibility = "visible";
-}
+﻿
+
+
 
 function openNav() {
     document.getElementById("cartWindow").style.width = "330px";

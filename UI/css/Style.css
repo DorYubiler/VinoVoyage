@@ -48,7 +48,8 @@ p, .custom-label {
 
     .topnav .aDropdown:hover .dropA {
         color: black;
-        background-color: #bc5a45
+        background-color: #bc5a45;
+        z-index:1000;
     }
 
     .topnav .aDropdown:hover .dropContent {
@@ -156,6 +157,12 @@ p, .custom-label {
     font-weight: 200;
     /*font-size: 14px;*/
     text-transform: uppercase;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    height: 60px;
+    padding: 15px 20px 0 0;
 }
 
     .topnav a {
@@ -352,7 +359,7 @@ p, .custom-label {
     height: 100%;
     position: fixed;
     width: 140px;
-    top: auto;
+    top: 60px;
     overflow: hidden;
     float:left;
     background-color: #111;
@@ -360,8 +367,9 @@ p, .custom-label {
     padding-top: 10px;
     visibility: hidden;
     left:24px;
-    margin-top:1px;
     transition: 0.5s;
+    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.6);
+    z-index:1000;
     
 }
     .tab button {
@@ -436,9 +444,9 @@ p, .custom-label {
     height: 80%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     right: 0;
-    top: 0;
+    top: 60px;
     background-color: #c48a7d;
     overflow-x: hidden;
     transition: 0.5s;
@@ -458,6 +466,10 @@ p, .custom-label {
 
 .sidenavCart .quantity{
 
+}
+.cartItem {
+    height: 300px;
+    overflow-y: scroll;
 }
 .cartItem .prodCartImage {
     width: 60px;
@@ -499,7 +511,16 @@ p, .custom-label {
     .sidenavCart .name, .sidenavCart .prodPrice {
         font-size: 13px;
         padding: 14px 10px 0 0;
+        white-space: normal;
+        overflow: hidden;
     }
+.sidenavCart .prodPrice {
+    font-size: 13px;
+    padding: 14px 10px 0 0;
+    white-space: nowrap;
+}
+
+
 
 .sidenavCart .topCart .cartTitle {
     font-family: 'Lucida Console';
@@ -815,6 +836,7 @@ p, .custom-label {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    margin-top: 30px;
 }
 
 /* maincontent div for the main div in admin page */

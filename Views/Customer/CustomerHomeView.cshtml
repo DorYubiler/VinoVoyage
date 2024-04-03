@@ -23,9 +23,9 @@
 
             <!-- user info nav -->
             <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            @*<a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
-            </a>
+            </a>*@
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
             <div class="aDropdown">
                 <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
@@ -184,6 +184,16 @@
         </div>
 
         <div class="main-content">
+            <script>
+                function closeSide() {
+                    //document.getElementById("sideWineMenu").style.visibility = "hidden";
+                    document.getElementById("sideWineMenu").style.width = "0px";
+                }
+                function openSide() {
+                    document.getElementById("sideWineMenu").style.visibility = "visible";
+                    document.getElementById("sideWineMenu").style.width = "130px";
+                }
+            </script>
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
                 <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
@@ -191,6 +201,7 @@
                 <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
                 <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
                 <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
+                <button class="tablinks" onclick="closeSide()">close menu</button>
             </div>
 
             <div id="AllWines" class="tabcontent">
@@ -209,7 +220,16 @@
                                 <h1>@prod.ProductName</h1>
                                 <div class="originPrice">
                                     <h2>@prod.Origin</h2>
+                                    @if (prod.NewPrice != 0)
+                                    {
+
+                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                        <h2>@(prod.NewPrice)₪</h2>
+                                    }
+                                    else
+                                    {
                                     <h2>@(prod.Price)₪</h2>
+                                    }
                                 </div>
 
                                 <div class="productButtons">
