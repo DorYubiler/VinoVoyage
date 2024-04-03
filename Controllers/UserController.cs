@@ -8,6 +8,7 @@ using VinoVoyage.Models;
 using VinoVoyage.ViewModel;
 using VinoVoyage.Dal;
 using System.Data.Entity;
+using System.Runtime.Remoting.Messaging;
 
 
 namespace VinoVoyage.Controllers
@@ -20,7 +21,11 @@ namespace VinoVoyage.Controllers
         //{
         //    return View();
         //}
+        public ActionResult HomePage()
+        {
 
+            return View();
+        }
 
         public ActionResult RegisterView()
         {
@@ -62,6 +67,7 @@ namespace VinoVoyage.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Inavalid username or password");
+                    return RedirectToAction("HomePage","Home");
                 }
             }
             return View();
