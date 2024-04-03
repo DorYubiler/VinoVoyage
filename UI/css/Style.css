@@ -1,4 +1,4 @@
-﻿html, body {
+html, body {
     background-color: #f4e1d2; 
 }
 /* --------------- basic fonts --------------- */
@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     font-size: 16px;
     font-weight: 300;
@@ -16,7 +16,7 @@ h1 {
 }
 
 h2 {
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     font-weight: 150;
     font-size: 14px;
@@ -25,7 +25,7 @@ h2 {
 }
 
 p, .custom-label {
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     font-size: 14px;
     color: black;
@@ -35,55 +35,13 @@ p, .custom-label {
 /* --------------------------------------------------------------- */
 /* --------------- dropdown for top navigation bar --------------- */
 
-.topnav .aDropdown {
-    flex-flow: column;
-    cursor: pointer;
-    
-}
-    .topnav .aDropdown .dropA {
-        color: black;
-        min-width: 107px;
-    }
 
-
-    .topnav .aDropdown:hover .dropA {
-        color: black;
-        background-color: #bc5a45;
-        z-index:1000;
-    }
-
-    .topnav .aDropdown:hover .dropContent {
-        display: block;
-        background-color: #bc5a45;
-        color: black;
-    }
-    .topnav .aDropdown .dropContent:hover {
-        display: block;
-        /*background-color: #bc5a45;*/
-        color: white;
-    }
-
-    .topnav .aDropdown .dropContent {
-        display: none;
-        position: fixed;
-        background-color: #f9f9f9;
-        margin: 30px 0 0 141px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 100000;
-    }
-        .topnav .aDropdown .dropContent a {
-            float: none;
-            color: black;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            padding: 3px;
-            margin: 3px;
-            width: 100px;
-        }
 .dropdown {
     float: right;
     overflow: hidden;
+}
+.costumerDropdown {
+
 }
 
 .dropdown:hover .dropbtn {
@@ -114,7 +72,7 @@ p, .custom-label {
         background-color: inherit;
         font-family: inherit;
         margin: 0;
-        font-family: 'Lucida Console';
+        font-family: Lucida Console;
         font-weight: 200;
         font-size: 17px;
         text-transform: uppercase;
@@ -153,16 +111,10 @@ p, .custom-label {
 .topnav {
     background-color: #f4e1d2;
     overflow: hidden;
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     /*font-size: 14px;*/
     text-transform: uppercase;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    height: 60px;
-    padding: 15px 20px 0 0;
 }
 
     .topnav a {
@@ -175,9 +127,9 @@ p, .custom-label {
         font-size: 14px;
     }
 
-        .topnav a:hover, .aDropdown:hover {
-            /*background-color: #bc5a45;*/
-            color: #bc5a45;
+        .topnav a:hover, .dropdown:hover, .dropbtn {
+            background-color: #bc5a45;
+            color: white;
         }
 
         .topnav a:active {
@@ -237,7 +189,7 @@ p, .custom-label {
             top: 0;
         }
 
-        .topnav.responsive a, .topnav responsive dropdown {
+        .topnav.responsive a, .topnav responsove dropdown {
             float: none;
             display: block;
             text-align: left;
@@ -258,20 +210,18 @@ p, .custom-label {
     }
 }*/
 
-
-
-    /* ----------------------------------------------- */
-    /* ---------------  general button --------------- */
-    button {
-        background-color: #bc5a45;
-        color: #f4e1d2;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 50%;
-        border-radius: 13px;
-    }
+/* ----------------------------------------------- */
+/* ---------------  general button --------------- */
+button {
+    background-color: #bc5a45;
+    color: #f4e1d2;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    border-radius: 13px;
+}
 
     button:hover {
         opacity: 0.8;
@@ -324,7 +274,7 @@ p, .custom-label {
     .popup input[type=text]::placeholder, input[type=password]::placeholder, .custom-textbox::placeholder {
         color: black;
         background-color: dimgrey;
-        font-family: 'Lucida Console';
+        font-family: Lucida Console;
         font-weight: 200;
         font-size: 13px;
         border: none;
@@ -348,7 +298,7 @@ p, .custom-label {
     }
 
 .custom-validation-message {
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     font-size: 14px;
     color: black;
@@ -358,27 +308,24 @@ p, .custom-label {
 .tab {
     height: 100%;
     position: fixed;
-    width: 140px;
-    top: 60px;
+    width: 200px;
+    top: auto;
     overflow: hidden;
     float:left;
     background-color: #111;
     overflow-x: hidden;
-    padding-top: 10px;
+    padding-top: 20px;
     visibility: hidden;
-    left:24px;
-    transition: 0.5s;
-    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.6);
-    z-index:1000;
     
 }
     .tab button {
         background-color: inherit;
         border: none;
         outline: none;
-        padding: 6px 0 6px 22px;
+        cursor: pointer;
+        padding: 6px 8px 6px 16px;
         transition: 0.3s;
-        font-size: 14px;
+        font-size: 20px;
         width: 100%; 
         text-align: left; 
         text-decoration: none;
@@ -387,22 +334,18 @@ p, .custom-label {
         background: none;
         text-align: left;
         cursor: pointer;
-        font-family:'Lucida Console';
-        text-transform:uppercase;
     }
         .tab button:hover {
             color: #f1f1f1;
         }
         .tab button.active {
-            color: #c48a7d;
-            font-size: 16px;
-            font-weight:400;
+            background-color: #ccc;
         }
 .tabcontent {
     display: none;
     padding-top: 13px;
     padding: 6px 12px;
-/*    border: 1px solid #ccc;*/
+    border: 1px solid #ccc;
     /*border-top: none;*/
     /*margin-left: 200px; */
 }
@@ -444,14 +387,13 @@ p, .custom-label {
     height: 80%;
     width: 0;
     position: fixed;
-    z-index: 1000;
+    z-index: 1;
     right: 0;
-    top: 60px;
+    top: 0;
     background-color: #c48a7d;
     overflow-x: hidden;
     transition: 0.5s;
     color: black;
-    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.2);
 }
 
     .sidenavCart h1 {
@@ -464,41 +406,25 @@ p, .custom-label {
     width: 60px;
 }
 
-.sidenavCart .quantity{
-
-}
-.cartItem {
-    height: 300px;
-    overflow-y: scroll;
-}
 .cartItem .prodCartImage {
     width: 60px;
 }
-.sidenavCart .cartList {
-    position: relative
-}
     .sidenavCart .cartActions {
+        bottom: 0;
         width: 100%;
-        bottom: auto;
         position: absolute;
+        display: flex;
         justify-content: space-around;
-        padding: 10px 0 10px 0;
-        font-family: 'Lucida Console';
-        text-transform: uppercase;
-        padding: 10px
+        padding: 0 0 10px 0;
+        background-color: antiquewhite;
     }
 
-        .sidenavCart .cartActions .cartActionsBtn, .sidenavCart .cartActions .cartTotal {
-            color: black;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            padding: 10px 15px 15px 15px;
-            /*            background-color: #B07C70*/
-        }
-        .sidenavCart .cartActions .cartActionsBtn:hover {
-            background-color: #B07C70
-        }
+    .sidenavCart .cartActions .cartActionsBtn {
+        color:black;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 300;
+    }
 
 .sidenavCart a {
     /*padding: 8px 8px 8px 32px;*/
@@ -508,61 +434,21 @@ p, .custom-label {
     display: block;
     transition: 0.3s;
 }
-    .sidenavCart .name, .sidenavCart .prodPrice {
-        font-size: 13px;
-        padding: 14px 10px 0 0;
-        white-space: normal;
-        overflow: hidden;
+    .sidenavCart .name, .sidenavCart .prodPrice, .sidenavCart .totalPrice {
+        font-size: 14px;
     }
-.sidenavCart .prodPrice {
-    font-size: 13px;
-    padding: 14px 10px 0 0;
-    white-space: nowrap;
-}
 
 
 
-.sidenavCart .topCart .cartTitle {
-    font-family: 'Lucida Console';
-    font-weight: 200;
-    font-size: 20px;
-    font-weight: 500;
-    color: black;
-    text-transform: uppercase;
-    margin: 30px 0 30px 0;
-    text-align: center;
-}
-
-.tableCheckout .cartList {
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-}
-    .tableCheckout .cartList .cartTitle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 50px;
-        font-family: 'Lucida Console';
-        font-weight: 200;
-        font-size: 20px;
-        font-weight: 500;
+    .sidenavCart .topCart .closebtnCart {
+        position: absolute;
+        top: 0;
+        right: 5%;
+        margin: 0 0 60px 60px;
         color: black;
-        text-transform: uppercase;
-        margin: 30px 0 30px 0;
-        text-align: center;
+        font-size: 15px;
+        font-weight: bold;
     }
-
-
-.sidenavCart .closebtnCart {
-    text-align:right;
-    top: 0;
-    right: 0;
-    margin: 10px 10px 0 0;
-    color: black;
-    font-size: 20px;
-    font-weight: bolder;
-}
 
 .listCart {
     overflow-y: auto;
@@ -610,26 +496,12 @@ p, .custom-label {
 /* Dropdown container (hidden by default).*/
 .sidedropdown-container {
     display: none;
-    background-color: transparent;
+    background-color: #262626;
     padding-left: 8px;
 }
 
     .sidedropdown-container a {
         display: block;
-        color: #f1f1f1;
-        font-family: 'Lucida Console';
-        text-transform: uppercase;
-        white-space: normal;
-        font-size: 14px;
-        padding: 5px;
-        overflow-x: hidden;
-        background-color: transparent;
-        margin: 0 0 4px 7px;
-        font-weight: 100;
-    }
-
-    .sidedropdown-container a:hover {
-        background-color:#282c35;
     }
 
 .fa-caret-downSide {
@@ -705,7 +577,7 @@ p, .custom-label {
     bottom: 10px;
     width: 100%;
     text-align: center;
-    font-family: 'Lucida Console';
+    font-family: Lucida Console;
     font-weight: 200;
     font-size: 18px;
     color: black;
@@ -768,26 +640,20 @@ p, .custom-label {
         overflow-y: auto;
     }
 
-.prodGrid .prodCard .prodDesctiption .productButtons {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+.prodDescription .productButtons {
+    text-align: center;
 }
 
     .productButtons button {
         border: none;
         outline: 0;
-        padding: 7px;
+        /*padding: 8px;*/
         color: white;
         background-color: #000;
+        text-align: center;
         cursor: pointer;
         width: auto;
-        flex: 0 0 auto;
-        font-family: 'Lucida Console';
-        text-transform: uppercase;
-        text-align: center;
-        display: inline-block;
-        margin: 0 10px 0 0;
+        margin: 0 5px;
     }
  .prodImage {
     opacity: 1;
@@ -846,66 +712,25 @@ p, .custom-label {
     gap: 10px;
     grid-template: repeat(4, 1fr) / repeat(2, 1fr);
     grid-auto-flow: row;*/ /* or 'row', 'row dense', 'column dense' */
-    margin-left: 200px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 30px;
+    margin-left: 200px;                       
 }
 
 /* maincontent div for the main div in admin page */
 .content{
-    margin: 60px 0 0 160px;
+    padding-left:220px;
 }
 
-
-.checkoutSideColor {
+.checkout {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%; /* Adjust as needed */
-    background-color: #c48a7d;
 }
 
 .centerCheckout {
-    width: 70vh; /* Adjust width as needed */
+    width: 400px; /* Adjust width as needed */
     height: 100vh; /* Adjust height as needed */
-    background-color: #B07C70;
+    background-color: #d08c7d;
     text-align: center;
     line-height: 200px; /* Match height to vertically center content */
-    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.9);
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-    .centerCheckout .tableCheckout {
-        width: 300px;
-        width: 50vh; /* Adjust width as needed */
-        height: 100vh; /* Adjust height as needed */
-    }
-
-.checkoutDescription {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    color: blue;
-}
-.desElement {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    font-family: 'Lucida Console';
-    font-size: 14px;
-    font-weight: 500;
-    color: black;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.scrollable {
-    height: 100px; 
-    overflow: auto;
-    padding: 5px;
 }

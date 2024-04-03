@@ -17,8 +17,9 @@
         <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
         <div class="aDropdown">
             <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
-            <a href="#link1">profile</a>
-            <a href="@Url.Action("Logout", "Admin")">Logout</a>
+            <div class="dropContent">
+                <a href="@Url.Action("Logout", "Admin")">logout</a>
+            </div>
         </div>
     </div>
 
