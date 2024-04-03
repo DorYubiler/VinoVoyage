@@ -280,11 +280,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-<<<<<<< HEAD
-=======
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Product\" />
->>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
