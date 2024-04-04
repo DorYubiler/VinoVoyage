@@ -132,6 +132,27 @@
                 display: flex;
                 justify-content: center;
             }
+            .tdHeader {
+                text-align: center;
+                padding-left: 160px;
+            }
+            select {
+                font-size: 14px;
+                outline: none;
+                width: 174px;
+                text-align: center;
+            }
+            option {
+                font-size: 14px;
+                margin: inherit;             
+            }
+            option:hover {
+                background-color: #ca8a7d;
+            }
+            .error {
+                color: red;
+            }
+
         </style>
         
         <div id="EditRemoveUsers" class="tabcontent">           
@@ -165,20 +186,23 @@
             <h1 class="titles">Add user</h1>
             <h1 class="subTitles">create accounts for new users. modify role to 'Admin' to grant access to Admin portal</h1>
 
-            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new {onsubmit= "return UservalidateForm()" } ))
+            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { onsubmit = "return UservalidateForm()" }))
             {
                 <table>
                     <tbody>
                         <tr>
-                            <td><label for="username">Username:</label></td>
+                            @*<td><label for="username">Username:</label></td>*@
+                            <td class="tdHeader">username:</td>
                             <td><input type="text" id="username" name="username" required></td>
                         </tr>
                         <tr>
                             @*<td><label for="password">Password:</label></td>*@
+                            <td class="tdHeader">password:</td>
                             <td><input type="password" id="password" name="password" required></td>
                         </tr>
                         <tr>
-                            <td><label for="role">Role</label></td>
+                            @*<td><label for="role">Role</label></td>*@
+                            <td class="tdHeader">role:</td>
                             <td>
                                 <select id="role" name="role" required>
                                     <option value="customer">Customer</option>
@@ -187,40 +211,23 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="email">Email:</label></td>
+                            @*<td><label for="email">Email:</label></td>*@
+                            <td class="tdHeader">email</td>
                             <td><input type="email" id="email" name="email" placeholder="exmaple@gmail.com" required></td>
                         </tr>
+                        <tr class="tableBtn">
+                            <td><button type="submit">Add user</button></td>
+                        </tr>
                     </tbody>
-                </table>
-                @*<label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password"  required>
-                <label for="role">Role</label>
-                <select id="role" name="role" required>
-                    <option value="customer">Customer</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="exmaple@gmail.com" required>
-                <style>
-                    label, select, button {
-                        display: grid;
-                    }
-                    .error{
-                        color:red;
-                    }
-                </style>*@
-                <button type="submit" >Add user</button>
+                </table>               
             }
             <div id="uservalidationErrors"></div>
         </div>
 
-
         <div id="EditRemoveProducts" class="tabcontent">
-            <h1 class="titles">Edit or remove a product</h1>
-            <h1 class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</h1>
             <table>
+            <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
+            <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr> 
                 <tr>
                     <th>Product ID</th>
                     <th>Product name</th>
@@ -259,6 +266,9 @@
             
             <form id="orderform">
                 <table>
+                    <tr><th colspan="5" class="titles">order products</th></tr>
+                    <tr><th colspan="5" class="subTitles">send an order to your supplier with all products you need to restock.</th></tr>
+
                     <tr>
                         <th>Product ID</th>
                         <th>Product name</th>
@@ -283,61 +293,65 @@
 
         <div id="AddNewProduct" class="tabcontent">
 
-            <p>Please fill in this form to add new product to VV.</p>
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" ,onsubmit = "return ProductValidateForm()" }))
+            <h1 class="titles">Add product</h1>
+            <h1 class="subTitles">create a new product to be displayed in the site.be reminded that the product name cannot be changed after creation. you can edit other information regarding the product at any time in 'edit/remove products' tab </h1>
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return ProductValidateForm()" }))
             {
-                
-                <style>
-                    select, option {
-                        margin-left: auto;
-                        padding: 10px 20px;
-                        font-size: 18px;
-                        margin: inherit;
-                    }
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="tdHeader">Product name:</td>
+                            <td> <input type="text" id="ProductName" name="ProductName" placeholder="ProductName" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Winery</td>
+                            <td> <input type="text" id="Winery" name="Winery" placeholder="Winery" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Type</td>
+                            <td>
+                                <select id="Type" name="Type" required>
+                                    <option value="White">White</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Rose">Rose</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Description</td>
+                            <td><input type="text" id="Description" name="Description" placeholder="write your description here" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Origin:</td>
+                            <td>
+                                <select id="Origin" name="Origin" required>
+                                    <option value="Israel">Israel</option>
+                                    <option value="France">France</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Spain">Spain</option>
 
-                    .error {
-                        color: red;
-                    }
-                </style>
-                <label for="ProductName">Product name:</label>
-                <input type="text" id="ProductName" name="ProductName" placeholder="ProductName" required>
-
-                <label for="Winery">Winery:</label>
-                <input type="text" id="Winery" name="Winery" placeholder="Winery" required>
-
-                <label for="Type">Type</label>
-                <select id="Type" name="Type" required>
-                    <option value="White">White</option>
-                    <option value="Red">Red</option>
-                    <option value="Rose">Rose</option>
-                </select>
-
-                <label for="Description">Description:</label>
-                <input type="text" id="Description" name="Description" placeholder="write your description here" required>
-
-                <label for="Origin">Origin:</label>
-                <select id="Origin" name="Origin" required>
-                    <option value="Israel">Israel</option>
-                    <option value="France">France</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Spain">Spain</option>
-
-                </select>
-
-                <label for="Amount">Amount:</label>
-                <input type="number" id="Amount" name="Amount" value="1" min="1" required>
-
-                <label for="Price">Price:</label>
-                <input type="number" id="Price" name="Price" value="1" min="1" required>
-
-                <label for="NewPrice">NewPrice:</label>
-                <input type="number" id="NewPrice" name="NewPrice" value="0" min="0" required>
-
-                <label for="ProductImage">Product Image:</label>
-                <input type="file" id="ProductImage" name="ProductImage" required>
-
-
-                <button type="submit" >Add Product</button>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Amount:</td>
+                            <td><input type="number" id="Amount" name="Amount" value="1" min="1" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Price:</td>
+                            <td><input type="number" id="Price" name="Price" value="1" min="1" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Price after discount:</td>
+                            <td><input type="number" id="NewPrice" name="NewPrice" value="0" min="0" required></td>
+                        </tr>
+                        <tr>
+                            <td class="tdHeader">Product image:</td>
+                            <td><input type="file" id="ProductImage" name="ProductImage" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit">Add Product</button>
             }
             <div id="productValidationErrors"></div>
         </div>

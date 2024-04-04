@@ -53,24 +53,25 @@ p, .custom-label {
     }
 
     .topnav .aDropdown:hover .dropContent {
-        display: block;
+        display: flex;
         background-color: #bc5a45;
         color: black;
     }
 
     .topnav .aDropdown .dropContent:hover {
-        display: block;
-        /*background-color: #bc5a45;*/
+        display: flex;
         color: white;
     }
 
     .topnav .aDropdown .dropContent {
         display: none;
-        position: absolute;
         background-color: #f9f9f9;
-        margin: 30px 0 0 141px;
+        margin: 0 0 0 250px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 10;
+        z-index: 1000000;
+        width: fit-content;
+        height: 29px;
+        padding: 2px;
     }
 
         .topnav .aDropdown .dropContent a {
@@ -158,7 +159,6 @@ p, .custom-label {
     overflow: hidden;
     font-family: 'Lucida Console';
     font-weight: 200;
-    /*font-size: 14px;*/
     text-transform: uppercase;
     position: fixed;
     top: 0;
@@ -179,7 +179,6 @@ p, .custom-label {
     }
 
         .topnav a:hover, .aDropdown:hover {
-            /*background-color: #bc5a45;*/
             color: #bc5a45;
         }
 
@@ -362,7 +361,7 @@ button {
 .tab {
     height: 100%;
     position: fixed;
-    width: 140px;
+    width: 130px;
     top: 60px;
     overflow: hidden;
     float: left;
@@ -409,9 +408,7 @@ button {
     display: none;
     padding-top: 13px;
     padding: 6px 12px;
-    /*    border: 1px solid #ccc;*/
-    /*border-top: none;*/
-    /*margin-left: 200px; */
+    margin-top: 60px;
 }
 
 .sidenav {
@@ -504,7 +501,6 @@ button {
         font-size: 16px;
         font-weight: 600;
         padding: 10px 15px 15px 15px;
-        /*            background-color: #B07C70*/
     }
 
         .sidenavCart .cartActions .cartActionsBtn:hover {
@@ -512,7 +508,6 @@ button {
         }
 
 .sidenavCart a {
-    /*padding: 8px 8px 8px 32px;*/
     text-decoration: none;
     font-size: 25px;
     color: black;
@@ -616,8 +611,8 @@ button {
 /* --------------- main content window --------------- */
 .main {
     position: fixed;
-    margin-left: 200px; /* Same as the width of the sidenav */
-    font-size: 20px; /* Increased text to enable scrolling */
+    margin-left: 200px; 
+    font-size: 20px; 
     padding: 0px 10px;
 }
 
@@ -629,12 +624,23 @@ button {
 /* Dropdown container (hidden by default).*/
 .sidedropdown-container {
     display: none;
-    background-color: #262626;
+    background-color: transparent;
     padding-left: 8px;
 }
 
     .sidedropdown-container a {
         display: block;
+        color: #818181;
+        font-family: 'Lucida Console';
+        text-transform: uppercase;
+        padding: inherit;
+        font-size: 14px;
+        margin: 10px 10px 5px 10px;
+        cursor: pointer;
+    }
+
+    .sidedropdown-container a:hover {
+        color: #f1f1f1;
     }
 
 .fa-caret-downSide {
@@ -651,7 +657,7 @@ button {
 /*  Slideshow container */
 .slideshow-container {
     position: fixed;
-    top: 60px; /* This should be equal to the height of your navigation bar */
+    top: 60px; 
     left: 0;
     z-index: 100;
     width: 100%;
@@ -852,17 +858,10 @@ button {
 }
 /* ------------------------------------------------ */
 .prodGrid {
-    /*height: 170px;
-    width: 150px;
-    display: grid;
-    gap: 10px;
-    grid-template: repeat(4, 1fr) / repeat(2, 1fr);
-    grid-auto-flow: row;*/ /* or 'row', 'row dense', 'column dense' */
     margin-left: 200px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-top: 30px;
 }
 
 /* maincontent div for the main div in admin page */
@@ -880,11 +879,11 @@ button {
 }
 
 .centerCheckout {
-    width: 70vh; /* Adjust width as needed */
-    height: 100vh; /* Adjust height as needed */
+    width: 70vh; 
+    height: 100vh; 
     background-color: #B07C70;
     text-align: center;
-    line-height: 200px; /* Match height to vertically center content */
+    line-height: 200px; 
     box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
@@ -893,8 +892,8 @@ button {
 
     .centerCheckout .tableCheckout {
         width: 300px;
-        width: 50vh; /* Adjust width as needed */
-        height: 100vh; /* Adjust height as needed */
+        width: 50vh; 
+        height: 100vh; 
     }
 
 .checkoutDescription {
