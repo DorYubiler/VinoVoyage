@@ -333,7 +333,7 @@ function UservalidateForm() {
 
     // Validate email
     var email = document.getElementById('email').value;
-    if (!/^[^\s@@]+@@[^\s@@]+\.[^\s@@]{2,}$/.test(email) || email.length < 12 || email.length > 30) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length < 12 || email.length > 30) {
         errors.push("Email must be a valid format and 12-30 characters long.");
     }
 

@@ -1,5 +1,5 @@
 html, body {
-    background-color: #f4e1d2; 
+    background-color: #f4e1d2;
 }
 /* --------------- basic fonts --------------- */
 body {
@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     font-size: 16px;
     font-weight: 300;
@@ -16,7 +16,7 @@ h1 {
 }
 
 h2 {
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     font-weight: 150;
     font-size: 14px;
@@ -25,7 +25,7 @@ h2 {
 }
 
 p, .custom-label {
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     font-size: 14px;
     color: black;
@@ -35,18 +35,63 @@ p, .custom-label {
 /* --------------------------------------------------------------- */
 /* --------------- dropdown for top navigation bar --------------- */
 
+.topnav .aDropdown {
+    flex-flow: column;
+    cursor: pointer;
+}
+
+    .topnav .aDropdown .dropA {
+        color: black;
+        min-width: 107px;
+    }
+
+
+    .topnav .aDropdown:hover .dropA {
+        color: black;
+        background-color: #bc5a45;
+        z-index: 1000;
+    }
+
+    .topnav .aDropdown:hover .dropContent {
+        display: block;
+        background-color: #bc5a45;
+        color: black;
+    }
+
+    .topnav .aDropdown .dropContent:hover {
+        display: block;
+        /*background-color: #bc5a45;*/
+        color: white;
+    }
+
+    .topnav .aDropdown .dropContent {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        margin: 30px 0 0 141px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+    }
+
+        .topnav .aDropdown .dropContent a {
+            float: none;
+            color: black;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            padding: 3px;
+            margin: 3px;
+            width: 100px;
+        }
 
 .dropdown {
     float: right;
     overflow: hidden;
 }
-.costumerDropdown {
 
-}
-
-.dropdown:hover .dropbtn {
-    color: white;
-}
+    .dropdown:hover .dropbtn {
+        color: white;
+    }
 
     .dropdown button:hover {
         background-color: #bc5a45;
@@ -72,7 +117,7 @@ p, .custom-label {
         background-color: inherit;
         font-family: inherit;
         margin: 0;
-        font-family: Lucida Console;
+        font-family: 'Lucida Console';
         font-weight: 200;
         font-size: 17px;
         text-transform: uppercase;
@@ -88,19 +133,19 @@ p, .custom-label {
         z-index: 10;
     }
 
-    .dropdown .dropdown-content a {
-        float: none;
-        color: black;
-        text-decoration: none;
-        display: block;
-        text-align: left;
-        padding: 0;
-        margin: 0;
-    }
+        .dropdown .dropdown-content a {
+            float: none;
+            color: black;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            padding: 0;
+            margin: 0;
+        }
 
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
 
 .show {
     display: block;
@@ -111,10 +156,16 @@ p, .custom-label {
 .topnav {
     background-color: #f4e1d2;
     overflow: hidden;
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     /*font-size: 14px;*/
     text-transform: uppercase;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    height: 60px;
+    padding: 15px 20px 0 0;
 }
 
     .topnav a {
@@ -127,9 +178,9 @@ p, .custom-label {
         font-size: 14px;
     }
 
-        .topnav a:hover, .dropdown:hover, .dropbtn {
-            background-color: #bc5a45;
-            color: white;
+        .topnav a:hover, .aDropdown:hover {
+            /*background-color: #bc5a45;*/
+            color: #bc5a45;
         }
 
         .topnav a:active {
@@ -147,7 +198,7 @@ p, .custom-label {
                 background-color: #f4e1d2;
                 color: #bc5a45;
             }
-/*
+    /*
     .topnav input[type=text] {
         float: right;
         padding: 6px;
@@ -157,7 +208,7 @@ p, .custom-label {
         background-color: #d08b7c;
         color: black;
     }*/
-/*
+    /*
         .topnav input[type=text]::placeholder {
             color: #f4e1d2;
             font-family: Lucida Console;
@@ -167,6 +218,7 @@ p, .custom-label {
     .topnav .icon {
         display: none;
     }
+
 @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {
         display: none;
@@ -189,7 +241,7 @@ p, .custom-label {
             top: 0;
         }
 
-        .topnav.responsive a, .topnav responsove dropdown {
+        .topnav.responsive a, .topnav responsive dropdown {
             float: none;
             display: block;
             text-align: left;
@@ -209,6 +261,8 @@ p, .custom-label {
         border: 1px solid #ccc;
     }
 }*/
+
+
 
 /* ----------------------------------------------- */
 /* ---------------  general button --------------- */
@@ -274,7 +328,7 @@ button {
     .popup input[type=text]::placeholder, input[type=password]::placeholder, .custom-textbox::placeholder {
         color: black;
         background-color: dimgrey;
-        font-family: Lucida Console;
+        font-family: 'Lucida Console';
         font-weight: 200;
         font-size: 13px;
         border: none;
@@ -298,7 +352,7 @@ button {
     }
 
 .custom-validation-message {
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     font-size: 14px;
     color: black;
@@ -308,44 +362,54 @@ button {
 .tab {
     height: 100%;
     position: fixed;
-    width: 200px;
-    top: auto;
+    width: 140px;
+    top: 60px;
     overflow: hidden;
-    float:left;
+    float: left;
     background-color: #111;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 10px;
     visibility: hidden;
-    
+    left: 24px;
+    transition: 0.5s;
+    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
 }
+
     .tab button {
         background-color: inherit;
         border: none;
         outline: none;
-        cursor: pointer;
-        padding: 6px 8px 6px 16px;
+        padding: 6px 0 6px 22px;
         transition: 0.3s;
-        font-size: 20px;
-        width: 100%; 
-        text-align: left; 
+        font-size: 14px;
+        width: 100%;
+        text-align: left;
         text-decoration: none;
         color: #818181;
         display: block;
         background: none;
         text-align: left;
         cursor: pointer;
+        font-family: 'Lucida Console';
+        text-transform: uppercase;
     }
+
         .tab button:hover {
             color: #f1f1f1;
         }
+
         .tab button.active {
-            background-color: #ccc;
+            color: #c48a7d;
+            font-size: 16px;
+            font-weight: 400;
         }
+
 .tabcontent {
     display: none;
     padding-top: 13px;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    /*    border: 1px solid #ccc;*/
     /*border-top: none;*/
     /*margin-left: 200px; */
 }
@@ -376,9 +440,9 @@ button {
         cursor: pointer;
         outline: none;
     }
-        /* On mouse-over */        
+        /* On mouse-over */
         .sidenav a:hover, .sidenav .dropdown-btn:hover {
-            color: #f1f1f1;      
+            color: #f1f1f1;
         }
 
 /* -------------------------------------------- */
@@ -387,13 +451,14 @@ button {
     height: 80%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     right: 0;
-    top: 0;
+    top: 60px;
     background-color: #c48a7d;
     overflow-x: hidden;
     transition: 0.5s;
     color: black;
+    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.2);
 }
 
     .sidenavCart h1 {
@@ -402,29 +467,49 @@ button {
         font-weight: 300;
     }
 
-.sidenavCart .prodCartImage {
-    width: 60px;
-}
-
-.cartItem .prodCartImage {
-    width: 60px;
-}
-    .sidenavCart .cartActions {
-        bottom: 0;
-        width: 100%;
-        position: absolute;
-        display: flex;
-        justify-content: space-around;
-        padding: 0 0 10px 0;
-        background-color: antiquewhite;
+    .sidenavCart .prodCartImage {
+        width: 60px;
     }
 
-    .sidenavCart .cartActions .cartActionsBtn {
-        color:black;
+    .sidenavCart .quantity {
+    }
+
+.cartItem {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+    .cartItem .prodCartImage {
+        width: 60px;
+    }
+
+.sidenavCart .cartList {
+    position: relative
+}
+
+.sidenavCart .cartActions {
+    width: 100%;
+    bottom: auto;
+    position: absolute;
+    justify-content: space-around;
+    padding: 10px 0 10px 0;
+    font-family: 'Lucida Console';
+    text-transform: uppercase;
+    padding: 10px
+}
+
+    .sidenavCart .cartActions .cartActionsBtn, .sidenavCart .cartActions .cartTotal {
+        color: black;
         text-align: center;
         font-size: 16px;
-        font-weight: 300;
+        font-weight: 600;
+        padding: 10px 15px 15px 15px;
+        /*            background-color: #B07C70*/
     }
+
+        .sidenavCart .cartActions .cartActionsBtn:hover {
+            background-color: #B07C70
+        }
 
 .sidenavCart a {
     /*padding: 8px 8px 8px 32px;*/
@@ -434,47 +519,95 @@ button {
     display: block;
     transition: 0.3s;
 }
-    .sidenavCart .name, .sidenavCart .prodPrice, .sidenavCart .totalPrice {
-        font-size: 14px;
-    }
+
+.sidenavCart .name, .sidenavCart .prodPrice {
+    font-size: 13px;
+    padding: 14px 10px 0 0;
+    white-space: normal;
+    overflow: hidden;
+}
+
+.sidenavCart .prodPrice {
+    font-size: 13px;
+    padding: 14px 10px 0 0;
+    white-space: nowrap;
+}
 
 
 
-    .sidenavCart .topCart .closebtnCart {
-        position: absolute;
-        top: 0;
-        right: 5%;
-        margin: 0 0 60px 60px;
+.sidenavCart .topCart .cartTitle {
+    font-family: 'Lucida Console';
+    font-weight: 200;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    text-transform: uppercase;
+    margin: 30px 0 30px 0;
+    text-align: center;
+}
+
+.tableCheckout .cartList {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+    .tableCheckout .cartList .cartTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        font-family: 'Lucida Console';
+        font-weight: 200;
+        font-size: 20px;
+        font-weight: 500;
         color: black;
-        font-size: 15px;
-        font-weight: bold;
+        text-transform: uppercase;
+        margin: 30px 0 30px 0;
+        text-align: center;
     }
+
+
+.sidenavCart .closebtnCart {
+    text-align: right;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0 0;
+    color: black;
+    font-size: 20px;
+    font-weight: bolder;
+}
 
 .listCart {
     overflow-y: auto;
 }
-.listCart .quantity {
-    display:inline-block;
-}
-    .listCart .quantity span {
+
+    .listCart .quantity {
         display: inline-block;
-        width: 10px;
-        height: 10px;
-        background-color: grey;
-        color: black;
-        padding: 0 0 13px 0;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 200;
     }
+
+        .listCart .quantity span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: grey;
+            color: black;
+            padding: 0 0 13px 0;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 200;
+        }
+
 .productsAmount .quantity .minus, .productsAmount .quantity .plus {
     font-size: 12px;
 }
+
 .productsAmount .quantity span:nth-child(2) {
     background-color: transparent;
     color: #eee;
 }
+
 #main {
     transition: margin-right .5s;
     padding: 16px;
@@ -482,7 +615,7 @@ button {
 /* --------------------------------------------------- */
 /* --------------- main content window --------------- */
 .main {
-    position:fixed;
+    position: fixed;
     margin-left: 200px; /* Same as the width of the sidenav */
     font-size: 20px; /* Increased text to enable scrolling */
     padding: 0px 10px;
@@ -577,7 +710,7 @@ button {
     bottom: 10px;
     width: 100%;
     text-align: center;
-    font-family: Lucida Console;
+    font-family: 'Lucida Console';
     font-weight: 200;
     font-size: 18px;
     color: black;
@@ -640,22 +773,29 @@ button {
         overflow-y: auto;
     }
 
-.prodDescription .productButtons {
-    text-align: center;
+.prodGrid .prodCard .prodDesctiption .productButtons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
-    .productButtons button {
-        border: none;
-        outline: 0;
-        /*padding: 8px;*/
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: auto;
-        margin: 0 5px;
-    }
- .prodImage {
+.productButtons button {
+    border: none;
+    outline: 0;
+    padding: 7px;
+    color: white;
+    background-color: #000;
+    cursor: pointer;
+    width: auto;
+    flex: 0 0 auto;
+    font-family: 'Lucida Console';
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.prodImage {
     opacity: 1;
     display: block;
     width: 100%;
@@ -663,6 +803,7 @@ button {
     transition: .5s ease;
     backface-visibility: hidden;
 }
+
 .desctiprionLayer {
     transition: .5s ease;
     opacity: 0;
@@ -672,8 +813,9 @@ button {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     overflow-y: auto;
-    max-width:250px;
+    max-width: 250px;
 }
+
 .productButtons p {
     display: inline-block;
 }
@@ -690,17 +832,21 @@ button {
     position: relative;
     width: 100%;
 }
+
     .imageContainer:hover .prodImage {
         opacity: 0.5;
     }
-    .imageContainer:hover .desctiprionLayer{
+
+    .imageContainer:hover .desctiprionLayer {
         opacity: 1;
     }
+
 .originPrice {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .prodTable {
     margin-left: 200px;
 }
@@ -712,25 +858,67 @@ button {
     gap: 10px;
     grid-template: repeat(4, 1fr) / repeat(2, 1fr);
     grid-auto-flow: row;*/ /* or 'row', 'row dense', 'column dense' */
-    margin-left: 200px;                       
+    margin-left: 200px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 30px;
 }
 
 /* maincontent div for the main div in admin page */
-.content{
-    padding-left:220px;
+.content {
+    padding-left: 220px;
 }
 
-.checkout {
+
+.checkoutSideColor {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%; /* Adjust as needed */
+    background-color: #c48a7d;
 }
 
 .centerCheckout {
-    width: 400px; /* Adjust width as needed */
+    width: 70vh; /* Adjust width as needed */
     height: 100vh; /* Adjust height as needed */
-    background-color: #d08c7d;
+    background-color: #B07C70;
     text-align: center;
     line-height: 200px; /* Match height to vertically center content */
+    box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .centerCheckout .tableCheckout {
+        width: 300px;
+        width: 50vh; /* Adjust width as needed */
+        height: 100vh; /* Adjust height as needed */
+    }
+
+.checkoutDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: blue;
+}
+
+.desElement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-family: 'Lucida Console';
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.scrollable {
+    height: 100px;
+    overflow: auto;
+    padding: 5px;
 }
