@@ -28,6 +28,7 @@
                                 font-weight: 300;
                                 color: black;
                                 text-transform: uppercase;
+                                overflow-y: auto;
                             }
 
                             td, th {
@@ -36,8 +37,10 @@
                                 font-size: 14px;
                                 white-space: nowrap;
                                 vertical-align: top;
-                                height:200px;
-                                
+                            }
+
+                            td .prodCartImage {
+                                width: 60px;
                             }
 
                             tr:nth-child(even) {
@@ -66,7 +69,6 @@
                                 font-weight: 200;
                                 font-family: 'Lucida Console';
                             }
-
                         </style>
                         <table>
                             <tbody>
@@ -75,7 +77,7 @@
                                     var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
                                     <tr>
                                         <td>
-                                            <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine"  height="150" />
+                                            <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine"  height="150" />
                                         </td>
                                         <td>
                                             <div class="checkoutDescription">
