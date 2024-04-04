@@ -59,6 +59,7 @@
                     /*                    padding: 8px;*/
                     font-size: 14px;
                     white-space: nowrap;
+                    vertical-align: top;
                 }
 
                     td .prodCartImage {
@@ -102,6 +103,18 @@
                     background-color: #f4e1d2;
                     margin-left: 200px;
                 }
+                .outOfStockLayer {
+                    opacity: 1;
+                    max-width: 250px;
+                    font-size: 16px;
+                    font-family: 'Lucida Console';
+                    white-space: nowrap;
+                    background-color: grey;
+                    padding: 6px 15px;
+                    border-radius: 1px;
+                    color: white;
+                    margin: 0 4px 0 0;
+                }
             </style>
             <div class="cartList">
                 <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
@@ -118,7 +131,14 @@
                                     <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" style="width:100%" />
                                 </td>
                                 <td class="name">@product.ProductName </td>
-                                <td class="prodPrice">@(product.Price) ₪</td>
+                                @if (product.NewPrice != 0)
+                                {
+                                    <td class="prodPrice">@(product.NewPrice) ₪</td>
+                                }
+                                else
+                                {
+                                    <td class="prodPrice">@(product.Price) ₪</td>
+                                }
                                 <td class="quantity">
                                     <script>
                                         function plusBtn(button) {
@@ -173,7 +193,7 @@
                                             }
                                         }
                                     </script>
-                                    <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
+                                    <button onclick="minusBtn(this)" class="minus"><</button> 
                                     <h1>@order.Quantity</h1>
                                     <button onclick="plusBtn(this)" class="plus">></button>
                                 </td>
@@ -216,6 +236,96 @@
             </div>
 
             <div id="AllWines" class="tabcontent">
+                <script>
+                    function addToCart(ProductId) {
+                    $.ajax({
+                        url: '@Url.Action("AddToCart", "Customer")',
+                        type: 'POST',
+                        data: { prodId: ProductId },
+                        success: function (response) {                 // Update cart table
+                            updateCart(ProductId, response);
+                            var name = response.prod.ProductName;
+                            var amount = response.prod.Amount;
+                            var availableBtn = document.querySelector('.productButtons[data-product-available="' + ProductId + '"]');
+                            
+                            if (availableBtn && amount == 0) {                           
+                                availableBtn.style.visibility = 'hidden';
+                                var notInStockBtn = document.querySelector('.productButtons[data-not-in-stock="' + name + '"]');
+                                if (notInStockBtn) {
+                                    notInStockBtn.style.visibility = 'visible';
+                                } else {
+                                    if (amount == 0) {
+                                        // Create the new element
+                                        var newElement = document.createElement('div');
+                                        newElement.classList.add('productButtons');
+                                        newElement.dataset.notInStock = name;
+
+                                        var outOfStockLayer = document.createElement('div');
+                                        outOfStockLayer.classList.add('outOfStockLayer');
+
+                                        var outOfStockText = document.createElement('div');
+                                        outOfStockText.classList.add('outOfStockText');
+                                        outOfStockText.textContent = 'out of stock';
+
+                                        var addToCartButton = document.createElement('button');
+                                        addToCartButton.classList.add('addToCart');
+
+                                        var icon = document.createElement('i');
+                                        icon.classList.add('fas', 'fa-bell');
+
+                                        addToCartButton.appendChild(icon);
+                                        newElement.appendChild(outOfStockLayer);
+                                        outOfStockLayer.appendChild(outOfStockText);
+                                        newElement.appendChild(addToCartButton);
+
+                                        // Replace availableBtn with the new element
+                                        availableBtn.parentNode.replaceChild(newElement, availableBtn);
+                                    }
+                                }
+
+                            }
+                        }, error: function (xhr, status, error) { }
+                    });
+
+                    }
+                    function updateCart(id, response) {
+                        var $row = $('tr[data-productid="' + id + '"]');
+                        var newProduct = response.prod;
+                        var exsistingAmount = newProduct.Amount;
+                        if (exsistingAmount == 0) {
+
+                        }
+                        if ($row.length) {
+                            // Update the quantity in the cart table
+                            var quantity = parseInt($row.find('.quantity h1').text());
+                            quantity++;
+                            $row.find('.quantity h1').text(quantity);
+                        } else {
+
+                            var quantity = response.newQuantity;
+                            var x = newProduct.Price;
+                            if (newProduct.NewPrice != 0) {
+                                x = newProduct.NewPrice;
+                            }
+                            // Construct HTML for the table row
+                            var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
+                                        '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                                        '<td class="name">' + newProduct.ProductName + '</td>' +
+                                        '<td class="prodPrice">' + x + '</td>' +
+                                        '<td class="quantity">' +
+                                        '<button onclick="minusBtn(this)" class="minus"><</button>' +
+                                        '<h1>' + quantity + '</h1>' +
+                                        '<button onclick="plusBtn(this)" class="plus">></button>' +
+                                        '</td>' +
+                                        '</tr>';
+
+                                        // Append the new row to the cart table body
+                            $('.cartItem').append(newRow);
+                        }
+                        var updatedTotalPrice = response.total;
+                        $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                    }
+                </script>
                 <h1 class="titles">all wines</h1>
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
@@ -244,54 +354,23 @@
                                     }
                                 </div>
 
-                                <div class="productButtons">
-
-                                    <button class="addWineBtn">Buy Now</button>
-                                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-
-                                    <script>
-                                    function addToCart(ProductId) {
-                                        $.ajax({
-                                            url: '@Url.Action("AddToCart", "Customer")',
-                                            type: 'POST',
-                                            data: { prodId: ProductId },
-                                            success: function (response) {                 // Update cart table
-                                                updateCart(ProductId, response);
-                                            },
-                                            error: function (xhr, status, error) { }
-                                        });
-
-                                    }
-                                    function updateCart(id, response) {
-                                        var $row = $('tr[data-productid="' + id + '"]');
-                                        if ($row.length) {
-                                            // Update the quantity in the cart table
-                                            var quantity = parseInt($row.find('.quantity h1').text());
-                                            quantity++;
-                                            $row.find('.quantity h1').text(quantity);
-                                        } else {
-                                            var newProduct = response.prod;
-                                            var quantity = response.newQuantity;
-                                            // Construct HTML for the table row
-                                            var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
-                                                '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
-                                                        '<td class="name">' + newProduct.ProductName + '</td>' +
-                                                        '<td class="prodPrice">' + newProduct.Price + '</td>' +
-                                                        '<td class="quantity">' +
-                                                            '<button onclick="minusBtn(this)" class="minus"><</button>' +
-                                                            '<h1>' + quantity + '</h1>' +
-                                                            '<button onclick="plusBtn(this)" class="plus">></button>' +
-                                                        '</td>' +
-                                                        '</tr>';
-
-                                                        // Append the new row to the cart table body
-                                            $('.cartItem').append(newRow);
-                                        }
-                                        var updatedTotalPrice = response.total;
-                                        $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                                    }
-                                    </script>
-                                </div>
+                                @if (prod.Amount != 0)
+                                {
+                                    <div class="productButtons" data-product-available="@prod.ProductID">
+                                        <button class="addWineBtn">Buy Now</button>
+                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                        <div class="outOfStockLayer">
+                                            <div class="outOfStockText">out of stock</div>
+                                        </div>
+                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                    </div>
+                                    
+                                }
                             </div>
                         </div>
                     }
