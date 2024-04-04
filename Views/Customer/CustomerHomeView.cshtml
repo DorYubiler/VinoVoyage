@@ -91,6 +91,17 @@
                     font-weight: 200;
                     font-family: 'Lucida Console';
                 }
+                .titles {
+                    font-family: 'Lucida Console';
+                    font-size: 22px;
+                    font-weight: revert;
+                    color: black;
+                    text-transform: uppercase;
+                    text-align: center;
+                    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+                    background-color: #f4e1d2;
+                    margin-left: 200px;
+                }
             </style>
             <div class="cartList">
                 <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
@@ -205,6 +216,7 @@
             </div>
 
             <div id="AllWines" class="tabcontent">
+                <h1 class="titles">all wines</h1>
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
                     {
@@ -228,7 +240,7 @@
                                     }
                                     else
                                     {
-                                    <h2>@(prod.Price)₪</h2>
+                                        <h2>@(prod.Price)₪</h2>
                                     }
                                 </div>
 
