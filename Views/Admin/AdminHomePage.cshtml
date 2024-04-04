@@ -106,7 +106,8 @@
             <h1>Add user</h1>
             <p>Please fill in this form to create user.</p>
 
-            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new {onsubmit= "return UservalidateForm()" } ))
+            @*@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new {onsubmit= "return UservalidateForm()" } ))*@
+            @using(Html.BeginForm("AddUser","Admin",FormMethod.Post,new {@id="addUserForm"}))
             {
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" placeholder="username" required>
@@ -129,7 +130,7 @@
                 </style>
                 <button type="submit" >Add user</button>
             }
-            <div id="uservalidationErrors"></div>
+            <div id="uservalidationErrors" style="color:red" ></div>
         </div>
 
 
@@ -198,9 +199,9 @@
         <div id="AddNewProduct" style="display:none;">
 
             <p>Please fill in this form to add new product to VV.</p>
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" ,onsubmit = "return ProductValidateForm()" }))
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data"  }))
             {
-                
+
                 <style>
                     label, input, select, option {
                         margin-left: auto;
@@ -214,23 +215,23 @@
                     }
                 </style>
                 <label for="ProductName">Product name:</label>
-                <input type="text" id="ProductName" name="ProductName" placeholder="ProductName" required>
+                <input type="text" id="productName" name="ProductName" placeholder="ProductName" required>
 
                 <label for="Winery">Winery:</label>
-                <input type="text" id="Winery" name="Winery" placeholder="Winery" required>
+                <input type="text" id="winery" name="Winery" placeholder="Winery" required>
 
                 <label for="Type">Type</label>
-                <select id="Type" name="Type" required>
+                <select id="type" name="Type" required>
                     <option value="White">White</option>
                     <option value="Red">Red</option>
                     <option value="Rose">Rose</option>
                 </select>
 
                 <label for="Description">Description:</label>
-                <input type="text" id="Description" name="Description" placeholder="write your description here" required>
+                <input type="text" id="description" name="Description" placeholder="write your description here" required>
 
                 <label for="Origin">Origin:</label>
-                <select id="Origin" name="Origin" required>
+                <select id="origin" name="Origin" required>
                     <option value="Israel">Israel</option>
                     <option value="France">France</option>
                     <option value="Italy">Italy</option>
@@ -239,16 +240,16 @@
                 </select>
 
                 <label for="Amount">Amount:</label>
-                <input type="number" id="Amount" name="Amount" value="1" min="1" required>
+                <input type="number" id="amount" name="Amount" value="1" min="1" required>
 
                 <label for="Price">Price:</label>
-                <input type="number" id="Price" name="Price" value="1" min="1" required>
+                <input type="number" id="price" name="Price" value="1" min="1" required>
 
                 <label for="NewPrice">NewPrice:</label>
-                <input type="number" id="NewPrice" name="NewPrice" value="0" min="0" required>
+                <input type="number" id="newPrice" name="NewPrice" value="0" min="0" required>
 
                 <label for="ProductImage">Product Image:</label>
-                <input type="file" id="ProductImage" name="ProductImage" required>
+                <input type="file" id="productImage" name="ProductImage" required>
 
 
                 <button type="submit" >Add Product</button>
@@ -258,6 +259,6 @@
     </div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="../UI/JS/ShowDiv.js"></script>
+<script src="../UI/JS/AdminJS.js"></script>
 </body>
 </html>

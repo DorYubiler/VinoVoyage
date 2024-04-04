@@ -87,24 +87,32 @@ function checkLogin(event) {
 
 }
      
-
-function LoginValidateForm() {
+//----------------------------------------------------------
+//--------------Register validation-------------------------
+/*function RegisterValidateForm() {
     var errors = [];
 
     // Validate username
-    var username = document.getElementById('username').value;
+    var username = document.getElementById('Regusername').value;
     if (!/^[a-zA-Z0-9]{3,10}$/.test(username)) {
         errors.push("Username must be 3-10 letters or digits.");
     }
 
     // Validate password
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('Regpassword').value;
     if (!/^[a-zA-Z0-9]{6,10}$/.test(password)) {
         errors.push("Password must be 6-10 letters or digits.");
     }
 
+    // Validate email
+    var email = document.getElementById('Regemail').value;
+    var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
+    if (!(regex.test(email)) || email.length < 12 || email.length > 30) {
+        errors.push("Email must be a valid format and 12-30 characters long.");
+    }
+
     // Display errors or submit form
-    var errorsDiv = document.getElementById('LoginValidationErrors');
+    var errorsDiv = document.getElementById('registervalidationErrors');
     errorsDiv.style.display = "block";
     if (errors.length > 0) {
         errorsDiv.innerHTML = '<p class="error">' + errors.join('<br>') + '</p>';
@@ -113,9 +121,9 @@ function LoginValidateForm() {
         errorsDiv.innerHTML = '';
         return true;
     }
+    showmessage("Enjoy your voyage!");
 
-
-}
+}*/
 //----------------------------------------------------
 (function () {
     var script = document.createElement("script");
@@ -147,3 +155,53 @@ function toggleSignupPopup() {
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
 }
 //-----------------------------------------------------------------------------
+//----- register valdation with ajax, test----------------------------------
+
+$(document).ready(function () {
+    console.log("jQuery is loaded");
+    $('#signupForm').on('submit.signupForm', checkSignup);
+});
+
+function checkSignup(event) {
+    event.preventDefault();
+    $("#registervalidationErrors").empty();
+    // Updated IDs to match the HTML
+    var uname = $('#Regusername').val();
+    if (uname.length < 3 || uname.length > 10) {
+        $("#registervalidationErrors").html("Invalid username").show();
+        return;
+    }
+    var pass = $('#Regpassword').val();
+    if (pass.length < 6 || pass.length > 10) {
+        $("#registervalidationErrors").html("Invalid password").show();
+        return;
+    }
+    var mail = $('#Regemail').val(); // Fixed selector
+    var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
+    if (!(regex.test(mail))) {
+        $("#registervalidationErrors").html("Invalid email").show();
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/User/SignUp",
+        data: {
+            username: uname,
+            password: pass,
+            email: mail
+        },
+        success: function (response) {
+            if (response.success) {
+                window.location.href = response.redirectUrl;
+            } else {
+                // If login fails, keep the popup open and show error messages.
+                $("#registervalidationErrors").html("Invalid username or password").show();
+            }
+        },
+        error: function () {
+            // Handle any errors that occur during the request.
+            $("#registervalidationErrors").html("An error occurred. Please try again.").show();
+        }
+    });
+}

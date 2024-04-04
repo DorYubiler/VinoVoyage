@@ -252,7 +252,7 @@
     <Content Include="UI\img\slideshow\rose.jpeg" />
     <Content Include="UI\img\slideshow\vinowine2.jpeg" />
     <Content Include="UI\JS\HomePagejs.js" />
-    <Content Include="UI\JS\ShowDiv.js" />
+    <Content Include="UI\JS\AdminJS.js" />
     <Content Include="UI\JS\Slideshow.js" />
     <Content Include="UI\JS\UserTable.js" />
     <Content Include="Web.config" />

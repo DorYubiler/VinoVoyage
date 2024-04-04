@@ -90,12 +90,25 @@ namespace VinoVoyage.Controllers
 
 
         [HttpPost]
-        public ActionResult AddUser(UserModel user)
+        public JsonResult AddUser(UserModel user)
         {
-            
+            if (db.Users.Find(user.Username) == null)
+            {
+                if (ModelState.IsValid)
+                {
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return Json(new { success = true });
+
+                }
+                return Json(new { success = false });
+            }
+            return Json(new { success = false });
+            /*    
             db.Users.Add(user);
             db.SaveChanges();
-            return RedirectToAction("AdminHomePage");
+            return RedirectToAction("AdminHomePage");*/
         }
 
 
@@ -154,30 +167,34 @@ namespace VinoVoyage.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddProduct(string ProductName,string Winery, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
+        public JsonResult AddProduct(string ProductName,string Winery, string Type, string Description, string Origin, int Amount, int Price, int NewPrice, HttpPostedFileBase ProductImage)
         {
-            ProductModel product=new ProductModel();
-            product.ProductName= ProductName;
-            product.Winery= Winery;
-            product.Type= Type;
-            product.Description= Description;
-            product.Origin= Origin;
-            product.Amount= Amount;
-            product.Price= Price;
-            product.NewPrice= NewPrice;
-            db.Products.Add(product);
-            db.SaveChanges();
-            if (ProductImage != null && ProductImage.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(ProductImage.FileName);
-                var newFileName = ProductName + product.ProductID.ToString()+".jpg";
-                var directoryPath = Server.MapPath("~/UI/img/wines/"); // For ASP.NET MVC
-                var fullPath = Path.Combine(directoryPath, newFileName);
+            if (db.Products.FirstOrDefault(p=>p.ProductName==ProductName)==null) {
+                ProductModel product = new ProductModel();
+                product.ProductName = ProductName;
+                product.Winery = Winery;
+                product.Type = Type;
+                product.Description = Description;
+                product.Origin = Origin;
+                product.Amount = Amount;
+                product.Price = Price;
+                product.NewPrice = NewPrice;
+                db.Products.Add(product);
+                db.SaveChanges();
+                if (ProductImage != null && ProductImage.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(ProductImage.FileName);
+                    var newFileName = ProductName + product.ProductID.ToString()+".jpg";
+                    var directoryPath = Server.MapPath("~/UI/img/wines/"); // For ASP.NET MVC
+                    var fullPath = Path.Combine(directoryPath, newFileName);
 
-                // Save the file to the new path
-                ProductImage.SaveAs(fullPath);
+                    // Save the file to the new path
+                    ProductImage.SaveAs(fullPath);
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false });
             }
-            return RedirectToAction("AdminHomePage");
+            return Json(new { success = false });
         }
         protected override void Dispose(bool disposing)
         {

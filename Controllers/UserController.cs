@@ -33,17 +33,24 @@ namespace VinoVoyage.Controllers
         }
         [HttpPost]
  
-        public ActionResult SignUp(UserModel user)
-        {
-            /* change the customerDal to db (importent!!! I created in line 16 db from VinoVoyageDb. we use it in every use of Db.)*/
-            if (ModelState.IsValid)
+        public JsonResult SignUp(String username, String password, String email)
+        {   UserModel user = new UserModel();
+            user.Username = username;
+            user.Password = password;
+            user.Email = email;
+            if (db.Users.Find(username) == null)
             {
+                if (ModelState.IsValid)
+                {
 
-                db.Users.Add(user);
-                db.SaveChanges();
-                return View("RegisterView", user);
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
+
+                }
+                return Json(new { success = false });
             }
-            return View("RegisterView", user);
+            return Json(new { success = false });
         }
 
         /* public ActionResult Login(LoginModel model)
