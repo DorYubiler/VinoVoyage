@@ -7,8 +7,8 @@ using VinoVoyage.Models;
 /* our Db initalizer, in the first time, when the Db is not exist, the initializer, with the seed method, creates new data base.
  we also added in web.config the initializer. after creating one, its not working again*/
 namespace VinoVoyage.Dal{
-        public class VVInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<VinoVoyageDb>
-        {
+    public class VVInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<VinoVoyageDb>
+    {
         protected override void Seed(VinoVoyageDb context)
         {
             var users = new List<UserModel>
@@ -58,7 +58,16 @@ namespace VinoVoyage.Dal{
             };
             orders.ForEach(s=> context.Orders.Add(s));
             context.SaveChanges();
+
+            var wishlist = new List<WishListModel>
+            {
+                new WishListModel{ Username="shanik",ProductID=14},
+                new WishListModel{ Username="shanik",ProductID=15},
+
+            };
+            wishlist.ForEach(s => context.wishList.Add(s));
+            context.SaveChanges(); 
         }
             
-        }
+    }
 }
