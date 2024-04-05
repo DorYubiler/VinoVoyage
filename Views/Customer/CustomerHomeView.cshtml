@@ -12,23 +12,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel=" stylesheet" href="./UI/css/Style.css" />
+    <link rel=" stylesheet" href="~/UI/css/Style.css"/>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/UI/JS/CostumerScript.js"></script>
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="window">
         <!-- top navigation bar -->
         <div class="topnav" id="myTopnav">
 
             <!-- user info nav -->
             <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            @*<a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
-            </a>
+            </a>*@
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
-            <div class="dropdown">
-                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
-                <div class="dropdown-content">
+            <div class="aDropdown">
+                <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
+                <div class="dropContent">
                     <a href="#link1">profile</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
@@ -38,126 +39,192 @@
             <a href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
         </div>
 
+        <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
             <style>
                 table {
-                    font-family: arial, sans-serif;
                     border-collapse: collapse;
                     width: 100%;
+                    font-family: Lucida Console;
+                    font-weight: 200;
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: black;
+                    text-transform: uppercase;
+                    overflow-y: auto;
                 }
 
                 td, th {
-                    border: 1px solid #dddddd;
-                    text-align: left;
-                    padding: 8px;
+                    text-align: center;
+                    /*                    padding: 8px;*/
                     font-size: 14px;
+                    white-space: nowrap;
+                    vertical-align: top;
                 }
 
+                    td .prodCartImage {
+                        width: 60px;
+                    }
+
                 tr:nth-child(even) {
-                    background-color: #dddddd;
+                    background-color: #C9958A;
                 }
+
                 table button {
                     display: inline-block;
-                    width: 10px;
-                    height: 10px;
-                    background-color: grey;
-                    color: black;
-                    padding: 0 0 13px 0;
+                    width: 13px;
+                    height: 13px;
+                    background-color: black;
+                    color: #f4e1d2;
+                    padding: 0 0 0 0;
                     cursor: pointer;
-                    font-size: 15px;
-                    font-weight: 200;
+                    font-size: 10px;
+                    font-weight: 400;
                 }
+
                 table h1 {
                     display: inline-block;
                     width: 10px;
                     height: 10px;
                     color: black;
-                    padding: 0 0 13px 0;
-                    font-size: 15px;
+                    padding: 0 0 0px 0;
+                    font-size: 13px;
                     font-weight: 200;
+                    font-family: 'Lucida Console';
+                }
+                .titles {
+                    font-family: 'Lucida Console';
+                    font-size: 22px;
+                    font-weight: revert;
+                    color: black;
+                    text-transform: uppercase;
+                    text-align: center;
+                    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+                    background-color: #f4e1d2;
+                    margin-left: 200px;
+                }
+                .outOfStockLayer {
+                    opacity: 1;
+                    max-width: 250px;
+                    font-size: 16px;
+                    font-family: 'Lucida Console';
+                    white-space: nowrap;
+                    background-color: grey;
+                    padding: 6px 15px;
+                    border-radius: 1px;
+                    color: white;
+                    margin: 0 4px 0 0;
                 }
             </style>
             <div class="cartList">
+                <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
                 <div class="topCart">
-                    <h1>Shopping Cart</h1>
-                    <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
+                    <div class="cartTitle">Shopping Cart</div>
                 </div>
                 <table>
-                    @foreach (OrderModel order in Model.cart)
-                    {
-                        var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-                        <tr data-productid="@order.ProductID">
-                            <td class="prodCartImage">
-                                <img src="~/UI/img/products/@(product.ProductName).jpg" alt="wine" style="width:100%" />
-                            </td>
-                            <td class="name">@product.ProductID </td>
-                            <td class="prodPrice">@product.Price </td>
-                            <td class="quantity">
-                                <button onclick="minusBtn(this)" class="minus"><</button>  <!--onclick="minusBtn(this)"-->
-                                <h1>@order.Quantity</h1>
-                                <button onclick="plusBtn(this)" class="plus">></button>
-                            </td>
-                        </tr>
-                    }
+                    <tbody class="cartItem">
+                        @foreach (OrderModel order in Model.cart)
+                        {
+                            var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                            <tr data-productid="@order.ProductID">
+                                <td class="prodCartImage">
+                                    <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" style="width:100%" />
+                                </td>
+                                <td class="name">@product.ProductName </td>
+                                @if (product.NewPrice != 0)
+                                {
+                                    <td class="prodPrice">@(product.NewPrice) ₪</td>
+                                }
+                                else
+                                {
+                                    <td class="prodPrice">@(product.Price) ₪</td>
+                                }
+                                <td class="quantity">
+                                    <script>
+                                        function plusBtn(button) {
+                                            var row = $(button).closest('tr');
+                                            var pID = row.data('productid');
+                                            $.ajax({
+                                                url: '@Url.Action("AddToCart", "Customer")',
+                                                type: 'POST',
+                                                data: { prodId: pID },
+                                                success: function (response) {
+                                                    var updatedAmount = response.newQuantity;
+                                                    var updatedTotalPrice = response.total;
+                                                    row.find('h1').text(updatedAmount);
+                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                                                },
+                                                error: function (xhr, status, error) { }
+                                            });
+                                        }
+                                        function minusBtn(button) {
+                                            var row = $(button).closest('tr');
+                                            var pID = row.data('productid');
+                                            $.ajax({
+                                                url: '@Url.Action("DeleteFromCart","Customer")',
+                                                type: 'POST',
+                                                data: { prodId: pID },
+                                                success: function (response) {
+                                                    var updatedAmount = response.newQuantity;
+                                                    var updatedTotalPrice = response.total;
+                                                    if (updatedAmount == 0) {
+                                                        row.remove();
+                                                    }
+                                                    else {
+                                                        row.find('h1').text(updatedAmount);
+                                                    }
+                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                                                },
+                                                error: function (xhr, status, error) { }
+                                            });
+                                        }
+                                        function emptyCart() {
+                                            let text = "Are you sure you want to delete all the products in your cart?";
+                                            if (confirm(text) == true) {
+                                                $.ajax({
+                                                    url:  '@Url.Action("EmptyCart", "Customer")',
+                                                    type: 'POST',
+                                                    success: function (response) {
+                                                        $('.cartTotal').text('total price: 0');
+                                                        $('.cartItem').empty();
+                                                    },
+                                                    error: function (xhr, status, error) { }
+                                                });
+                                            }
+                                        }
+                                    </script>
+                                    <button onclick="minusBtn(this)" class="minus"><</button> 
+                                    <h1>@order.Quantity</h1>
+                                    <button onclick="plusBtn(this)" class="plus">></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
 
             </div>
             <div class="cartActions">
-                <a href="#" class="cartActionsBtn">checkout</a>
-                <a href="#" class="cartActionsBtn">empty cart</a>
+                <div class="cartTotal">
+                    total price: @(Session["cartTotal"])
+                </div>
+                @{ TempData["UserVieModel"] = Model; }
+                <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
+                <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
 
-            <script>
-                function openNav() {
-                    document.getElementById("cartWindow").style.width = "250px";
-                    document.getElementById("main").style.marginRight = "250px";
-                }
+        </div>
 
-                function closeNav() {
-                    document.getElementById("cartWindow").style.width = "0";
-                    document.getElementById("main").style.marginRigh = "0";
-                    document.getElementById("myTopnav").style.marginRight = "0";
+        <div class="main-content">
+            <script>
+                function closeSide() {
+                    //document.getElementById("sideWineMenu").style.visibility = "hidden";
+                    document.getElementById("sideWineMenu").style.width = "0px";
                 }
                 function openSide() {
                     document.getElementById("sideWineMenu").style.visibility = "visible";
+                    document.getElementById("sideWineMenu").style.width = "130px";
                 }
-                function plusBtn(button){
-                    var row = $(button).closest('tr');
-                    var pID = row.data('productid');
-                    $.ajax({
-                        url: '@Url.Action("AddToCart", "Customer")',
-                        type: 'POST',
-                        data: { prodId: pID },
-                        success: function(response) { 
-                            var updatedAmount = response.newQuantity;
-                            row.find('h1').text(updatedAmount);
-                        },
-                        error: function(xhr, status, error) { }
-                    });
-                }
-                function minusBtn(button){
-                    var row = $(button).closest('tr');
-                    var pID = row.data('productid');
-                    $.ajax({
-                        url: '@Url.Action("DeleteFromCart","Customer")',
-                        type: 'POST',
-                        data: { prodId: pID },
-                        success: function(response) {
-                            var updatedAmount = response.newQuantity;
-                            if (updatedAmount == 0) {
-                                row.remove();
-                            }
-                            else {
-                                row.find('h1').text(updatedAmount);
-                            }
-                        },
-                        error: function(xhr, status, error) { }
-                    });
-                }
-
             </script>
-        </div>
-        <div class="main-content">
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
                 <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
@@ -165,15 +232,107 @@
                 <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
                 <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
                 <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
+                <button class="tablinks" onclick="closeSide()">close menu</button>
             </div>
 
             <div id="AllWines" class="tabcontent">
+                <script>
+                    function addToCart(ProductId) {
+                    $.ajax({
+                        url: '@Url.Action("AddToCart", "Customer")',
+                        type: 'POST',
+                        data: { prodId: ProductId },
+                        success: function (response) {                 // Update cart table
+                            updateCart(ProductId, response);
+                            var name = response.prod.ProductName;
+                            var amount = response.prod.Amount;
+                            var availableBtn = document.querySelector('.productButtons[data-product-available="' + ProductId + '"]');
+                            
+                            if (availableBtn && amount == 0) {                           
+                                availableBtn.style.visibility = 'hidden';
+                                var notInStockBtn = document.querySelector('.productButtons[data-not-in-stock="' + name + '"]');
+                                if (notInStockBtn) {
+                                    notInStockBtn.style.visibility = 'visible';
+                                } else {
+                                    if (amount == 0) {
+                                        // Create the new element
+                                        var newElement = document.createElement('div');
+                                        newElement.classList.add('productButtons');
+                                        newElement.dataset.notInStock = name;
+
+                                        var outOfStockLayer = document.createElement('div');
+                                        outOfStockLayer.classList.add('outOfStockLayer');
+
+                                        var outOfStockText = document.createElement('div');
+                                        outOfStockText.classList.add('outOfStockText');
+                                        outOfStockText.textContent = 'out of stock';
+
+                                        var addToCartButton = document.createElement('button');
+                                        addToCartButton.classList.add('addToCart');
+
+                                        var icon = document.createElement('i');
+                                        icon.classList.add('fas', 'fa-bell');
+
+                                        addToCartButton.appendChild(icon);
+                                        newElement.appendChild(outOfStockLayer);
+                                        outOfStockLayer.appendChild(outOfStockText);
+                                        newElement.appendChild(addToCartButton);
+
+                                        // Replace availableBtn with the new element
+                                        availableBtn.parentNode.replaceChild(newElement, availableBtn);
+                                    }
+                                }
+
+                            }
+                        }, error: function (xhr, status, error) { }
+                    });
+
+                    }
+                    function updateCart(id, response) {
+                        var $row = $('tr[data-productid="' + id + '"]');
+                        var newProduct = response.prod;
+                        var exsistingAmount = newProduct.Amount;
+                        if (exsistingAmount == 0) {
+
+                        }
+                        if ($row.length) {
+                            // Update the quantity in the cart table
+                            var quantity = parseInt($row.find('.quantity h1').text());
+                            quantity++;
+                            $row.find('.quantity h1').text(quantity);
+                        } else {
+
+                            var quantity = response.newQuantity;
+                            var x = newProduct.Price;
+                            if (newProduct.NewPrice != 0) {
+                                x = newProduct.NewPrice;
+                            }
+                            // Construct HTML for the table row
+                            var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
+                                        '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                                        '<td class="name">' + newProduct.ProductName + '</td>' +
+                                        '<td class="prodPrice">' + x + '</td>' +
+                                        '<td class="quantity">' +
+                                        '<button onclick="minusBtn(this)" class="minus"><</button>' +
+                                        '<h1>' + quantity + '</h1>' +
+                                        '<button onclick="plusBtn(this)" class="plus">></button>' +
+                                        '</td>' +
+                                        '</tr>';
+
+                                        // Append the new row to the cart table body
+                            $('.cartItem').append(newRow);
+                        }
+                        var updatedTotalPrice = response.total;
+                        $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                    }
+                </script>
+                <h1 class="titles">all wines</h1>
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
                     {
                         <div class="prodCard">
                             <div class="imageContainer">
-                                <img src="~/UI/img/products/@(prod.ProductName).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
                                 <div class="desctiprionLayer">
                                     <div class="desctiprionLayerText">@prod.Description</div>
                                 </div>
@@ -183,29 +342,35 @@
                                 <h1>@prod.ProductName</h1>
                                 <div class="originPrice">
                                     <h2>@prod.Origin</h2>
-                                    <h2>@(prod.Price)₪</h2>
+                                    @if (prod.NewPrice != 0)
+                                    {
+
+                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                        <h2>@(prod.NewPrice)₪</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2>@(prod.Price)₪</h2>
+                                    }
                                 </div>
 
-                                <div class="productButtons">
-
-                                    <button class="addWineBtn">Buy Now</button>
-                                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-
-                                    <script>
-                                        function addToCart(ProductId) {
-                                            if (confirm("product added")) {
-                                                $.ajax({
-                                                    url: '@Url.Action("AddToCart", "Customer")',
-                                                    type: 'POST',
-                                                    data: { prodId: ProductId },
-                                                    success: function (response) {  },
-                                                    error: function (xhr, status, error) { }
-                                                });
-                                            }
-
-                                        }
-                                    </script>
-                                </div>
+                                @if (prod.Amount != 0)
+                                {
+                                    <div class="productButtons" data-product-available="@prod.ProductID">
+                                        <button class="addWineBtn">Buy Now</button>
+                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                        <div class="outOfStockLayer">
+                                            <div class="outOfStockText">out of stock</div>
+                                        </div>
+                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                    </div>
+                                    
+                                }
                             </div>
                         </div>
                     }
@@ -213,7 +378,9 @@
             </div>
             <div id="Whites" class="tabcontent">
             </div>
-            <div id="Reds" class="tabcontent"></div>
+            <div id="Reds" class="tabcontent">
+
+            </div>
             <div id="Roses" class="tabcontent">
                 <h1>Roses</h1>
             </div>
@@ -224,14 +391,16 @@
         <script>
             function myFunction() {
                 var x = document.getElementById("myTopnav");
-                if (x.className === "topnav") {
+                if (x.className == "topnav") {
                     x.className += " responsive";
-                } else {
+                }
+                if (x.className == "aDropdown") {
+                    x.className += " responsive";
+                }
+                else {
                     x.className = "topnav";
                 }
             }
-        </script>
-        <script>
             function openWindow(evt, wineName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
@@ -247,7 +416,7 @@
             }
         </script>
 
-        <script src="../UI/JS/ShowDiv.js"></script>
+       
         <!-- bring them back now -->
         <div id="bthn" lang="en"></div>
         <script>
