@@ -6,8 +6,9 @@ using System.Data.Entity;
 using VinoVoyage.Models;
 /* our Db initalizer, in the first time, when the Db is not exist, the initializer, with the seed method, creates new data base.
  we also added in web.config the initializer. after creating one, its not working again*/
-namespace VinoVoyage.Dal{
-    public class VVInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<VinoVoyageDb>
+namespace VinoVoyage.Dal
+{
+    public class VVInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<VinoVoyageDb>
     {
         protected override void Seed(VinoVoyageDb context)
         {
@@ -50,13 +51,13 @@ namespace VinoVoyage.Dal{
                 new ProductModel {ProductID = 24,ProductName = "Blossom Mirage",Winery = "Flam Winery",Type = "rose",Description = "A symphony of pomegranate and rose petals, light and refreshing.",Origin = "Israel",Amount = 100,Price = 200,NewPrice = 0},
                 new ProductModel {ProductID = 25,ProductName = "Riviera Whisper",Winery = "Château Minuty",Type = "rose",Description = "A sophisticated blend with peach and orange zest, capturing the Riviera's essence.",Origin = "France",Amount = 100,Price = 200,NewPrice = 0},
             };
-                products.ForEach(s=> context.Products.Add(s));
+            products.ForEach(s => context.Products.Add(s));
             context.SaveChanges();
             var orders = new List<OrderModel>
             {
                 new OrderModel{ ProductID=1, Username="shanik", Quantity=2}
             };
-            orders.ForEach(s=> context.Orders.Add(s));
+            orders.ForEach(s => context.Orders.Add(s));
             context.SaveChanges();
 
             var wishlist = new List<WishListModel>
@@ -66,8 +67,8 @@ namespace VinoVoyage.Dal{
 
             };
             wishlist.ForEach(s => context.wishList.Add(s));
-            context.SaveChanges(); 
+            context.SaveChanges();
         }
-            
+
     }
 }
