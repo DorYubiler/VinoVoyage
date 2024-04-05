@@ -206,10 +206,6 @@
     <Compile Include="Migrations\202404011335115_wineryFix.Designer.cs">
       <DependentUpon>202404011335115_wineryFix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202404050926103_AddWishList.cs" />
-    <Compile Include="Migrations\202404050926103_AddWishList.Designer.cs">
-      <DependentUpon>202404050926103_AddWishList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -255,9 +251,8 @@
     <Content Include="UI\img\slideshow\hebrewmistakes.jpeg" />
     <Content Include="UI\img\slideshow\rose.jpeg" />
     <Content Include="UI\img\slideshow\vinowine2.jpeg" />
-    <Content Include="UI\JS\HomePagejs.js" />
-    <Content Include="UI\JS\AdminJS.js" />
     <Content Include="UI\JS\CostumerScript.js" />
+    <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -310,9 +305,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404011335115_wineryFix.resx">
       <DependentUpon>202404011335115_wineryFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404050926103_AddWishList.resx">
-      <DependentUpon>202404050926103_AddWishList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
