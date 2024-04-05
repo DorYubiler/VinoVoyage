@@ -224,14 +224,165 @@
                     }
                 </div>
             </div>
+            
             <div id="Whites" class="tabcontent">
+                <h1 class="titles">Whites</h1>
+                <div class="prodGrid">
+
+                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
+                    {
+                        <div class="prodCard">
+                            <div class="imageContainer">
+                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <div class="desctiprionLayer">
+                                    <div class="desctiprionLayerText">@prod.Description</div>
+                                </div>
+                            </div>
+
+                            <div class="prodDesctiption">
+                                <h1>@prod.ProductName</h1>
+                                <div class="originPrice">
+                                    <h2>@prod.Origin</h2>
+                                    @if (prod.NewPrice != 0)
+                                    {
+
+                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                        <h2>@(prod.NewPrice)₪</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2>@(prod.Price)₪</h2>
+                                    }
+                                </div>
+
+                                @if (prod.Amount != 0)
+                                {
+                                    <div class="productButtons" data-product-available="@prod.ProductID">
+                                        <button class="addWineBtn">Buy Now</button>
+                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                        <div class="outOfStockLayer">
+                                            <div class="outOfStockText">out of stock</div>
+                                        </div>
+                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
 
             </div>
+
             <div id="Reds" class="tabcontent">
+                <h1 class="titles">Reds</h1>
+                <div class="prodGrid">
+
+                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "red"))
+                    {
+                        <div class="prodCard">
+                            <div class="imageContainer">
+                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <div class="desctiprionLayer">
+                                    <div class="desctiprionLayerText">@prod.Description</div>
+                                </div>
+                            </div>
+
+                            <div class="prodDesctiption">
+                                <h1>@prod.ProductName</h1>
+                                <div class="originPrice">
+                                    <h2>@prod.Origin</h2>
+                                    @if (prod.NewPrice != 0)
+                                    {
+
+                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                        <h2>@(prod.NewPrice)₪</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2>@(prod.Price)₪</h2>
+                                    }
+                                </div>
+
+                                @if (prod.Amount != 0)
+                                {
+                                    <div class="productButtons" data-product-available="@prod.ProductID">
+                                        <button class="addWineBtn">Buy Now</button>
+                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                        <div class="outOfStockLayer">
+                                            <div class="outOfStockText">out of stock</div>
+                                        </div>
+                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
 
             </div>
             <div id="Roses" class="tabcontent">
-                <h1>Roses</h1>
+                <h1 class="titles">Rose</h1>
+                <div class="prodGrid">
+
+                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
+                    {
+                        <div class="prodCard">
+                            <div class="imageContainer">
+                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                <div class="desctiprionLayer">
+                                    <div class="desctiprionLayerText">@prod.Description</div>
+                                </div>
+                            </div>
+
+                            <div class="prodDesctiption">
+                                <h1>@prod.ProductName</h1>
+                                <div class="originPrice">
+                                    <h2>@prod.Origin</h2>
+                                    @if (prod.NewPrice != 0)
+                                    {
+
+                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                        <h2>@(prod.NewPrice)₪</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2>@(prod.Price)₪</h2>
+                                    }
+                                </div>
+
+                                @if (prod.Amount != 0)
+                                {
+                                    <div class="productButtons" data-product-available="@prod.ProductID">
+                                        <button class="addWineBtn">Buy Now</button>
+                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                        <div class="outOfStockLayer">
+                                            <div class="outOfStockText">out of stock</div>
+                                        </div>
+                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
             <div id="Specials" class="tabcontent">
                 <h1> Specials </h1>
@@ -384,220 +535,7 @@
                         var updatedTotalPrice = response.total;
                         $('.cartTotal').text('total price: ' + updatedTotalPrice);
                     }
-                </script>
-                <h1 class="titles">all wines</h1>
-                <div class="prodGrid">
-                    @foreach (ProductModel prod in Model.products)
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
 
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-                                    
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div id="Whites" class="tabcontent">
-                <h1 class="titles">Whites</h1>
-                <div class="prodGrid">
-
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
-
-            </div>
-            <div id="Reds" class="tabcontent">
-                <h1 class="titles">Reds</h1>
-                <div class="prodGrid">
-
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "red"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
-
-            </div>
-            <div id="Roses" class="tabcontent">
-                <h1 class="titles">Rose</h1>
-                <div class="prodGrid">
-
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div id="Specials" class="tabcontent">
-                <h1> Specials </h1>
-            </div>
-        </div>
-        <script>
             function myFunction() {
                 var x = document.getElementById("myTopnav");
                 if (x.className == "topnav") {
@@ -622,6 +560,15 @@
                 }
                 document.getElementById(wineName).style.display = "block";
                 evt.currentTarget.className += " active";
+            }
+
+            function closeSide() {
+                //document.getElementById("sideWineMenu").style.visibility = "hidden";
+                document.getElementById("sideWineMenu").style.width = "0px";
+            }
+            function openSide() {
+                document.getElementById("sideWineMenu").style.visibility = "visible";
+                document.getElementById("sideWineMenu").style.width = "130px";
             }
         </script>
 
