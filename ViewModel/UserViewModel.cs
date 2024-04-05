@@ -12,5 +12,7 @@ namespace VinoVoyage.ViewModel
         public List<UserModel> users { get; set; }
         public List<ProductModel> products { get; set; }
         public List<OrderModel> cart {  get; set; }
+
+        public List<ProductModel> filter { get; set; }
     }
 }

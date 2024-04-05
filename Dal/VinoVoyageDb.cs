@@ -20,6 +20,7 @@ namespace VinoVoyage.Dal
         public DbSet<ProductModel> Products{ get; set; }
 
         public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<WishListModel> wishList {  get; set; }
 
         /*public DbSet<WishListModel> Wishlist { get; set; }*/
 

@@ -185,8 +185,7 @@
         <div id="AddUsers" class="tabcontent">
             <h1 class="titles">Add user</h1>
             <h1 class="subTitles">create accounts for new users. modify role to 'Admin' to grant access to Admin portal</h1>
-
-            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { onsubmit = "return UservalidateForm()" }))
+            @using(Html.BeginForm("AddUser","Admin",FormMethod.Post,new {@id="addUserForm"}))
             {
                 <table>
                     <tbody>
@@ -295,7 +294,9 @@
 
             <h1 class="titles">Add product</h1>
             <h1 class="subTitles">create a new product to be displayed in the site.be reminded that the product name cannot be changed after creation. you can edit other information regarding the product at any time in 'edit/remove products' tab </h1>
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return ProductValidateForm()" }))
+          
+
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data"  }))
             {
                 <table>
                     <tbody>
@@ -358,6 +359,6 @@
     </div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="../UI/JS/ShowDiv.js"></script>
+<script src="../UI/JS/AdminJS.js"></script>
 </body>
 </html>

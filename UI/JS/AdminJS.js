@@ -316,87 +316,157 @@ function showmessage(message) {
 
 }
 
-function UservalidateForm() {
-    var errors = [];
-
-    // Validate username
-    var username = document.getElementById('username').value;
-    if (!/^[a-zA-Z0-9]{3,10}$/.test(username)) {
-        errors.push("Username must be 3-10 letters or digits.");
+$(document).ready(function () {
+    $('#addUserForm').on('submit.addUserForm', UservalidateForm);
+});
+function UservalidateForm(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $('#uservalidationErrors').empty();
+    var uname = $('#username').val();
+    if (uname.length < 3 || uname.length > 10) {
+        $("#uservalidationErrors").html("Invalid username").show();
+        return;
     }
-
-    // Validate password
-    var password = document.getElementById('password').value;
-    if (!/^[a-zA-Z0-9]{6,10}$/.test(password)) {
-        errors.push("Password must be 6-10 letters or digits.");
+    var pass = $('#password').val();
+    if (pass.length < 6 || pass.length > 10) {
+        $("#uservalidationErrors").html("Invalid password").show();
+        return;
     }
-
-    // Validate email
-    var email = document.getElementById('email').value;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length < 12 || email.length > 30) {
-        errors.push("Email must be a valid format and 12-30 characters long.");
+    var mail = $('#email').val(); // Fixed selector
+    var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
+    if (!(regex.test(mail))) {
+        $("#uservalidationErrors").html("Invalid email").show();
+        return;
     }
+    var userData = {
+        UserName: uname,
+        Password: pass,
+        Email: mail,
+    };
 
-    // Display errors or submit form
-    var errorsDiv = document.getElementById('uservalidationErrors');
-    errorsDiv.style.display = "block";
-    if (errors.length > 0) {
-        errorsDiv.innerHTML = '<p class="error">' + errors.join('<br>') + '</p>';
-        return false;
-    } else {
-        errorsDiv.innerHTML = '';
-        return true;
-    }
-    showmessage("the user has been successfully added!");
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddUser",
+        data: { user: userData },
 
+        success: function (respones) {
+            if (respones.success) {
+                confirm("user add successfully")
+                window.location.href = '/Admin/AdminHomePage';
+            }
+            else {
+                $("#uservalidationErrors").html("Invalid inputs").show();
+            }
+        },
+        error: function () {
+            // Handle any errors that occur during the request.
+            $("#uservalidationErrors").html("An error occurred. Please try again.").show();
+        }
+    });
 }
 
-function ProductValidateForm() {
-    var errors = [];
-    // Validate Product Name
-    var productName = document.getElementById('ProductName').value;
+    
+
+$(document).ready(function () {
+    $('#addProductForm').on('submit.addProductForm', ProductValidateForm);
+});
+function ProductValidateForm(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $('#productValidationErrors').empty();
+    var productName = $('#productName').val();
     if (productName.length < 4 || productName.length > 30) {
-        errors.push("Product name must be between 4 and 30 characters.");
+        $("#productValidationErrors").html("Invalid product name").show();
+        return;
     }
-
-
-    var winery = document.getElementById('Winery').value;
+    var winery = $('#winery').val();
     if (winery.length < 2 || winery.length > 30) {
-        errors.push("Winery name must be between 2 and 30 characters.");
+        $("#productValidationErrors").html("Invalid winery").show();
+        return;
     }
-
-
-    var description = document.getElementById('Description').value;
+    var type = $('#type').val();
+    
+    var description = $('#description').val(); // Fixed selector
     if (description.length < 4 || description.length > 500) {
-        errors.push("Product name must be between 4 and 500 characters.");
+        $("#productValidationErrors").html("Invalid description").show();
+        return;
     }
-    // Validate Amount
-    var amount = document.getElementById('Amount').value;
-    if (amount <= 0 || amount > 200) {
-        errors.push("Amount must be greater than 0, max 200.");
+    var origin = $('#origin').val();
+
+    var amount = $('#amount').val();
+    if (amount < 0 || amount > 300) {
+        $("#productValidationErrors").html("Invalid amount").show();
     }
 
-    // Validate Price
-    var price = document.getElementById('Price').value;
-    if (price <= 0) {
-        errors.push("Price must be greater than 0.");
+    var price = $('#price').val();
+    if (price < 0 ) {
+        $("#productValidationErrors").html("Invalid price").show();
     }
 
+    var newPrice = $('#newPrice').val();
+    if (newPrice < 0 ) {
+        $("#productValidationErrors").html("Invalid new price").show();
+    }
 
-    var newprice = document.getElementById('NewPrice').value;
-    if (newprice < 0) {
-        errors.push("New price must be positive number.");
-    }
-    // Display errors or allow form submission
-    var errorsDiv = document.getElementById('productValidationErrors');
-    errorsDiv.style.display = 'block';
-    if (errors.length > 0) {
-        errorsDiv.innerHTML = '<p class="error">' + errors.join('<br>') + '</p>';
-        return false; // Prevent form submission
-    } else {
-        errorsDiv.innerHTML = '';
-        return true; // Allow form submission
-    }
+    var image = $('#productImage').val();
+
+    var formData = new FormData();
+formData.append('ProductName', $('#productName').val());
+formData.append('Winery', $('#winery').val());
+formData.append('Type', $('#type').val());
+formData.append('Description', $('#description').val());
+formData.append('Origin', $('#origin').val());
+formData.append('Amount', $('#amount').val());
+formData.append('Price', $('#price').val());
+formData.append('NewPrice', $('#newPrice').val());
+// Assuming '#productImage' is the file input's ID
+formData.append('ProductImage', $('#productImage')[0].files[0]);
+    /*var userData = {
+        ProductName: productName,
+        Winery: winery,
+        Type: type,
+        Description: description,
+        Origin: origin,
+        Amount: amount,
+        Price: price,
+        NewPrice: newPrice,
+        ProductImage: image
+    };*/
+
+    $.ajax({
+        type: "POST",
+        url: "AddProduct",
+        data: formData,
+        processData: false,
+        contentType:false,
+        /*{
+            ProductName: productName,
+            Winery: winery,
+            Type: type,
+            Description: description,
+            Origin: origin,
+            Amount: amount,
+            Price: price,
+            NewPrice: newPrice,
+            ProductImage: image },*/
+
+        success: function (respones) {
+            if (respones.success) {
+                confirm("Product added successfully")
+                window.location.href = '/Admin/AdminHomePage';
+            }
+            else {
+                $("#productValidationErrors").html("Invalid inputs").show();
+                console.log("###########33");
+            }
+        },
+        error: function (xhr, status, error) {
+            // Handle any errors that occur during the request.
+            $("#productValidationErrors").html("An error occurred. Please try again.").show();
+            console.error("Error - Status:", status, "Error:", error);
+        }
+    });
 }
 
  

@@ -23,16 +23,16 @@
         <a href="#wishlist"><i class="fa fa-heart"></i></a>
         @*<input type="text" placeholder="SEARCH...">*@
     </div>
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
+    @*<script>
+        //function myFunction() {
+        //    var x = document.getElementById("myTopnav");
+        //    if (x.className === "topnav") {
+        //        x.className += " responsive";
+        //    } else {
+        //        x.className = "topnav";
+        //    }
+        //}
+    </script>*@
     <!-- photo slideshow -->
     <div class="slideshow-container">
         <div class="mySlides fade">
@@ -72,49 +72,51 @@
     </div>
     <br>
     <!-- script for slideshow functionality: arrows and automatic change -->
-    <script>
-        let slideIndex = 1;
-        let slideInterval; // Variable to store the interval ID
+    @*<script>
+        ////script for slideshow functionality: arrows and automatic change
+        //let slideIndex = 1;
+        //let slideInterval; // Variable to store the interval ID
 
-        function showSlides(n = slideIndex) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
+        //function showSlides(n = slideIndex) {
+        //    let i;
+        //    let slides = document.getElementsByClassName("mySlides");
+        //    let dots = document.getElementsByClassName("dot");
 
-            // Reset the interval every time showSlides is called to ensure consistent timing
-            clearInterval(slideInterval);
-            slideInterval = setInterval(function () { plusSlides(1); }, 3000);
+        //    // Reset the interval every time showSlides is called to ensure consistent timing
+        //    clearInterval(slideInterval);
+        //    slideInterval = setInterval(function () { plusSlides(1); }, 3000);
 
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
+        //    if (n > slides.length) { slideIndex = 1 }
+        //    if (n < 1) { slideIndex = slides.length }
 
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
+        //    for (i = 0; i < slides.length; i++) {
+        //        slides[i].style.display = "none";
+        //    }
+        //    for (i = 0; i < dots.length; i++) {
+        //        dots[i].className = dots[i].className.replace(" active", "");
+        //    }
 
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-        }
-        showSlides(slideIndex);
+        //    slides[slideIndex - 1].style.display = "block";
+        //    dots[slideIndex - 1].className += " active";
+        //}
+        //showSlides(slideIndex);
 
-        // Next/previous controls
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
+        //// Next/previous controls
+        //function plusSlides(n) {
+        //    showSlides(slideIndex += n);
+        //}
 
-        // Thumbnail image controls
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
+        //// Thumbnail image controls
+        //function currentSlide(n) {
+        //    showSlides(slideIndex = n);
 
-        }
-    </script>
+        //}
+    </script>*@
+
 
     <div id="loginPopup" class="popup">
         <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-        @using (Html.BeginForm("Login", "User", FormMethod.Post, new { onsubmit = "return LoginValidateForm()" }))
+        @using (Html.BeginForm("Login", "User", FormMethod.Post, new {@id="loginForm", }))
         {
             <h1>VINOVOYAGE</h1>
             <h2>LOGIN TO JOIN OUR VOYAGE</h2>
@@ -127,47 +129,42 @@
                 <p>PASSWORD</p>
                 <input type="password" id="password" name="Password" placeholder="" required />
             </div>
-            <button class="popUpButton" type="submit">Login</button>
+            <button class="popUpButton" id="showLoginForm" type="submit" >Login</button>
         }
         <div id="LoginValidationErrors"></div>
     </div>
 
-    <script>
+    @*<script>
+       
 
-        function LoginValidateForm() {
-            var errors = [];
+    </script>*@
+@* signin popup not clisong, need to figure it !!!!!!!!*@
+<div id="SignupPopup" class="popup">
+    <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+    @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {@id="signupForm" }))
+    {
+        <h1> VINOVOYAGE </h1>
+        <h2> LOGIN TO JOIN OUR VOYAGE</h2>
+        <div class="form-group">
+            <p>Username</p>
+            <input type="text" id="Regusername" name="UserName" placeholder="" required />
+        </div>
+        <div class="form-group">
+            <p>Password</p>
+            <input type="password" id="Regpassword" name="Password" placeholder="" required />
+        </div>
+        <div class="form-group">
+            <p>Email</p>
+            <input type="email" id="Regemail" name="Email" placeholder="example@gmil.com" required />
+        </div>
+        <button class="popUpButton"  type="submit">Signup</button>
+    }
+    <div id="registervalidationErrors"></div>
+</div>
 
-            // Validate username
-            var username = document.getElementById('username').value;
-            if (!/^[a-zA-Z0-9]{3,10}$/.test(username)) {
-                errors.push("Username must be 3-10 letters or digits.");
-            }
 
-            // Validate password
-            var password = document.getElementById('password').value;
-            if (!/^[a-zA-Z0-9]{6,10}$/.test(password)) {
-                errors.push("Password must be 6-10 letters or digits.");
-            }
-
-            // Display errors or submit form
-            var errorsDiv = document.getElementById('LoginValidationErrors');
-            errorsDiv.style.display = "block";
-            if (errors.length > 0) {
-                errorsDiv.innerHTML = '<p class="error">' + errors.join('<br>') + '</p>';
-                return false;
-            } else {
-                errorsDiv.innerHTML = '';
-                return true;
-            }
-            showmessage("the user has been successfully added!");
-
-        }
-
-    </script>
-
-    <div id="SignupPopup" class="popup">
-        <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-        @using (Html.BeginForm("SignUp", "User", FormMethod.Post))
+@*<span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {onsubmit ="return RegisterValidateForm()"}))
         {
             <h1>VINOVOYAGE</h1>
             <h2>SIGNUP AND START EXPLORING WITH US</h2>
@@ -193,46 +190,40 @@
                 <button id="SignUp" name="SignUp" type="submit" class="popUpButton">Register</button>
             </div>
         }
-    </div>
+        <div id="registervalidationErrors"></div>
+    </div>*@
 
-    <script>
-        // JavaScript function to close all popups
-        function closePopups() {
-            var popups = document.getElementsByClassName("popup");
-            for (var i = 0; i < popups.length; i++) {
-                popups[i].style.display = "none";
-            }
+@*< script >
+    /*// JavaScript function to close all popups
+    function closePopups() {
+        var popups = document.getElementsByClassName("popup");
+        for (var i = 0; i < popups.length; i++) {
+            popups[i].style.display = "none";
         }
-        function togglePopup() {
-            closePopups();
-            var popup = document.getElementById("loginPopup");
-            popup.style.display = (popup.style.display === "none") ? "block" : "none";
-        }
-        function toggleSignupPopup() {
-            closePopups();
-            var popup = document.getElementById("SignupPopup");
-            popup.style.display = (popup.style.display === "none") ? "block" : "none";
-        }
-    </script>
+    }
+    function togglePopup() {
+        closePopups();
+        var popup = document.getElementById("loginPopup");
+        popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    }
+    function toggleSignupPopup() {
+        closePopups();
+        var popup = document.getElementById("SignupPopup");
+        popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    }*/
+</ script >
 
 
 
 
 
-    <!-- bring them back now -->
-    <div id="bthn" lang="en"></div>
-    <script>
-        (function () {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
-            script.setAttribute(
-                "integrity",
-                "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
-            );
-            script.setAttribute("crossorigin", "anonymous");
-            document.getElementsByTagName("head")[0].appendChild(script);
-        })();
-    </script>
+< !--bring them back now -->*@
+<div id = "bthn" lang="en"></div>
+@*<script>
+
+    </script>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/UI/JS/HomePagejs.js"></script>
+
 </body>
 </html>
