@@ -92,6 +92,7 @@
                     font-weight: 200;
                     font-family: 'Lucida Console';
                 }
+
                 .titles {
                     font-family: 'Lucida Console';
                     font-size: 22px;
@@ -103,6 +104,7 @@
                     background-color: #f4e1d2;
                     margin-left: 200px;
                 }
+
                 .outOfStockLayer {
                     opacity: 1;
                     max-width: 250px;
@@ -140,60 +142,7 @@
                                     <td class="prodPrice">@(product.Price) ₪</td>
                                 }
                                 <td class="quantity">
-                                    <script>
-                                        function plusBtn(button) {
-                                            var row = $(button).closest('tr');
-                                            var pID = row.data('productid');
-                                            $.ajax({
-                                                url: '@Url.Action("AddToCart", "Customer")',
-                                                type: 'POST',
-                                                data: { prodId: pID },
-                                                success: function (response) {
-                                                    var updatedAmount = response.newQuantity;
-                                                    var updatedTotalPrice = response.total;
-                                                    row.find('h1').text(updatedAmount);
-                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                                                },
-                                                error: function (xhr, status, error) { }
-                                            });
-                                        }
-                                        function minusBtn(button) {
-                                            var row = $(button).closest('tr');
-                                            var pID = row.data('productid');
-                                            $.ajax({
-                                                url: '@Url.Action("DeleteFromCart","Customer")',
-                                                type: 'POST',
-                                                data: { prodId: pID },
-                                                success: function (response) {
-                                                    var updatedAmount = response.newQuantity;
-                                                    var updatedTotalPrice = response.total;
-                                                    if (updatedAmount == 0) {
-                                                        row.remove();
-                                                    }
-                                                    else {
-                                                        row.find('h1').text(updatedAmount);
-                                                    }
-                                                    $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                                                },
-                                                error: function (xhr, status, error) { }
-                                            });
-                                        }
-                                        function emptyCart() {
-                                            let text = "Are you sure you want to delete all the products in your cart?";
-                                            if (confirm(text) == true) {
-                                                $.ajax({
-                                                    url:  '@Url.Action("EmptyCart", "Customer")',
-                                                    type: 'POST',
-                                                    success: function (response) {
-                                                        $('.cartTotal').text('total price: 0');
-                                                        $('.cartItem').empty();
-                                                    },
-                                                    error: function (xhr, status, error) { }
-                                                });
-                                            }
-                                        }
-                                    </script>
-                                    <button onclick="minusBtn(this)" class="minus"><</button> 
+                                    <button onclick="minusBtn(this)" class="minus"><</button>
                                     <h1>@order.Quantity</h1>
                                     <button onclick="plusBtn(this)" class="plus">></button>
                                 </td>
@@ -211,20 +160,9 @@
                 <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
-
         </div>
 
         <div class="main-content">
-            <script>
-                function closeSide() {
-                    //document.getElementById("sideWineMenu").style.visibility = "hidden";
-                    document.getElementById("sideWineMenu").style.width = "0px";
-                }
-                function openSide() {
-                    document.getElementById("sideWineMenu").style.visibility = "visible";
-                    document.getElementById("sideWineMenu").style.width = "130px";
-                }
-            </script>
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
                 <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
@@ -236,96 +174,6 @@
             </div>
 
             <div id="AllWines" class="tabcontent">
-                <script>
-                    function addToCart(ProductId) {
-                    $.ajax({
-                        url: '@Url.Action("AddToCart", "Customer")',
-                        type: 'POST',
-                        data: { prodId: ProductId },
-                        success: function (response) {                 // Update cart table
-                            updateCart(ProductId, response);
-                            var name = response.prod.ProductName;
-                            var amount = response.prod.Amount;
-                            var availableBtn = document.querySelector('.productButtons[data-product-available="' + ProductId + '"]');
-                            
-                            if (availableBtn && amount == 0) {                           
-                                availableBtn.style.visibility = 'hidden';
-                                var notInStockBtn = document.querySelector('.productButtons[data-not-in-stock="' + name + '"]');
-                                if (notInStockBtn) {
-                                    notInStockBtn.style.visibility = 'visible';
-                                } else {
-                                    if (amount == 0) {
-                                        // Create the new element
-                                        var newElement = document.createElement('div');
-                                        newElement.classList.add('productButtons');
-                                        newElement.dataset.notInStock = name;
-
-                                        var outOfStockLayer = document.createElement('div');
-                                        outOfStockLayer.classList.add('outOfStockLayer');
-
-                                        var outOfStockText = document.createElement('div');
-                                        outOfStockText.classList.add('outOfStockText');
-                                        outOfStockText.textContent = 'out of stock';
-
-                                        var addToCartButton = document.createElement('button');
-                                        addToCartButton.classList.add('addToCart');
-
-                                        var icon = document.createElement('i');
-                                        icon.classList.add('fas', 'fa-bell');
-
-                                        addToCartButton.appendChild(icon);
-                                        newElement.appendChild(outOfStockLayer);
-                                        outOfStockLayer.appendChild(outOfStockText);
-                                        newElement.appendChild(addToCartButton);
-
-                                        // Replace availableBtn with the new element
-                                        availableBtn.parentNode.replaceChild(newElement, availableBtn);
-                                    }
-                                }
-
-                            }
-                        }, error: function (xhr, status, error) { }
-                    });
-
-                    }
-                    function updateCart(id, response) {
-                        var $row = $('tr[data-productid="' + id + '"]');
-                        var newProduct = response.prod;
-                        var exsistingAmount = newProduct.Amount;
-                        if (exsistingAmount == 0) {
-
-                        }
-                        if ($row.length) {
-                            // Update the quantity in the cart table
-                            var quantity = parseInt($row.find('.quantity h1').text());
-                            quantity++;
-                            $row.find('.quantity h1').text(quantity);
-                        } else {
-
-                            var quantity = response.newQuantity;
-                            var x = newProduct.Price;
-                            if (newProduct.NewPrice != 0) {
-                                x = newProduct.NewPrice;
-                            }
-                            // Construct HTML for the table row
-                            var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
-                                        '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
-                                        '<td class="name">' + newProduct.ProductName + '</td>' +
-                                        '<td class="prodPrice">' + x + '</td>' +
-                                        '<td class="quantity">' +
-                                        '<button onclick="minusBtn(this)" class="minus"><</button>' +
-                                        '<h1>' + quantity + '</h1>' +
-                                        '<button onclick="plusBtn(this)" class="plus">></button>' +
-                                        '</td>' +
-                                        '</tr>';
-
-                                        // Append the new row to the cart table body
-                            $('.cartItem').append(newRow);
-                        }
-                        var updatedTotalPrice = response.total;
-                        $('.cartTotal').text('total price: ' + updatedTotalPrice);
-                    }
-                </script>
                 <h1 class="titles">all wines</h1>
                 <div class="prodGrid">
                     @foreach (ProductModel prod in Model.products)
@@ -369,7 +217,7 @@
                                         </div>
                                         <button class="addToCart"><i class="fas fa-bell"></i></button>
                                     </div>
-                                    
+
                                 }
                             </div>
                         </div>
@@ -377,59 +225,6 @@
                 </div>
             </div>
             <div id="Whites" class="tabcontent">
-
-                <div class="prodGrid">
-                    
-                    @foreach (ProductModel prod in Model.products)
-                    {
-                        List<ProductModel> filter = Model.products.Where(p => p.Type.ToString() == "White").ToList();
-                    }
-                    @foreach(ProductModel prod in filter)
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
 
             </div>
             <div id="Reds" class="tabcontent">
@@ -442,35 +237,190 @@
                 <h1> Specials </h1>
             </div>
         </div>
+
+
+
         <script>
-            function myFunction() {
-                var x = document.getElementById("myTopnav");
-                if (x.className == "topnav") {
-                    x.className += " responsive";
-                }
-                if (x.className == "aDropdown") {
-                    x.className += " responsive";
-                }
-                else {
-                    x.className = "topnav";
-                }
-            }
-            function openWindow(evt, wineName) {
-                var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(wineName).style.display = "block";
-                evt.currentTarget.className += " active";
-            }
+             function plusBtn(button) {
+                 var row = $(button).closest('tr');
+                 var pID = row.data('productid');
+                 $.ajax({
+                     url: '@Url.Action("AddToCart", "Customer")',
+                     type: 'POST',
+                     data: { prodId: pID },
+                     success: function (response) {
+                         var updatedAmount = response.newQuantity;
+                         var updatedTotalPrice = response.total;
+                         row.find('h1').text(updatedAmount);
+                         $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                     },
+                     error: function (xhr, status, error) { }
+                 });
+             }
+
+             function minusBtn(button) {
+                 var row = $(button).closest('tr');
+                 var pID = row.data('productid');
+                 $.ajax({
+                     url: '@Url.Action("DeleteFromCart","Customer")',
+                     type: 'POST',
+                     data: { prodId: pID },
+                     success: function (response) {
+                         var updatedAmount = response.newQuantity;
+                         var updatedTotalPrice = response.total;
+                         if (updatedAmount == 0) {
+                             row.remove();
+                         }
+                         else {
+                             row.find('h1').text(updatedAmount);
+                         }
+                         $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                     },
+                     error: function (xhr, status, error) { }
+                 });
+             }
+
+             function emptyCart() {
+                 let text = "Are you sure you want to delete all the products in your cart?";
+                 if (confirm(text) == true) {
+                     $.ajax({
+                         url: '@Url.Action("EmptyCart", "Customer")',
+                         type: 'POST',
+                         success: function (response) {
+                             $('.cartTotal').text('total price: 0');
+                             $('.cartItem').empty();
+                         },
+                         error: function (xhr, status, error) { }
+                     });
+                 }
+             }
+
+             function addToCart(ProductId) {
+                 $.ajax({
+                     url: '@Url.Action("AddToCart", "Customer")',
+                     type: 'POST',
+                     data: { prodId: ProductId },
+                     success: function (response) {                 // Update cart table
+                         updateCart(ProductId, response);
+                         var name = response.prod.ProductName;
+                         var amount = response.prod.Amount;
+                         var availableBtn = document.querySelector('.productButtons[data-product-available="' + ProductId + '"]');
+
+                         if (availableBtn && amount == 0) {
+                             availableBtn.style.visibility = 'hidden';
+                             var notInStockBtn = document.querySelector('.productButtons[data-not-in-stock="' + name + '"]');
+                             if (notInStockBtn) {
+                                 notInStockBtn.style.visibility = 'visible';
+                             } else {
+                                 if (amount == 0) {
+                                     // Create the new element
+                                     var newElement = document.createElement('div');
+                                     newElement.classList.add('productButtons');
+                                     newElement.dataset.notInStock = name;
+
+                                     var outOfStockLayer = document.createElement('div');
+                                     outOfStockLayer.classList.add('outOfStockLayer');
+
+                                     var outOfStockText = document.createElement('div');
+                                     outOfStockText.classList.add('outOfStockText');
+                                     outOfStockText.textContent = 'out of stock';
+
+                                     var addToCartButton = document.createElement('button');
+                                     addToCartButton.classList.add('addToCart');
+
+                                     var icon = document.createElement('i');
+                                     icon.classList.add('fas', 'fa-bell');
+
+                                     addToCartButton.appendChild(icon);
+                                     newElement.appendChild(outOfStockLayer);
+                                     outOfStockLayer.appendChild(outOfStockText);
+                                     newElement.appendChild(addToCartButton);
+
+                                     // Replace availableBtn with the new element
+                                     availableBtn.parentNode.replaceChild(newElement, availableBtn);
+                                 }
+                             }
+
+                         }
+                     }, error: function (xhr, status, error) { }
+                 });
+
+             }
+
+             function updateCart(id, response) {
+                 var $row = $('tr[data-productid="' + id + '"]');
+                 var newProduct = response.prod;
+                 var exsistingAmount = newProduct.Amount;
+                 if (exsistingAmount == 0) {
+
+                 }
+                 if ($row.length) {
+                     // Update the quantity in the cart table
+                     var quantity = parseInt($row.find('.quantity h1').text());
+                     quantity++;
+                     $row.find('.quantity h1').text(quantity);
+                 } else {
+
+                     var quantity = response.newQuantity;
+                     var x = newProduct.Price;
+                     if (newProduct.NewPrice != 0) {
+                         x = newProduct.NewPrice;
+                     }
+                     // Construct HTML for the table row
+                     var newRow = '<tr data-productid="' + newProduct.ProductID + '">' +
+                         '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + newProduct.ProductID + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                         '<td class="name">' + newProduct.ProductName + '</td>' +
+                         '<td class="prodPrice">' + x + '</td>' +
+                         '<td class="quantity">' +
+                         '<button onclick="minusBtn(this)" class="minus"><</button>' +
+                         '<h1>' + quantity + '</h1>' +
+                         '<button onclick="plusBtn(this)" class="plus">></button>' +
+                         '</td>' +
+                         '</tr>';
+
+                     // Append the new row to the cart table body
+                     $('.cartItem').append(newRow);
+                 }
+                 var updatedTotalPrice = response.total;
+                 $('.cartTotal').text('total price: ' + updatedTotalPrice);
+             }
+
+             function myFunction() {
+                 var x = document.getElementById("myTopnav");
+                 if (x.className == "topnav") {
+                     x.className += " responsive";
+                 }
+                 if (x.className == "aDropdown") {
+                     x.className += " responsive";
+                 }
+                 else {
+                     x.className = "topnav";
+                 }
+             }
+
+             function openWindow(evt, wineName) {
+                 var i, tabcontent, tablinks;
+                 tabcontent = document.getElementsByClassName("tabcontent");
+                 for (i = 0; i < tabcontent.length; i++) {
+                     tabcontent[i].style.display = "none";
+                 }
+                 tablinks = document.getElementsByClassName("tablinks");
+                 for (i = 0; i < tablinks.length; i++) {
+                     tablinks[i].className = tablinks[i].className.replace(" active", "");
+                 }
+                 document.getElementById(wineName).style.display = "block";
+                 evt.currentTarget.className += " active";
+             }
+             function closeSide() {
+                 //document.getElementById("sideWineMenu").style.visibility = "hidden";
+                 document.getElementById("sideWineMenu").style.width = "0px";
+             }
+             function openSide() {
+                 document.getElementById("sideWineMenu").style.visibility = "visible";
+                 document.getElementById("sideWineMenu").style.width = "130px";
+             }
         </script>
 
-       
         <!-- bring them back now -->
         <div id="bthn" lang="en"></div>
         <script>
