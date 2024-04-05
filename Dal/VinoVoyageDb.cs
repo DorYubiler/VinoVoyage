@@ -21,6 +21,8 @@ namespace VinoVoyage.Dal
 
         public DbSet<OrderModel> Orders { get; set; }
 
+        /*public DbSet<WishListModel> Wishlist { get; set; }*/
+
         /* prevents the project to create copies of same tables.*/
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

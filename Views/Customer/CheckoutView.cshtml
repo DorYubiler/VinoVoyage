@@ -15,85 +15,76 @@
             <div class="centerCheckout">
                 <div class="tableCheckout">   
                     <div class="cartList">
-                        <div class="cartTitle">@(Model.user.Username) Shopping Cart</div>
-                    </div>     
-                    <div class="cartTable">
-                        <style>
-                            table {
-                                border-collapse: collapse;
-                                width: 100%;
-                                font-family: Lucida Console;
-                                font-weight: 200;
-                                font-size: 14px;
-                                font-weight: 300;
-                                color: black;
-                                text-transform: uppercase;
-                                overflow-y: auto;
-                            }
-
-                            td, th {
-                                text-align: center;
-                                /*                    padding: 8px;*/
-                                font-size: 14px;
-                                white-space: nowrap;
-                                vertical-align: top;
-                            }
-
-                            td .prodCartImage {
-                                width: 60px;
-                            }
-
-                            tr:nth-child(even) {
-                                background-color: #C9958A;
-                            }
-
-                            table button {
-                                display: inline-block;
-                                width: 13px;
-                                height: 13px;
-                                background-color: black;
-                                color: #f4e1d2;
-                                padding: 0 0 0 0;
-                                cursor: pointer;
-                                font-size: 10px;
-                                font-weight: 400;
-                            }
-
-                            table h1 {
-                                display: inline-block;
-                                width: 10px;
-                                height: 10px;
-                                color: black;
-                                padding: 0 0 0px 0;
-                                font-size: 13px;
-                                font-weight: 200;
-                                font-family: 'Lucida Console';
-                            }
-                        </style>
-                        <table>
-                            <tbody>
-                                @foreach (OrderModel order in Model.cart)
-                                {
-                                    var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-                                    <tr>
-                                        <td>
-                                            <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine"  height="150" />
-                                        </td>
-                                        <td>
-                                            <div class="checkoutDescription">
-                                                <div class="desElement">@product.ProductName</div>
-                                                <div class="desElement">@(product.Price) ₪</div>
-                                                <div class="desElement">
-                                                    <button onclick="minusBtn(this)" class="minus"> < </button>  <!--onclick="minusBtn(this)"-->
-                                                    @order.Quantity
-                                                    <button onclick="plusBtn(this)" class="plus"> > </button>
-                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                        <div class="cartTitle">@(Model.user.Username) Shopping Cart</div>     
+                        <div class="cartTable">
+                            <style>
+                                table {
+                                    border-collapse: collapse;
+                                    width: 100%;
+                                    font-family: Lucida Console;
+                                    font-weight: 200;
+                                    font-size: 14px;
+                                    font-weight: 300;
+                                    color: black;
+                                    text-transform: uppercase;
+                                    overflow-y: auto;
                                 }
-                            </tbody>
-                        </table>
+
+                                td, th {
+                                    text-align: center;
+                                    /*                    padding: 8px;*/
+                                    font-size: 14px;
+                                    white-space: nowrap;
+                                    vertical-align: top;
+                                }
+                                .cartRow {
+                                    height: 200px;
+                                }
+                                td .prodCartImage {
+                                    width: 60px;
+                                }
+
+                                tr:nth-child(even) {
+                                    background-color: #C9958A;
+                                }
+
+                                table button {
+                                    display: inline-block;
+                                    width: 13px;
+                                    height: 13px;
+                                    background-color: black;
+                                    color: #f4e1d2;
+                                    padding: 0 0 0 0;
+                                    cursor: pointer;
+                                    font-size: 10px;
+                                    font-weight: 400;
+                                }
+
+                                table h1 {
+                                    display: inline-block;
+                                    width: 10px;
+                                    height: 10px;
+                                    color: black;
+                                    padding: 0 0 0px 0;
+                                    font-size: 13px;
+                                    font-weight: 200;
+                                    font-family: 'Lucida Console';
+                                }
+                            </style>
+                            <table>
+                                <tbody class="cartItem">
+                                    @foreach (OrderModel order in Model.cart)
+                                    {
+                                        var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                                        <tr>
+                                            <td>
+                                                <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" height="150" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>           
