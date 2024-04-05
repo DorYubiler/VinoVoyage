@@ -35,8 +35,8 @@
                 </div>
             </div>
             <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
-            <a class="split"><span onclick="openNav()"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-            <a href="#wishlist" class="split"><i class="fa fa-heart"></i></a>
+            <a class="split"><span onclick="openNav(cartWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+            <a class="split" onclick="openNav(WishWindow)"><i class="fa fa-heart"></i></a>
         </div>
 
         <!-- cart window -->
@@ -119,9 +119,55 @@
                 }
             </style>
             <div class="cartList">
-                <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav()">&times;</a>
+                <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav(cartWindow)">&times;</a>
                 <div class="topCart">
                     <div class="cartTitle">Shopping Cart</div>
+                </div>
+                <table>
+                    <tbody class="cartItem">
+                        @foreach (OrderModel order in Model.cart)
+                        {
+                            var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+                            <tr data-productid="@order.ProductID">
+                                <td class="prodCartImage">
+                                    <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" style="width:100%" />
+                                </td>
+                                <td class="name">@product.ProductName </td>
+                                @if (product.NewPrice != 0)
+                                {
+                                    <td class="prodPrice">@(product.NewPrice) ₪</td>
+                                }
+                                else
+                                {
+                                    <td class="prodPrice">@(product.Price) ₪</td>
+                                }
+                                <td class="quantity">
+                                    <button onclick="minusBtn(this)" class="minus"><</button>
+                                    <h1>@order.Quantity</h1>
+                                    <button onclick="plusBtn(this)" class="plus">></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="cartActions">
+                <div class="cartTotal">
+                    total price: @(Session["cartTotal"])
+                </div>
+                @{ TempData["UserVieModel"] = Model; }
+                <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
+                <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
+            </div>
+        </div>
+
+        <!-- wishlist window -->
+        <div id="WishWindow" class="sidenavCart">
+            <div class="cartList">
+                <a href="javascript:void(0)" class="closebtnCart" onclick="closeNav(WishWindow)">&times;</a>
+                <div class="topCart">
+                    <div class="cartTitle">Wish List</div>
                 </div>
                 <table>
                     <tbody class="cartItem">
