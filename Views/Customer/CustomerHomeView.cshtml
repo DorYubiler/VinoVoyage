@@ -174,7 +174,7 @@
                     <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
                     <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
                     <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
-                    <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
+                    <button class="tablinks" onclick="openWindow(event, 'Sales')">On sale</button>
                     <button class="tablinks" onclick="closeSide()">close menu</button>
                 </div>
 
@@ -233,8 +233,18 @@
                         @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
                     </div>
                 </div>
-                <div id="Specials" class="tabcontent">
-                    <h1> Specials </h1>
+                <div id="Sales" class="tabcontent">
+                    <select class="sortselect" id="sortSales" data-wine-color="Sales">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">On sale</h1>
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
+
+                    </div>
                 </div>
             </div>
 
