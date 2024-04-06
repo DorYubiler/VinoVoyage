@@ -185,7 +185,7 @@ function editRowProduct(button) {
 
 
     row.find('td:not(:last-child)').each(function (index) {
-        if (index > 1) { // Skip the first column (ProductID)
+        if (index > 1) { 
             var text = $(this).text();
             $(this).html('<input type="text" value="' + text + '" />');
         }
@@ -238,6 +238,11 @@ function saveRowProduct(button) {
         showmessage("The new price input is incorrect");
         return;
     }
+    var rating = row.find('td:eq(9) input').val();
+    if (rating < 1 || rating > 5) {
+        showmessage("The rating muse be 1-5")
+        return;
+    }
     var prodData = {
         ProductID: productID,
         ProductName: productName,
@@ -248,6 +253,7 @@ function saveRowProduct(button) {
         Amount: amount,
         Price: Price,
         NewPrice: newPrice,
+        Rating: rating,
     };
     console.log(prodData);
 
@@ -408,6 +414,7 @@ function ProductValidateForm(event) {
     if (newPrice < 0 ) {
         $("#productValidationErrors").html("Invalid new price").show();
     }
+    
 
     var image = $('#productImage').val();
 
@@ -422,17 +429,7 @@ formData.append('Price', $('#price').val());
 formData.append('NewPrice', $('#newPrice').val());
 // Assuming '#productImage' is the file input's ID
 formData.append('ProductImage', $('#productImage')[0].files[0]);
-    /*var userData = {
-        ProductName: productName,
-        Winery: winery,
-        Type: type,
-        Description: description,
-        Origin: origin,
-        Amount: amount,
-        Price: price,
-        NewPrice: newPrice,
-        ProductImage: image
-    };*/
+
 
     $.ajax({
         type: "POST",
@@ -440,16 +437,6 @@ formData.append('ProductImage', $('#productImage')[0].files[0]);
         data: formData,
         processData: false,
         contentType:false,
-        /*{
-            ProductName: productName,
-            Winery: winery,
-            Type: type,
-            Description: description,
-            Origin: origin,
-            Amount: amount,
-            Price: price,
-            NewPrice: newPrice,
-            ProductImage: image },*/
 
         success: function (respones) {
             if (respones.success) {

@@ -237,6 +237,7 @@
                     <th>Amount</th>
                     <th>Price</th>
                     <th>New price</th>
+                    <th>Rating</th>
                     <th>Action</th>
                 </tr>
                 @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
@@ -251,6 +252,7 @@
                         <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
                         <td>@pr.Price</td>
                         <td>@pr.NewPrice</td>
+                        <td>@pr.Rating</td>
                         <td class="tableBtn">
                             <button id="ProductEditButton@(pr.ProductID)" onclick="editRowProduct(this)">Edit</button>
                             <button id="ProductDeleteButton@(pr.ProductID)" onclick="deleteRowProduct(this)">Delete</button>

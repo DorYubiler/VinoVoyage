@@ -161,237 +161,267 @@
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
         </div>
+        
+        
 
-        <div class="main-content">
-            <!-- side navigation bar -->
-            <div class="tab" id="sideWineMenu">
-                <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
-                <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
-                <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
-                <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
-                <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
-                <button class="tablinks" onclick="closeSide()">close menu</button>
-            </div>
+           
 
-            <div id="AllWines" class="tabcontent">
-                <h1 class="titles">all wines</h1>
-                <div class="prodGrid">
-                    @foreach (ProductModel prod in Model.products)
+
+            <div class="main-content">
+                <!-- side navigation bar -->
+                <div class="tab" id="sideWineMenu">
+                    <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
+                    <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
+                    <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
+                    <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
+                    <button class="tablinks" onclick="openWindow(event, 'Specials')">Specials</button>
+                    <button class="tablinks" onclick="closeSide()">close menu</button>
+                </div>
+
+                <div id="AllWines" class="tabcontent">
+                    <select class="sortselect" id="sort">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">all wines</h1>
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products)
+                        @*@foreach (ProductModel prod in Model.products)
+        {
+            <div class="prodCard">
+                <div class="imageContainer">
+                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                    <div class="desctiprionLayer">
+                        <div class="desctiprionLayerText">@prod.Description</div>
+                    </div>
+                </div>
+
+                <div class="prodDesctiption">
+                    <h1>@prod.ProductName</h1>
+                    <div class="originPrice">
+                        <h2>@prod.Origin</h2>
+                        @if (prod.NewPrice != 0)
+                        {
+
+                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                            <h2>@(prod.NewPrice)₪</h2>
+                        }
+                        else
+                        {
+                            <h2>@(prod.Price)₪</h2>
+                        }
+                    </div>
+
+                    @if (prod.Amount != 0)
                     {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
-                                </div>
-                            </div>
-
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
-                                    {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
-                                    }
-                                    else
-                                    {
-                                        <h2>@(prod.Price)₪</h2>
-                                    }
-                                </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
-                            </div>
+                        <div class="productButtons" data-product-available="@prod.ProductID">
+                            <button class="addWineBtn">Buy Now</button>
+                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
                         </div>
+                    }
+                    else
+                    {
+                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                            <div class="outOfStockLayer">
+                                <div class="outOfStockText">out of stock</div>
+                            </div>
+                            <button class="addToCart"><i class="fas fa-bell"></i></button>
+                        </div>
+
                     }
                 </div>
             </div>
-            
-            <div id="Whites" class="tabcontent">
-                <h1 class="titles">Whites</h1>
-                <div class="prodGrid">
+        }*@
+                    </div>
+                </div>
 
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
+                <div id="Whites" class="tabcontent">
+                    <select class="sortselect" id="sort">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">Whites</h1>
+                    <div class="prodGrid">
+
+                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
+                        {
+                            <div class="prodCard">
+                                <div class="imageContainer">
+                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                    <div class="desctiprionLayer">
+                                        <div class="desctiprionLayerText">@prod.Description</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
+                                <div class="prodDesctiption">
+                                    <h1>@prod.ProductName</h1>
+                                    <div class="originPrice">
+                                        <h2>@prod.Origin</h2>
+                                        @if (prod.NewPrice != 0)
+                                        {
+
+                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                            <h2>@(prod.NewPrice)₪</h2>
+                                        }
+                                        else
+                                        {
+                                            <h2>@(prod.Price)₪</h2>
+                                        }
+                                    </div>
+
+                                    @if (prod.Amount != 0)
                                     {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
+                                        <div class="productButtons" data-product-available="@prod.ProductID">
+                                            <button class="addWineBtn">Buy Now</button>
+                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <h2>@(prod.Price)₪</h2>
+                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                            <div class="outOfStockLayer">
+                                                <div class="outOfStockText">out of stock</div>
+                                            </div>
+                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                        </div>
+
                                     }
                                 </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+
                 </div>
 
-            </div>
+                <div id="Reds" class="tabcontent">
+                    <select class="sortselect" id="sort">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">Reds</h1>
+                    <div class="prodGrid">
 
-            <div id="Reds" class="tabcontent">
-                <h1 class="titles">Reds</h1>
-                <div class="prodGrid">
-
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "red"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
+                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "red"))
+                        {
+                            <div class="prodCard">
+                                <div class="imageContainer">
+                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                    <div class="desctiprionLayer">
+                                        <div class="desctiprionLayerText">@prod.Description</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
+                                <div class="prodDesctiption">
+                                    <h1>@prod.ProductName</h1>
+                                    <div class="originPrice">
+                                        <h2>@prod.Origin</h2>
+                                        @if (prod.NewPrice != 0)
+                                        {
+
+                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                            <h2>@(prod.NewPrice)₪</h2>
+                                        }
+                                        else
+                                        {
+                                            <h2>@(prod.Price)₪</h2>
+                                        }
+                                    </div>
+
+                                    @if (prod.Amount != 0)
                                     {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
+                                        <div class="productButtons" data-product-available="@prod.ProductID">
+                                            <button class="addWineBtn">Buy Now</button>
+                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <h2>@(prod.Price)₪</h2>
+                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                            <div class="outOfStockLayer">
+                                                <div class="outOfStockText">out of stock</div>
+                                            </div>
+                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                        </div>
+
                                     }
                                 </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+
                 </div>
+                <div id="Roses" class="tabcontent">
+                    <select class="sortselect" id="sort">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">Rose</h1>
+                    <div class="prodGrid">
 
-            </div>
-            <div id="Roses" class="tabcontent">
-                <h1 class="titles">Rose</h1>
-                <div class="prodGrid">
-
-                    @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
-                    {
-                        <div class="prodCard">
-                            <div class="imageContainer">
-                                <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                <div class="desctiprionLayer">
-                                    <div class="desctiprionLayerText">@prod.Description</div>
+                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "rose"))
+                        {
+                            <div class="prodCard">
+                                <div class="imageContainer">
+                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
+                                    <div class="desctiprionLayer">
+                                        <div class="desctiprionLayerText">@prod.Description</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="prodDesctiption">
-                                <h1>@prod.ProductName</h1>
-                                <div class="originPrice">
-                                    <h2>@prod.Origin</h2>
-                                    @if (prod.NewPrice != 0)
+                                <div class="prodDesctiption">
+                                    <h1>@prod.ProductName</h1>
+                                    <div class="originPrice">
+                                        <h2>@prod.Origin</h2>
+                                        @if (prod.NewPrice != 0)
+                                        {
+
+                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
+                                            <h2>@(prod.NewPrice)₪</h2>
+                                        }
+                                        else
+                                        {
+                                            <h2>@(prod.Price)₪</h2>
+                                        }
+                                    </div>
+
+                                    @if (prod.Amount != 0)
                                     {
-
-                                        <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                        <h2>@(prod.NewPrice)₪</h2>
+                                        <div class="productButtons" data-product-available="@prod.ProductID">
+                                            <button class="addWineBtn">Buy Now</button>
+                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <h2>@(prod.Price)₪</h2>
+                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
+                                            <div class="outOfStockLayer">
+                                                <div class="outOfStockText">out of stock</div>
+                                            </div>
+                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                        </div>
+
                                     }
                                 </div>
-
-                                @if (prod.Amount != 0)
-                                {
-                                    <div class="productButtons" data-product-available="@prod.ProductID">
-                                        <button class="addWineBtn">Buy Now</button>
-                                        <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                        <div class="outOfStockLayer">
-                                            <div class="outOfStockText">out of stock</div>
-                                        </div>
-                                        <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                    </div>
-
-                                }
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+                </div>
+                <div id="Specials" class="tabcontent">
+                    <h1> Specials </h1>
                 </div>
             </div>
-            <div id="Specials" class="tabcontent">
-                <h1> Specials </h1>
-            </div>
-        </div>
 
 
 
-        <script>
+            <script>
              function plusBtn(button) {
                  var row = $(button).closest('tr');
                  var pID = row.data('productid');
@@ -569,24 +599,48 @@
             function openSide() {
                 document.getElementById("sideWineMenu").style.visibility = "visible";
                 document.getElementById("sideWineMenu").style.width = "130px";
-            }
-        </script>
+                }
 
-        <!-- bring them back now -->
-        <div id="bthn" lang="en"></div>
-        <script>
-            (function () {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
-                script.setAttribute(
-                    "integrity",
-                    "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
-                );
-                script.setAttribute("crossorigin", "anonymous");
-                document.getElementsByTagName("head")[0].appendChild(script);
-            })();
-        </script>
-    </div>
+
+
+                $(document).ready(function () {
+                    $('#sort').change(function () {
+                        var sortBy = $(this).val();
+                        $ajax({
+                            url: '@Url.Action("SortProducts", "Customer")',
+                            type: 'GET',
+                            data: { sortBy: sortBy },
+                            success: function (data) {
+                                $('.prodGrid').html(data);
+                            },
+                            error: function () {
+                                alert('Error occurred');
+                            }
+                        });
+                    });
+                });
+
+               
+            </script>
+
+            <!-- bring them back now -->
+            <div id="bthn" lang="en"></div>
+            <script>
+                (function () {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
+                    script.setAttribute(
+                        "integrity",
+                        "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
+                    );
+                    script.setAttribute("crossorigin", "anonymous");
+                    document.getElementsByTagName("head")[0].appendChild(script);
+                })();
+
+
+
+            </script>
+        </div>
 </body>
 </html>

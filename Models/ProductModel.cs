@@ -59,6 +59,10 @@ namespace VinoVoyage.Models
         [Display(Name = "NewPrice")]
         public int NewPrice { get; set; }
 
+        [Range(1, 5, ErrorMessage = "Rating must be between 1-5")]
+        [Display(Name = "Rating")]
+        public int Rating { get; set; } = 1;
+
         public ProductModel() 
         {
           
