@@ -60,14 +60,14 @@ namespace VinoVoyage.Dal
             orders.ForEach(s => context.Orders.Add(s));
             context.SaveChanges();
 
-            var wishlist = new List<WishListModel>
-            {
-                new WishListModel{ Username="shanik",ProductID=14},
-                new WishListModel{ Username="shanik",ProductID=15},
+            //var wishlist = new List<WishListModel>
+            //{
+            //    new WishListModel{ Username="shanik",ProductID=14},
+            //    new WishListModel{ Username="shanik",ProductID=15},
 
-            };
-            wishlist.ForEach(s => context.wishList.Add(s));
-            context.SaveChanges();
+            //};
+            //wishlist.ForEach(s => context.wishList.Add(s));
+            //context.SaveChanges();
         }
 
     }

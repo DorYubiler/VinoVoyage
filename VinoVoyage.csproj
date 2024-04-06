@@ -210,6 +210,10 @@
     <Compile Include="Migrations\202404060950416_AddRatingP.Designer.cs">
       <DependentUpon>202404060950416_AddRatingP.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404061309303_myMigration.cs" />
+    <Compile Include="Migrations\202404061309303_myMigration.Designer.cs">
+      <DependentUpon>202404061309303_myMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -314,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404060950416_AddRatingP.resx">
       <DependentUpon>202404060950416_AddRatingP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404061309303_myMigration.resx">
+      <DependentUpon>202404061309303_myMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
