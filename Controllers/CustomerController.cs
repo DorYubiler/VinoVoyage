@@ -342,23 +342,31 @@ namespace VinoVoyage.Controllers
 
         public ActionResult SortProducts(string sortBy ,string wineColor)
         {
-            wineColor=(wineColor.Substring(0,wineColor.Length-1)).ToLower();
-            var products = db.Products.Where(p=>p.Type.ToString()==wineColor).AsQueryable();
-            System.Console.WriteLine(products);
+            wineColor = (wineColor.Substring(0, wineColor.Length - 1)).ToLower(); 
+            var products = db.Products.Where(p => p.Type.ToString() == wineColor).AsQueryable();
+            if (wineColor == "allwine")
+            {
+                products = db.Products.AsQueryable();
+
+            }
+            if(wineColor == "sale")
+            {
+                products = db.Products.Where(p=>p.NewPrice!=0).AsQueryable();
+            }
+
             switch (sortBy)
             {
                 case "PLH":
-                    products = products.OrderBy(p => p.Price);
+                    products = products.OrderBy(p => p.NewPrice != 0 ? p.NewPrice : p.Price);
                     break;
                 case "PHL":
-                    products = products.OrderByDescending(p => p.Price);
+                    products = products.OrderByDescending(p => p.NewPrice != 0 ? p.NewPrice : p.Price);
                     break;
                 case "popular":
                     products = products.OrderByDescending(p => p.Rating);
                     break;
             }
             return PartialView("_ProductsGrid", products);
-
         }
     }
 }
