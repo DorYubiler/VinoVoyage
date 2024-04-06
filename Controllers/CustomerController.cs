@@ -135,8 +135,8 @@ namespace VinoVoyage.Controllers
             {
                 // check if product in the cart
                 bool containsProduct = tempCart.Any(item => item.ProductID == prodId);
-                if (containsProduct) 
-                {  
+                if (containsProduct)
+                {
                     // if so, incrase quantity of order in db and in cart
                     var existingOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
                     if (existingOrder != null)
@@ -157,7 +157,7 @@ namespace VinoVoyage.Controllers
             newOrder.ProductID = prodId;
             newOrder.Username = user.Username;
             newOrder.Quantity = 1;
-                
+
             // add to cart
             tempCart.Add(newOrder);
 
@@ -196,7 +196,7 @@ namespace VinoVoyage.Controllers
         public ActionResult EmptyCart()
         {
             var allorders = Session["userCart"] as List<OrderModel>;
-            
+
             foreach (OrderModel order in allorders)
             {
                 // add product to stock
@@ -217,8 +217,8 @@ namespace VinoVoyage.Controllers
             // reset user's cart session
             Session["cartTotal"] = 0;
             allorders.Clear();
-            Session["userCart"] = allorders; 
-            return Json(new { success = true, message = "cart is empty"});
+            Session["userCart"] = allorders;
+            return Json(new { success = true, message = "cart is empty" });
         }
 
         [HttpPost]
@@ -326,7 +326,7 @@ namespace VinoVoyage.Controllers
             {
                 foreach (OrderModel order in userCart)
                 {
-                    var prod = db.Products.FirstOrDefault(p =>  p.ProductID == order.ProductID);
+                    var prod = db.Products.FirstOrDefault(p => p.ProductID == order.ProductID);
                     //var p = db.Products.FirstOrDefaultAsync(product => product.ProductID == order.ProductID);
                     var price = prod.Price;
                     if (prod.NewPrice != 0)
@@ -340,7 +340,24 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = total;
         }
 
+        public ActionResult SortProducts(string sortBy)
+        {
+            var products = db.Products.AsQueryable();
 
+            switch (sortBy)
+            {
+                case "PLH":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "PHL":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "popular":
+                    products = products.OrderByDescending(p => p.Rating);
+                    break;
+            }
+            return PartialView("_ProductsGrid", products);
 
+        }
     }
 }

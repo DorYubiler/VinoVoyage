@@ -90,6 +90,38 @@ p, .custom-label {
     float: right;
     overflow: hidden;
 }
+/*.filterdropdown {
+    float: right;
+    overflow: hidden;
+    padding-top:80px;
+    padding-right:50px;
+    
+}
+.filterbtn {
+    float: right;
+    overflow: hidden;
+    padding-top: 8px;
+    padding-right: 5px;
+    margin: 5px 0px;
+    border-radius:8px;
+}
+.filter-options {*/
+    /* Simple transition for the dropdown */
+    /*transition: all 0.3s ease;
+}*/
+
+.sortselect{
+    background-color:blue;
+    float:right;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: block;
+}
 
     .dropdown:hover .dropbtn {
         color: white;
