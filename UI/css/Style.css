@@ -802,6 +802,29 @@ button {
     margin: 0 10px 0 0;
 }
 
+.wishButtons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 13px 0 7px 0;
+    align-items: center;
+}
+
+    .wishButtons button {
+        border: none;
+        outline: 0;
+        padding: 5px 10px 13px 10px;
+        color: #f4e1d2;
+        background-color: black;
+        cursor: pointer;
+        width: auto;
+        flex: auto;
+        font-family: 'Lucida Console';
+        text-transform: uppercase;
+        text-align: center;
+        display: inline-block;
+        margin: 0 10px 0 0;
+    }
 .prodImage {
     opacity: 1;
     display: block;

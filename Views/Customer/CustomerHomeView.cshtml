@@ -35,8 +35,8 @@
                 </div>
             </div>
             <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
-            <a class="split"><span onclick="openNav(cartWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-            <a class="split" onclick="openNav(WishWindow)"><i class="fa fa-heart"></i></a>
+            <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+            <a class="split" onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
         </div>
 
         <!-- cart window -->
@@ -170,11 +170,11 @@
                     <div class="cartTitle">Wish List</div>
                 </div>
                 <table>
-                    <tbody class="cartItem">
-                        @foreach (OrderModel order in Model.cart)
+                    <tbody class="listItem">
+                        @foreach (WishListModel item in Model.wishList)
                         {
-                            var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-                            <tr data-productid="@order.ProductID">
+                            var product = Model.products.FirstOrDefault(i => i.ProductID == item.ProductID);
+                            <tr data-listid="@item.ProductID">
                                 <td class="prodCartImage">
                                     <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" style="width:100%" />
                                 </td>
@@ -187,24 +187,23 @@
                                 {
                                     <td class="prodPrice">@(product.Price) ₪</td>
                                 }
-                                <td class="quantity">
-                                    <button onclick="minusBtn(this)" class="minus"><</button>
-                                    <h1>@order.Quantity</h1>
-                                    <button onclick="plusBtn(this)" class="plus">></button>
+                                <td class="addToCart">
+                                    <div class="wishButtons">
+                                        <button class="wishButton" onclick="addToCart('@product.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                        <button class="wishButton" onclick="removeFromList(this, '@product.ProductID')">remove</button>
+                                    </div>
                                 </td>
                             </tr>
+
                         }
                     </tbody>
                 </table>
 
             </div>
             <div class="cartActions">
-                <div class="cartTotal">
-                    total price: @(Session["cartTotal"])
-                </div>
                 @{ TempData["UserVieModel"] = Model; }
-                <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
-                <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
+                <a onclick="addListToCart()" class="cartActionsBtn">add list to cart</a>
+                <a onclick="emptyList()" class="cartActionsBtn">empty list</a>
             </div>
         </div>
 
@@ -253,6 +252,7 @@
                                     <div class="productButtons" data-product-available="@prod.ProductID">
                                         <button class="addWineBtn">Buy Now</button>
                                         <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                                        <button class="addToList" onclick="addToList('@prod.ProductID')"><i class="fa fa-heart"></i></button>
                                     </div>
                                 }
                                 else
@@ -262,8 +262,8 @@
                                             <div class="outOfStockText">out of stock</div>
                                         </div>
                                         <button class="addToCart"><i class="fas fa-bell"></i></button>
+                                        
                                     </div>
-
                                 }
                             </div>
                         </div>
@@ -287,6 +287,10 @@
 
 
         <script>
+             function openSide() {
+                 document.getElementById("sideWineMenu").style.visibility = "visible";
+                 document.getElementById("sideWineMenu").style.width = "130px";
+             }
              function plusBtn(button) {
                  var row = $(button).closest('tr');
                  var pID = row.data('productid');
@@ -302,6 +306,21 @@
                      },
                      error: function (xhr, status, error) { }
                  });
+             }
+
+             function removeFromList(button, pID) {
+                 var row = $(button).closest('tr');
+                 console.log(pID);
+                 $.ajax({
+                     url: '@Url.Action("DeleteFromList", "Customer")',
+                     type: 'POST',
+                     data: { prodId: pID },
+                     success: function (response) {
+                         row.remove();
+                     },
+                     error: function (xhr, status, error) { }
+                 });
+
              }
 
              function minusBtn(button) {
@@ -326,6 +345,20 @@
                  });
              }
 
+            function emptyList() {
+                let text = "Are you sure you want to delete all the products in your cart?";
+                if (confirm(text) == true) {
+                    $.ajax({
+                        url: '@Url.Action("EmptyList", "Customer")',
+                        type: 'POST',
+                        success: function (response) {
+                            $('.listItem').empty();
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                }
+            }
+
              function emptyCart() {
                  let text = "Are you sure you want to delete all the products in your cart?";
                  if (confirm(text) == true) {
@@ -341,6 +374,32 @@
                  }
              }
 
+             function addToList(ProductId) {
+                 $.ajax({
+                     url: '@Url.Action("AddToList", "Customer")',
+                     type: 'POST',
+                     data: { prodId: ProductId },
+                     success: function(response) {
+                         if (response.success) {
+                            updateList(ProductId, response);
+                         }
+                     }, error: function (xhr, status, error) { }
+                 });
+            }
+            function addListToCart() {
+                $.ajax({
+                    url: '@Url.Action("ReturnNewToCart", "Customer")',
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            var newItems = response.newItems;
+                            newItems.forEach(function (item) {
+                                addToCart(item.ProductID);
+                            });
+                        }
+                    }
+                });
+            }
              function addToCart(ProductId) {
                  $.ajax({
                      url: '@Url.Action("AddToCart", "Customer")',
@@ -392,6 +451,29 @@
                  });
 
              }
+             function updateList(id, response) {
+                 console.log('productid:', id)
+                 var $row = $('tr[data-listid="' + id + '"]');
+                 var newProduct = response.prod;
+                 var x = newProduct.Price;
+                 if (newProduct.NewPrice != 0) {
+                     x = newProduct.NewPrice;
+                 }
+                 // Construct HTML for the table row
+                 var newRow = '<tr data-listid="' + id + '">' +
+                     '<td class="prodCartImage">' + '<img src="/UI/img/wines/' + newProduct.ProductName + id + '.jpg" alt="wine" style="width:100%" />' + '</td>' +
+                                '<td class="name">' + newProduct.ProductName + '</td>' +
+                                '<td class="prodPrice">' + x + '</td>' +
+                                '<td class="addToCart">' +
+                                    '<div class="wishButtons">' +
+                     '<button class="wishButton" onclick="addToCart(' + id + ')"><i class="fas fa-cart-plus"></i></button>' +
+                     '<button class="wishButton" onclick="removeFromList(this,' + id + ')">remove</button>' +
+                                    '</div' +
+                                '</td>' +
+                              '</tr>';
+                 $('.listItem').append(newRow);
+            }
+
 
              function updateCart(id, response) {
                  var $row = $('tr[data-productid="' + id + '"]');
@@ -460,10 +542,6 @@
              function closeSide() {
                  //document.getElementById("sideWineMenu").style.visibility = "hidden";
                  document.getElementById("sideWineMenu").style.width = "0px";
-             }
-             function openSide() {
-                 document.getElementById("sideWineMenu").style.visibility = "visible";
-                 document.getElementById("sideWineMenu").style.width = "130px";
              }
         </script>
 
