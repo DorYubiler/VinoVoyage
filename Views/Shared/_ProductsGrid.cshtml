@@ -32,6 +32,8 @@
                 <div class="productButtons" data-product-available="@prod.ProductID">
                     <button class="addWineBtn">Buy Now</button>
                     <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                    <button class="addToCart" onclick="addToList('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+
                 </div>
             }
             else

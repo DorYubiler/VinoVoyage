@@ -247,10 +247,11 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = total;
         }
 
-        public ActionResult SortProducts(string sortBy)
+        public ActionResult SortProducts(string sortBy ,string wineColor)
         {
-            var products = db.Products.AsQueryable();
-
+            wineColor=(wineColor.Substring(0,wineColor.Length-1)).ToLower();
+            var products = db.Products.Where(p=>p.Type.ToString()==wineColor).AsQueryable();
+            System.Console.WriteLine(products);
             switch (sortBy)
             {
                 case "PLH":

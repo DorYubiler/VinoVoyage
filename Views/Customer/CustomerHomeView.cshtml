@@ -179,7 +179,7 @@
                 </div>
 
                 <div id="AllWines" class="tabcontent">
-                    <select class="sortselect" id="sort">
+                    <select class="sortselect" id="sortAll" data-wine-color="AllWines">
                         <option value="">Sort by</option>
                         <option value="PLH">Price: Low-High</option>
                         <option value="PHL">Price: High-Low</option>
@@ -188,57 +188,12 @@
                     <h1 class="titles">all wines</h1>
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products)
-                        @*@foreach (ProductModel prod in Model.products)
-        {
-            <div class="prodCard">
-                <div class="imageContainer">
-                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                    <div class="desctiprionLayer">
-                        <div class="desctiprionLayerText">@prod.Description</div>
-                    </div>
-                </div>
 
-                <div class="prodDesctiption">
-                    <h1>@prod.ProductName</h1>
-                    <div class="originPrice">
-                        <h2>@prod.Origin</h2>
-                        @if (prod.NewPrice != 0)
-                        {
-
-                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                            <h2>@(prod.NewPrice)₪</h2>
-                        }
-                        else
-                        {
-                            <h2>@(prod.Price)₪</h2>
-                        }
-                    </div>
-
-                    @if (prod.Amount != 0)
-                    {
-                        <div class="productButtons" data-product-available="@prod.ProductID">
-                            <button class="addWineBtn">Buy Now</button>
-                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                            <div class="outOfStockLayer">
-                                <div class="outOfStockText">out of stock</div>
-                            </div>
-                            <button class="addToCart"><i class="fas fa-bell"></i></button>
-                        </div>
-
-                    }
-                </div>
-            </div>
-        }*@
                     </div>
                 </div>
 
                 <div id="Whites" class="tabcontent">
-                    <select class="sortselect" id="sort">
+                    <select class="sortselect" id="sortWhite" data-wine-color="Whites">
                         <option value="">Sort by</option>
                         <option value="PLH">Price: Low-High</option>
                         <option value="PHL">Price: High-Low</option>
@@ -247,58 +202,13 @@
                     <h1 class="titles">Whites</h1>
                     <div class="prodGrid">
 
-                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "white"))
-                        {
-                            <div class="prodCard">
-                                <div class="imageContainer">
-                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                    <div class="desctiprionLayer">
-                                        <div class="desctiprionLayerText">@prod.Description</div>
-                                    </div>
-                                </div>
-
-                                <div class="prodDesctiption">
-                                    <h1>@prod.ProductName</h1>
-                                    <div class="originPrice">
-                                        <h2>@prod.Origin</h2>
-                                        @if (prod.NewPrice != 0)
-                                        {
-
-                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                            <h2>@(prod.NewPrice)₪</h2>
-                                        }
-                                        else
-                                        {
-                                            <h2>@(prod.Price)₪</h2>
-                                        }
-                                    </div>
-
-                                    @if (prod.Amount != 0)
-                                    {
-                                        <div class="productButtons" data-product-available="@prod.ProductID">
-                                            <button class="addWineBtn">Buy Now</button>
-                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                            <div class="outOfStockLayer">
-                                                <div class="outOfStockText">out of stock</div>
-                                            </div>
-                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                        </div>
-
-                                    }
-                                </div>
-                            </div>
-                        }
+                        @Html.Partial("_ProductsGrid",Model.products.Where(p=>p.Type.ToString()=="white"))
                     </div>
 
                 </div>
 
                 <div id="Reds" class="tabcontent">
-                    <select class="sortselect" id="sort">
+                    <select class="sortselect" id="sortRed" data-wine-color="Reds">
                         <option value="">Sort by</option>
                         <option value="PLH">Price: Low-High</option>
                         <option value="PHL">Price: High-Low</option>
@@ -307,57 +217,12 @@
                     <h1 class="titles">Reds</h1>
                     <div class="prodGrid">
 
-                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "red"))
-                        {
-                            <div class="prodCard">
-                                <div class="imageContainer">
-                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                    <div class="desctiprionLayer">
-                                        <div class="desctiprionLayerText">@prod.Description</div>
-                                    </div>
-                                </div>
-
-                                <div class="prodDesctiption">
-                                    <h1>@prod.ProductName</h1>
-                                    <div class="originPrice">
-                                        <h2>@prod.Origin</h2>
-                                        @if (prod.NewPrice != 0)
-                                        {
-
-                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                            <h2>@(prod.NewPrice)₪</h2>
-                                        }
-                                        else
-                                        {
-                                            <h2>@(prod.Price)₪</h2>
-                                        }
-                                    </div>
-
-                                    @if (prod.Amount != 0)
-                                    {
-                                        <div class="productButtons" data-product-available="@prod.ProductID">
-                                            <button class="addWineBtn">Buy Now</button>
-                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                            <div class="outOfStockLayer">
-                                                <div class="outOfStockText">out of stock</div>
-                                            </div>
-                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                        </div>
-
-                                    }
-                                </div>
-                            </div>
-                        }
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
                     </div>
 
                 </div>
                 <div id="Roses" class="tabcontent">
-                    <select class="sortselect" id="sort">
+                    <select class="sortselect" id="sortRose" data-wine-color="Roses">
                         <option value="">Sort by</option>
                         <option value="PLH">Price: Low-High</option>
                         <option value="PHL">Price: High-Low</option>
@@ -365,53 +230,7 @@
                     </select>
                     <h1 class="titles">Rose</h1>
                     <div class="prodGrid">
-
-                        @foreach (ProductModel prod in Model.products.Where(p => p.Type.ToString() == "rose"))
-                        {
-                            <div class="prodCard">
-                                <div class="imageContainer">
-                                    <img src="~/UI/img/wines/@(prod.ProductName)@(prod.ProductID.ToString()).jpg" alt="wine" style="width:100%" class="prodImage" />
-                                    <div class="desctiprionLayer">
-                                        <div class="desctiprionLayerText">@prod.Description</div>
-                                    </div>
-                                </div>
-
-                                <div class="prodDesctiption">
-                                    <h1>@prod.ProductName</h1>
-                                    <div class="originPrice">
-                                        <h2>@prod.Origin</h2>
-                                        @if (prod.NewPrice != 0)
-                                        {
-
-                                            <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                                            <h2>@(prod.NewPrice)₪</h2>
-                                        }
-                                        else
-                                        {
-                                            <h2>@(prod.Price)₪</h2>
-                                        }
-                                    </div>
-
-                                    @if (prod.Amount != 0)
-                                    {
-                                        <div class="productButtons" data-product-available="@prod.ProductID">
-                                            <button class="addWineBtn">Buy Now</button>
-                                            <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="productButtons" data-not-in-stock="@prod.ProductName">
-                                            <div class="outOfStockLayer">
-                                                <div class="outOfStockText">out of stock</div>
-                                            </div>
-                                            <button class="addToCart"><i class="fas fa-bell"></i></button>
-                                        </div>
-
-                                    }
-                                </div>
-                            </div>
-                        }
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
                     </div>
                 </div>
                 <div id="Specials" class="tabcontent">
@@ -603,24 +422,26 @@
 
 
 
-                $(document).ready(function () {
-                    $('#sort').change(function () {
+                $(document).ready(function() {
+                    $('.sortselect').change(function() {
                         var sortBy = $(this).val();
-                        $ajax({
-                            url: '@Url.Action("SortProducts", "Customer")',
+                        var wineColor = $(this).data('wine-color'); // Used for identifying the correct div to update
+
+                        $.ajax({
+                            url: '@Url.Action("SortProducts", "Customer")', // Make sure this points to your actual controller and action
                             type: 'GET',
-                            data: { sortBy: sortBy },
-                            success: function (data) {
-                                $('.prodGrid').html(data);
+                            data: { sortBy: sortBy, wineColor: wineColor }, // wineColor is kept for client-side logic, not needed server-side
+                            success: function(data) {
+                                $('#' + wineColor + ' .prodGrid').html(data); // Updates the correct grid
                             },
-                            error: function () {
-                                alert('Error occurred');
+                            error: function(error) {
+                                console.log('Error: ', error);
                             }
                         });
                     });
                 });
 
-               
+
             </script>
 
             <!-- bring them back now -->
