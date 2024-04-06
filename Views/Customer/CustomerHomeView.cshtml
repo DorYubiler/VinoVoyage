@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel=" stylesheet" href="~/UI/css/Style.css"/>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/UI/JS/CostumerScript.js"></script>
+    <script src="~/UI/JS/CostumerScript.js"></script>   
 </head>
 <body>
     <div id="main" class="window">
@@ -116,6 +116,9 @@
                     border-radius: 1px;
                     color: white;
                     margin: 0 4px 0 0;
+                }
+                td .name {
+                    color: blue;
                 }
             </style>
             <div class="cartList">
@@ -241,7 +244,6 @@
                     </select>
                     <h1 class="titles">Whites</h1>
                     <div class="prodGrid">
-
                         @Html.Partial("_ProductsGrid",Model.products.Where(p=>p.Type.ToString()=="white"))
                     </div>
 
