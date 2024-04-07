@@ -21,6 +21,7 @@ namespace VinoVoyage.Dal
 
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<WishListModel> wishList { get; set; }
+        public DbSet<ShippingModel> ShippingList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

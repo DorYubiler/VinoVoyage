@@ -214,10 +214,15 @@
     <Compile Include="Migrations\202404061309303_myMigration.Designer.cs">
       <DependentUpon>202404061309303_myMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404070934260_ShippingModel.cs" />
+    <Compile Include="Migrations\202404070934260_ShippingModel.Designer.cs">
+      <DependentUpon>202404070934260_ShippingModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ShippingModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\WishListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -323,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404061309303_myMigration.resx">
       <DependentUpon>202404061309303_myMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404070934260_ShippingModel.resx">
+      <DependentUpon>202404070934260_ShippingModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
