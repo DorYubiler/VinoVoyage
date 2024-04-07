@@ -15,5 +15,17 @@ function closeNav(idColse, idOpen) {
 
 }
 
+function closeAllPopups() {
+    var popups = document.getElementsByClassName("popup");
+    for (var i = 0; i < popups.length; i++) {
+        popups[i].style.display = "none";
+    }
+}
+function togglePaymentPopup() {
+    closeAllPopups();
+    var popup = document.getElementById("paymentPopup");
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
+
 
 

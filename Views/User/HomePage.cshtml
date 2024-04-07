@@ -23,16 +23,7 @@
         <a href="#wishlist"><i class="fa fa-heart"></i></a>
         @*<input type="text" placeholder="SEARCH...">*@
     </div>
-    @*<script>
-        //function myFunction() {
-        //    var x = document.getElementById("myTopnav");
-        //    if (x.className === "topnav") {
-        //        x.className += " responsive";
-        //    } else {
-        //        x.className = "topnav";
-        //    }
-        //}
-    </script>*@
+
     <!-- photo slideshow -->
     <div class="slideshow-container">
         <div class="mySlides fade">
@@ -71,49 +62,6 @@
         </div>
     </div>
     <br>
-    <!-- script for slideshow functionality: arrows and automatic change -->
-    @*<script>
-        ////script for slideshow functionality: arrows and automatic change
-        //let slideIndex = 1;
-        //let slideInterval; // Variable to store the interval ID
-
-        //function showSlides(n = slideIndex) {
-        //    let i;
-        //    let slides = document.getElementsByClassName("mySlides");
-        //    let dots = document.getElementsByClassName("dot");
-
-        //    // Reset the interval every time showSlides is called to ensure consistent timing
-        //    clearInterval(slideInterval);
-        //    slideInterval = setInterval(function () { plusSlides(1); }, 3000);
-
-        //    if (n > slides.length) { slideIndex = 1 }
-        //    if (n < 1) { slideIndex = slides.length }
-
-        //    for (i = 0; i < slides.length; i++) {
-        //        slides[i].style.display = "none";
-        //    }
-        //    for (i = 0; i < dots.length; i++) {
-        //        dots[i].className = dots[i].className.replace(" active", "");
-        //    }
-
-        //    slides[slideIndex - 1].style.display = "block";
-        //    dots[slideIndex - 1].className += " active";
-        //}
-        //showSlides(slideIndex);
-
-        //// Next/previous controls
-        //function plusSlides(n) {
-        //    showSlides(slideIndex += n);
-        //}
-
-        //// Thumbnail image controls
-        //function currentSlide(n) {
-        //    showSlides(slideIndex = n);
-
-        //}
-    </script>*@
-
-
     <div id="loginPopup" class="popup">
         <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         @using (Html.BeginForm("Login", "User", FormMethod.Post, new {@id="loginForm", }))
@@ -134,11 +82,6 @@
         <div id="LoginValidationErrors"></div>
     </div>
 
-    @*<script>
-       
-
-    </script>*@
-@* signin popup not clisong, need to figure it !!!!!!!!*@
 <div id="SignupPopup" class="popup">
     <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
     @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {@id="signupForm" }))
@@ -163,65 +106,12 @@
 </div>
 
 
-@*<span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-        @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {onsubmit ="return RegisterValidateForm()"}))
-        {
-            <h1>VINOVOYAGE</h1>
-            <h2>SIGNUP AND START EXPLORING WITH US</h2>
-            <div id="elementContainer">
-                @Html.AntiForgeryToken()
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Username, new { @class = "custom-label" })
-                    @Html.TextBoxFor(m => m.Username, new { @class = "custom-textbox form-control" })
-                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "custom-validation-message" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "custom-label" })
-                    @Html.PasswordFor(m => m.Password, new { @class = "custom-textbox form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "custom-validation-message" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "custom-label" })
-                    @Html.TextBoxFor(m => m.Email, new { @class = "custom-textbox form-control" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "custom-validation-message" })
-                </div>
-                <button id="SignUp" name="SignUp" type="submit" class="popUpButton">Register</button>
-            </div>
-        }
-        <div id="registervalidationErrors"></div>
-    </div>*@
-
-@*< script >
-    /*// JavaScript function to close all popups
-    function closePopups() {
-        var popups = document.getElementsByClassName("popup");
-        for (var i = 0; i < popups.length; i++) {
-            popups[i].style.display = "none";
-        }
-    }
-    function togglePopup() {
-        closePopups();
-        var popup = document.getElementById("loginPopup");
-        popup.style.display = (popup.style.display === "none") ? "block" : "none";
-    }
-    function toggleSignupPopup() {
-        closePopups();
-        var popup = document.getElementById("SignupPopup");
-        popup.style.display = (popup.style.display === "none") ? "block" : "none";
-    }*/
-</ script >
 
 
 
 
-
-< !--bring them back now -->*@
+@*< !--bring them back now -->*@
 <div id = "bthn" lang="en"></div>
-@*<script>
-
-    </script>*@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/UI/JS/HomePagejs.js"></script>
 

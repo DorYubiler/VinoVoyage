@@ -261,6 +261,7 @@
     <Content Include="UI\img\slideshow\vinowine2.jpeg" />
     <Content Include="UI\JS\AdminJS.js" />
     <Content Include="UI\JS\CostumerScript.js" />
+    <Content Include="UI\JS\HomePagejs.js" />
     <Content Include="UI\JS\ShowDiv.js" />
     <Content Include="UI\JS\Slideshow.js" />
     <Content Include="Web.config" />
@@ -287,6 +288,7 @@
     <Content Include="Views\Customer\CheckoutView.cshtml" />
     <Content Include="Views\Product\CartView.cshtml" />
     <Content Include="Views\Shared\_ProductsGrid.cshtml" />
+    <Content Include="Views\Shared\_creitCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

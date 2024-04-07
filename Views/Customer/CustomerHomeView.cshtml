@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel=" stylesheet" href="~/UI/css/Style.css"/>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/UI/JS/CostumerScript.js"></script>
+    <script src="~/UI/JS/CostumerScript.js"></script>   
 </head>
 <body>
     <div id="main" class="window">
@@ -28,8 +28,8 @@
             </a>*@
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
             <div class="aDropdown">
-                @*               <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
-                *@<div class="dropContent">
+                <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
+                <div class="dropContent">
                     <a href="#link1">profile</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
@@ -121,6 +121,9 @@
                     border-radius: 1px;
                     color: white;
                     margin: 0 4px 0 0;
+                }
+                td .name {
+                    color: blue;
                 }
             </style>
             <div class="cartList">
@@ -237,18 +240,18 @@
                 </div>
             </div>
 
-            <div id="Whites" class="tabcontent">
-                <select class="sortselect" id="sortWhite" data-wine-color="Whites">
-                    <option value="">Sort by</option>
-                    <option value="PLH">Price: Low-High</option>
-                    <option value="PHL">Price: High-Low</option>
-                    <option value="popular">by popularity</option>
-                </select>
-                <h1 class="titles">Whites</h1>
-                <div class="prodGrid">
+                <div id="Whites" class="tabcontent">
+                    <select class="sortselect" id="sortWhite" data-wine-color="Whites">
+                        <option value="">Sort by</option>
+                        <option value="PLH">Price: Low-High</option>
+                        <option value="PHL">Price: High-Low</option>
+                        <option value="popular">by popularity</option>
+                    </select>
+                    <h1 class="titles">Whites</h1>
+                    <div class="prodGrid">
 
-                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
-                </div>
+                        @Html.Partial("_ProductsGrid",Model.products.Where(p=>p.Type.ToString()=="white"))
+                    </div>
 
             </div>
 
