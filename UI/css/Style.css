@@ -299,18 +299,21 @@ p, .custom-label {
 /* ----------------------------------------------- */
 /* ---------------  general button --------------- */
 button {
-    background-color: #bc5a45;
+    background-color: black;
     color: #f4e1d2;
-    padding: 14px 20px;
-    margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 50%;
-    border-radius: 13px;
+    border-radius: 7px;
+    text-transform: uppercase;
+    padding: 8px 0 8px 0;
+    font-family: 'Lucida Console';
+    font-size: 14px;
 }
 
     button:hover {
-        opacity: 0.8;
+        color: #B07C70;
+        background-color: black;
     }
 
 @media screen and (max-width: 300px) {
