@@ -1056,3 +1056,20 @@ button {
     outline: none;
     cursor: pointer;
 }*/
+
+.sortselect {
+    border: none;
+    outline: 0;
+    padding: 7px;
+    color: white;
+    background-color: #000;
+    cursor: pointer;
+    width: auto;
+    flex: 0 0 auto;
+    font-family: 'Lucida Console';
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    border-radius:13px;
+}
