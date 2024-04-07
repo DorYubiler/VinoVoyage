@@ -43,24 +43,35 @@
                         </div>
 
                         <div id="paymentPopup" class="popup">
+                            <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
                             <div class="popup-container">
-                                <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-                                <h3>Payment</h3>
-                                <div class="paymentTitles">Accepted Cards</div>
-                                <div class="icon-container">
-                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                <div class="popup-col">
+
+                                    <h3>Payment</h3>
+                                    <div class="paymentTitles">Accepted Cards</div>
+                                    <div class="icon-container">
+                                        <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                        <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                        <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                    </div>
+                                    <div class="paymentTitles">Name on card</div>
+                                    <input type="text" class="popup-input" id="cname" name="cardname" placeholder="Full Name">
+                                    <div class="paymentTitles">Credit card number</div>
+                                    <input type="text" class="popup-input" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                                    <div class="paymentTitles">Exp Date</div>
+                                    <input type="date" class="popup-input" style="text-transform:uppercase;" id="expmonth" name="expmonth">
+                                    <button type="submit">continue</button>
+                                    <div id="LoginValidationErrors"></div>
                                 </div>
-                                <div class="paymentTitles">Name on card</div>
-                                <input type="text" class="popup-input" id="cname" name="cardname" placeholder="Full Name">
-                                <div class="paymentTitles">Credit card number</div>
-                                <input type="text" class="popup-input" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                                <div class="paymentTitles">Exp Date</div>
-                                <input type="date" class="popup-input" style="text-transform:uppercase;" id="expmonth" name="expmonth">
+                                <div class="popup-col">
+                                    <h3>Shipping Address</h3>
+                                    <div class="paymentTitles">Name</div>
+                                    <input type="text" class="popup-input" id="username" name="username" placeholder="Full Name">
+                                    <div class="paymentTitles">Address</div>
+                                    <input type="text" class="popup-input" id="caddress" name="caddress" placeholder="Full Name">
+                                </div>
                                 <button type="submit">continue</button>
-                                <div id="LoginValidationErrors"></div>
                             </div>
                         </div>
                     </div>
