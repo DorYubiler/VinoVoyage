@@ -362,12 +362,12 @@ button {
     box-shadow: 0 0 30px rgba(0, 0, 1, 0.9);
     z-index: 9999;
     text-align: center;
-    overflow: auto;
+    width: 600px;
 }
 
     .popup h3 {
         color: black;
-        font-size: 18px;
+        font-size: 14px;
         font-family: 'Verdana';
         text-transform: uppercase;
         font-weight: 600;
@@ -375,7 +375,7 @@ button {
 
     .popup .paymentTitles {
         color: black;
-        font-size: 16px;
+        font-size: 13px;
         font-family: 'Verdana';
         text-transform: capitalize;
         font-weight: 400;
@@ -388,12 +388,30 @@ button {
     text-transform: capitalize;
     padding: 3px 0 5px 10px;
     text-align: left;
-    margin: 0 0 40px 0;
+    margin: 0 0 20px 0;
+    width: 180px;
+}
+
+.popup-inputCVV {
+    background-color: #f1f1f1;
+    font-family: 'Verdana';
+    font-size: 14px;
+    text-transform: capitalize;
+    padding: 3px 0 5px 10px;
+    text-align: left;
+    margin: 0 0 20px 0;
+    width: 60px;
+}
+.payment-info {
+    margin: 80px 0 0 0;
+}
+.dateCode {
+    display: inline-block;
 }
 .popup input[type=text]::placeholder, input[type=password]::placeholder, .custom-textbox::placeholder {
     color: black;
     background-color: #f1f1f1;
-    font-family: 'Lucida Console';
+    font-family: 'Verdana';
     font-weight: 200;
     font-size: 13px;
     border: none;
@@ -1022,23 +1040,33 @@ button {
 }
 
 .icon-container {
-    margin-bottom: 20px;
-    padding: 7px 0;
     font-size: 24px;
+    margin: 0 0 10px 0;
 }
 
-/*.popup-container {
-    position: absolute;
-    width:100%;
-    background-color: aqua;
+.popup-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
+    flex-flow: row;
+    text-align: left;
+    margin: 0 0 0 30px;
 }
 
-.popup-container.active{
+.popupTotal {
+    color: black;
+    font-size: 18px;
+    font-family: 'Verdana';
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 18px 0 0 0;
+}
+.popup-col {
+    width: 300px;
+}
+
+.adress-info {
+    margin: 39px 0 0 0;
+}
+/*.popup-container.active{
     opacity: 1;
     pointer-events: auto;
 }
@@ -1066,7 +1094,6 @@ button {
     outline: none;
     cursor: pointer;
 }*/
-
 .sortselect {
     border: none;
     outline: 0;
@@ -1081,5 +1108,5 @@ button {
     text-align: center;
     display: inline-block;
     margin: 0 10px 0 0;
-    border-radius:13px;
+    border-radius: 13px;
 }

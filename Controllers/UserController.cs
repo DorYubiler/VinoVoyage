@@ -32,7 +32,6 @@ namespace VinoVoyage.Controllers
             return View();
         }
         [HttpPost]
- 
         public JsonResult SignUp(String username, String password, String email)
         {   UserModel user = new UserModel();
             user.Username = username;
@@ -42,7 +41,6 @@ namespace VinoVoyage.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
                     db.Users.Add(user);
                     db.SaveChanges();
                     return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
@@ -109,9 +107,6 @@ namespace VinoVoyage.Controllers
             // In case of model state invalid.
             return Json(new { success = false });
         }
-
-
-
-
     }
+
 }
