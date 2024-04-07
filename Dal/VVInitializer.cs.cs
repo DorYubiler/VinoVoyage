@@ -60,14 +60,23 @@ namespace VinoVoyage.Dal
             orders.ForEach(s => context.Orders.Add(s));
             context.SaveChanges();
 
-            //var wishlist = new List<WishListModel>
-            //{
-            //    new WishListModel{ Username="shanik",ProductID=14},
-            //    new WishListModel{ Username="shanik",ProductID=15},
+            var wishlist = new List<WishListModel>
+            {
+                new WishListModel{ Username="shanik",ProductID=14},
+                new WishListModel{ Username="shanik",ProductID=15},
 
-            //};
-            //wishlist.ForEach(s => context.wishList.Add(s));
-            //context.SaveChanges();
+            };
+            wishlist.ForEach(s => context.wishList.Add(s));
+            context.SaveChanges();
+
+            var ShippingList = new List<ShippingModel>
+            {
+                new ShippingModel{ UserName="shanik",OrderDate=DateTime.Today,ShippingDate=DateTime.Now.AddDays(14),Address="Bialik 1,Be'er Sheva"},
+                 new ShippingModel{ UserName="shanik",OrderDate=DateTime.Now.AddDays(-3),ShippingDate=DateTime.Now.AddDays(11),Address="Bialik 1,Be'er Sheva"},
+
+            };
+            ShippingList.ForEach(s => context.ShippingList.Add(s));
+            context.SaveChanges();
         }
 
     }
