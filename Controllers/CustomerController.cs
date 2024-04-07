@@ -368,5 +368,16 @@ namespace VinoVoyage.Controllers
             }
             return PartialView("_ProductsGrid", products);
         }
+
+        public ActionResult SearchProducts(string query)
+        {
+            // Simulate fetching filtered products from database
+            // Replace this with your actual database query using Entity Framework, Dapper, or another ORM
+            var filteredProducts = db.Products.Where(p=> p.Type.ToString() == query || p.Winery.ToString() == query ||p.ProductName.ToString() == query || p.Origin.ToString() == query || p.Description.ToString() == query);
+            
+
+            // Return the Partial View with the filtered products
+            return PartialView("_ProductsGrid", filteredProducts);
+        }
     }
 }

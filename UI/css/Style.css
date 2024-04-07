@@ -90,29 +90,39 @@ p, .custom-label {
     float: right;
     overflow: hidden;
 }
-/*.filterdropdown {
-    float: right;
-    overflow: hidden;
-    padding-top:80px;
-    padding-right:50px;
+.topnav input[type=text] {
+    float: inherit;
+    padding: 7px 10px;
+    border: none;
     
+    margin-right: 16px;
+    margin-left: 980px;
+    font-size: 14px;
+    background-color: lightgray;
+    color: black;
 }
-.filterbtn {
-    float: right;
-    overflow: hidden;
-    padding-top: 8px;
-    padding-right: 5px;
-    margin: 5px 0px;
-    border-radius:8px;
+.searchButton {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    width:auto
 }
-.filter-options {*/
-    /* Simple transition for the dropdown */
-    /*transition: all 0.3s ease;
-}*/
+.searchdiv{
+    padding:10px 10px;
+}
 
-.sortselect{
-    background-color:blue;
-    float:right;
+.searchForm {
+    width: auto;
+    margin-top: 50px;
+}
+
+.sortselect {
+    background-color: blue;
+    float: right;
 }
 
 .hidden {

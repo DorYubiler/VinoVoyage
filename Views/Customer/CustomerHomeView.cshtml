@@ -28,16 +28,21 @@
             </a>*@
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
             <div class="aDropdown">
-                <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
-                <div class="dropContent">
+                @*               <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
+                *@<div class="dropContent">
                     <a href="#link1">profile</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
             </div>
+
             <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
             <a class="split" onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
         </div>
+        <form id="searchForm" class="searchForm">
+            <input type="text" placeholder="Search.." id="search" />
+            <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+        </form>
 
         <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
@@ -207,90 +212,98 @@
             </div>
         </div>
 
-            <div class="main-content">
-                <!-- side navigation bar -->
-                <div class="tab" id="sideWineMenu">
-                    <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
-                    <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
-                    <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
-                    <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
-                    <button class="tablinks" onclick="openWindow(event, 'Sales')">On sale</button>
-                    <button class="tablinks" onclick="closeSide()">close menu</button>
-                </div>
+        <div class="main-content">
+            <!-- side navigation bar -->
+            <div class="tab" id="sideWineMenu">
+                <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
+                <button class="tablinks" onclick="openWindow(event, 'Whites')">White</button>
+                <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
+                <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
+                <button class="tablinks" onclick="openWindow(event, 'Sales')">On sale</button>
+                <button class="tablinks" onclick="closeSide()">close menu</button>
+            </div>
 
-                <div id="AllWines" class="tabcontent">
-                    <select class="sortselect" id="sortAll" data-wine-color="AllWines">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">all wines</h1>
-                    <div class="prodGrid">
-                        @Html.Partial("_ProductsGrid", Model.products)
+            <div id="AllWines" class="tabcontent">
+                <select class="sortselect" id="sortAll" data-wine-color="AllWines">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">all wines</h1>
+                <div class="prodGrid">
+                    @Html.Partial("_ProductsGrid", Model.products)
 
-                    </div>
-                </div>
-
-                <div id="Whites" class="tabcontent">
-                    <select class="sortselect" id="sortWhite" data-wine-color="Whites">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">Whites</h1>
-                    <div class="prodGrid">
-
-                        @Html.Partial("_ProductsGrid",Model.products.Where(p=>p.Type.ToString()=="white"))
-                    </div>
-
-                </div>
-
-                <div id="Reds" class="tabcontent">
-                    <select class="sortselect" id="sortRed" data-wine-color="Reds">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">Reds</h1>
-                    <div class="prodGrid">
-
-                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
-                    </div>
-
-                </div>
-                <div id="Roses" class="tabcontent">
-                    <select class="sortselect" id="sortRose" data-wine-color="Roses">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">Rose</h1>
-                    <div class="prodGrid">
-                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
-                    </div>
-                </div>
-                <div id="Sales" class="tabcontent">
-                    <select class="sortselect" id="sortSales" data-wine-color="Sales">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">On sale</h1>
-                    <div class="prodGrid">
-                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
-
-                    </div>
                 </div>
             </div>
 
+            <div id="Whites" class="tabcontent">
+                <select class="sortselect" id="sortWhite" data-wine-color="Whites">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">Whites</h1>
+                <div class="prodGrid">
+
+                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
+                </div>
+
+            </div>
+
+            <div id="Reds" class="tabcontent">
+                <select class="sortselect" id="sortRed" data-wine-color="Reds">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">Reds</h1>
+                <div class="prodGrid">
+
+                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
+                </div>
+
+            </div>
+            <div id="Roses" class="tabcontent">
+                <select class="sortselect" id="sortRose" data-wine-color="Roses">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">Rose</h1>
+                <div class="prodGrid">
+                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
+                </div>
+            </div>
+            <div id="Sales" class="tabcontent">
+                <select class="sortselect" id="sortSales" data-wine-color="Sales">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">On sale</h1>
+                <div class="prodGrid">
+                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
+
+                </div>
+            </div>
+            <div id="searchdiv" class="tabcontent" style="display:none;">
+
+                <h1 class="titles">Search results:</h1>
+                <div class="prodGrid">
+                    @*@Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))*@
+
+                </div>
+            </div>
+        </div>
 
 
-            <script>
+
+        <script>
              function plusBtn(button) {
                  var row = $(button).closest('tr');
                  var pID = row.data('productid');
@@ -569,12 +582,30 @@
                     });
                 });
 
+            $('#searchForm').submit(function(e) {
+  e.preventDefault(); // Prevent the form from submitting the traditional way
+  var searchQuery = $('#searchInput').val();
 
-            </script>
+  $.ajax({
+    url: '@Url.Action("SearchProducts", "Customer")', // Adjust the URL to your controller and action
+    type: 'GET',
+    data: { query: searchQuery },
+    success: function(data) {
+      // Replace the content of your products grid with the filtered products
+      $('.searchdiv').html(data);
+    },
+    error: function(xhr, status, error) {
+      // Handle any errors
+      console.error("Search error:", status, error);
+    }
+  });
+});
 
-            <!-- bring them back now -->
-            <div id="bthn" lang="en"></div>
-            <script>
+        </script>
+
+        <!-- bring them back now -->
+        <div id="bthn" lang="en"></div>
+        <script>
                 (function () {
                     var script = document.createElement("script");
                     script.type = "text/javascript";
@@ -589,7 +620,7 @@
 
 
 
-            </script>
-        </div>
+        </script>
+    </div>
 </body>
 </html>
