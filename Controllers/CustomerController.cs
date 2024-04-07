@@ -373,7 +373,7 @@ namespace VinoVoyage.Controllers
         {
             // Simulate fetching filtered products from database
             // Replace this with your actual database query using Entity Framework, Dapper, or another ORM
-            var filteredProducts = db.Products.Where(p=> p.Type.ToString() == query || p.Winery.ToString() == query ||p.ProductName.ToString() == query || p.Origin.ToString() == query || p.Description.ToString() == query);
+            var filteredProducts = db.Products.Where(p=> p.Type.ToString().Contains(query) || p.Winery.ToString().Contains(query) || p.ProductName.ToString().Contains(query) || p.Origin.ToString().Contains(query) || p.Description.ToString().Contains(query));
             
 
             // Return the Partial View with the filtered products

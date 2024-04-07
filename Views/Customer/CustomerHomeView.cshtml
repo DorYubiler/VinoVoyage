@@ -20,12 +20,15 @@
     <div id="main" class="window">
         <!-- top navigation bar -->
         <div class="topnav" id="myTopnav">
-
+            <form id="searchForm" class="searchForm">
+                <input type="text" placeholder="Search.." id="search" />
+                <button type="submit" class="searchButton" onclick="openWindow(event, 'searchdiv')"><i class="fa fa-search"></i></button>
+            </form>
             <!-- user info nav -->
             <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
             @*<a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>*@
+            <i class="fa fa-bars"></i>
+        </a>*@
             @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
             <div class="aDropdown">
                 <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
@@ -39,10 +42,7 @@
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
             <a class="split" onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
         </div>
-        <form id="searchForm" class="searchForm">
-            <input type="text" placeholder="Search.." id="search" />
-            <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
-        </form>
+        
 
         <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
@@ -289,17 +289,16 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">On sale</h1>
-                <div class="prodGrid">
+                <div id="searchgrid" class="prodGrid">
                     @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
 
                 </div>
             </div>
-            <div id="searchdiv" class="tabcontent" style="display:none;">
-
+            <div id="searchdiv" class="tabcontent" >
                 <h1 class="titles">Search results:</h1>
-                <div class="prodGrid">
-                    @*@Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))*@
-
+                <div  id="prodgrid" class="prodGrid">
+                   
+                    
                 </div>
             </div>
         </div>
@@ -587,15 +586,15 @@
 
             $('#searchForm').submit(function(e) {
   e.preventDefault(); // Prevent the form from submitting the traditional way
-  var searchQuery = $('#searchInput').val();
+  var searchField = $('#search').val();
 
   $.ajax({
     url: '@Url.Action("SearchProducts", "Customer")', // Adjust the URL to your controller and action
     type: 'GET',
-    data: { query: searchQuery },
+    data: { query: searchField },
     success: function(data) {
       // Replace the content of your products grid with the filtered products
-      $('.searchdiv').html(data);
+        $('#prodgrid').html(data);
     },
     error: function(xhr, status, error) {
       // Handle any errors
@@ -604,6 +603,8 @@
   });
 });
 
+
+;
         </script>
 
         <!-- bring them back now -->
