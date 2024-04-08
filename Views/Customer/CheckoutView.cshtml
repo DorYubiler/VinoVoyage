@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/UI/JS/CostumerScript.js"></script>
 </head>
 <body>
@@ -43,25 +43,47 @@
                         </div>
 
                         <div id="paymentPopup" class="popup">
-                            <div class="popup-container">
-                                <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-                                <h3>Payment</h3>
-                                <div class="paymentTitles">Accepted Cards</div>
-                                <div class="icon-container">
-                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
+                            <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+                            @using (Html.BeginForm("Payment", "Customer", FormMethod.Post, new { @id = "paymentForm" }))
+                            {
+                                <div class="popup-container">
+                                    <div class="popup-col">
+                                        <div class="popupTotal">total price: @(Session["cartTotal"])</div>
+                                        <div class="adress-info">
+                                            <h3>Shipping Address</h3>
+                                            <div class="paymentTitles">Enter valid shipping adress</div>
+                                            <div class="paymentTitles">Name</div>
+                                            <input type="text" class="popup-input" id="username" name="username" placeholder="Full Name" required>
+                                            <div class="paymentTitles">street</div>
+                                            <input type="text" class="popup-input" id="cstreet" name="cstreet" placeholder="street" required>
+                                            <div class="paymentTitles">city</div>
+                                            <input type="text" class="popup-input" id="city" name="city" placeholder="city" required>
+                                        </div>
+                                    </div>
+                                    <div class="popup-col">
+                                        <div class="payment-info">
+                                            <h3>Payment</h3>
+                                            <div class="paymentTitles">Accepted Cards</div>
+                                            <div class="icon-container">
+                                                <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                                <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                            </div>
+                                            <div class="paymentTitles">Credit card number</div>
+                                            <input type="text" class="popup-input" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
+                                            <div class="paymentTitles">Exp Date</div>                                         
+                                            <div class="dateCode">
+                                                <input type="month" class="popup-input" style="text-transform:uppercase;" id="expDate" name="expDate" min="2024-04" onchange="validateMonth(this)" required>
+                                                <input type="text" class="popup-inputCVV" style="text-transform:uppercase;" id="cvv" name="cvv" placeholder="CVV" required>
+                                                <div id="expDateError" style="display: none;">Please select a month from the current month forward.</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="paymentTitles">Name on card</div>
-                                <input type="text" class="popup-input" id="cname" name="cardname" placeholder="Full Name">
-                                <div class="paymentTitles">Credit card number</div>
-                                <input type="text" class="popup-input" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                                <div class="paymentTitles">Exp Date</div>
-                                <input type="date" class="popup-input" style="text-transform:uppercase;" id="expmonth" name="expmonth">
-                                <button type="submit">continue</button>
-                                <div id="LoginValidationErrors"></div>
-                            </div>
+                                <button type="submit" onclick="checkPayment()">continue</button>
+                            }
+                            <div id="paymentValidationErrors"></div>
                         </div>
                     </div>
                     <div class="cartTable">

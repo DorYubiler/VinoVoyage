@@ -41,6 +41,38 @@ namespace VinoVoyage.Controllers
             return View("CustomerHomeView", uvm);
         }
 
+        [HttpPost]
+        public JsonResult Payment(String cityAddress)
+        {
+            ShippingModel newShipping = new ShippingModel();
+            UserModel user = Session["userinfo"] as UserModel;
+            DateTime today = DateTime.Today;
+            DateTime shipDay = today.AddDays(14);
+            newShipping.UserName = user.Username;
+            newShipping.OrderDate = today;
+            newShipping.ShippingDate = shipDay;
+            newShipping.Address = cityAddress;
+
+            db.ShippingList.Add(newShipping);
+            db.SaveChanges();
+
+            var allorders = Session["userCart"] as List<OrderModel>;
+
+            foreach (OrderModel order in allorders)
+            {
+                // delete from orders db
+                var orderToDelete = db.Orders.FirstOrDefault(o => o.ProductID == order.ProductID && o.Username == order.Username);
+                db.Orders.Remove(orderToDelete);
+                db.SaveChanges();
+            }
+
+            // reset user's cart session
+            Session["cartTotal"] = 0;
+            allorders.Clear();
+            Session["userCart"] = allorders;
+
+            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
+        }
         public ActionResult CheckoutView()
         {
             var user = db.Users.Find("shanik");
@@ -218,9 +250,9 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = 0;
             allorders.Clear();
             Session["userCart"] = allorders;
+
             return Json(new { success = true, message = "cart is empty" });
         }
-
         [HttpPost]
         public ActionResult DeleteFromList(int prodId)
         {

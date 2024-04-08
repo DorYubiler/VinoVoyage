@@ -166,6 +166,7 @@ function checkSignup(event) {
     event.preventDefault();
     $("#registervalidationErrors").empty();
     // Updated IDs to match the HTML
+
     var uname = $('#Regusername').val();
     if (uname.length < 3 || uname.length > 10) {
         $("#registervalidationErrors").html("Invalid username").show();
