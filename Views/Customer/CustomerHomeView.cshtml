@@ -24,7 +24,7 @@
                 <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
                 <div class="dropdown-content">
                     <a href="#link1">update info</a>
-                    <a href="#">track shipping</a>
+                    <a onclick="toggleTrackPopup()">track shipping</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
             </div>
@@ -39,6 +39,13 @@
                     <button type="submit" class="searchButton" onclick="openWindow(event, 'searchdiv')"><i class="fa fa-search"></i></button>
                 </form>
             </div>
+            @if (!(Model.user.Username.Contains("guest")))
+            {
+                <div id="trackPopup" class="popup">
+                    <span onclick="document.getElementById('trackPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    @Html.Partial("_ShippingTrackerView", Model.shipping)
+                </div>
+            }
 
 
         </div>
