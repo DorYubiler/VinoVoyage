@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -16,23 +17,27 @@ namespace VinoVoyage.Controllers
     {
         private VinoVoyageDb db = new VinoVoyageDb();
         // GET: Customer
-        public ActionResult CustomerHomeView()
+        public ActionResult CustomerHomeView(UserModel user)
         {
-            var user = db.Users.Find("shanik");
-            Session["userinfo"] = user as UserModel;
-            //var user = Session["userinfo"] as UserModel;
+            
+    
+            Session["userinfo"] = user as UserModel;       
+             
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();
             uvm.products = db.Products.ToList<ProductModel>();
             uvm.cart = new List<OrderModel>();
             uvm.wishList = new List<WishListModel>();
-
+            uvm.shipping = new List<ShippingModel>();
+            
             if (user != null)
             {
                 ViewBag.Username = user.Username;
                 uvm.cart = db.Orders.Where(order => order.Username == user.Username).ToList();
                 uvm.wishList = db.wishList.Where(item => item.Username == user.Username).ToList();
+                uvm.shipping=db.ShippingList.Where(item=>item.UserName == user.Username).ToList();
+                
             }
 
             Session["userCart"] = uvm.cart;
@@ -45,7 +50,7 @@ namespace VinoVoyage.Controllers
         public JsonResult Payment(String cityAddress)
         {
             ShippingModel newShipping = new ShippingModel();
-            UserModel user = Session["userinfo"] as UserModel;
+            var user = Session["userinfo"] as UserModel;
             DateTime today = DateTime.Today;
             DateTime shipDay = today.AddDays(14);
             newShipping.UserName = user.Username;
@@ -70,13 +75,17 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = 0;
             allorders.Clear();
             Session["userCart"] = allorders;
-
-            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
+            if (user.Username.Contains("guest"))
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Logout", "Customer", user) });
+            }
+            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
         }
-        public ActionResult CheckoutView()
+        public ActionResult CheckoutView(UserModel user)
         {
-            var user = db.Users.Find("shanik");
-            Session["userinfo"] = user as UserModel;
+            /*var user = db.Users.Find("shanik");
+            Session["userinfo"] = user as UserModel;*/
+            Session["userinfo"]=user as UserModel;
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();
@@ -96,8 +105,13 @@ namespace VinoVoyage.Controllers
 
         public ActionResult Logout()
         {
+            
             Session.Clear();
+            List<UserModel> users = db.Users.Where(u => u.Username.Contains("guest")).ToList();
+            db.Users.RemoveRange(users);
             return RedirectToAction("HomePage", "User");
+            
+
         }
 
         public ActionResult Checkout()
@@ -411,5 +425,7 @@ namespace VinoVoyage.Controllers
             // Return the Partial View with the filtered products
             return PartialView("_ProductsGrid", filteredProducts);
         }
+
+        
     }
 }

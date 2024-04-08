@@ -105,5 +105,13 @@ function togglePaymentPopup() {
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
 }
 
+function toggleTrackPopup() {
+    closeAllPopups();
+    var popup = document.getElementById("trackPopup");
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
 
-
+//$(window).on('beforeunload', function () {
+//    // Making an async request to the server
+//    navigator.sendBeacon('/Customer/Logout');
+//});

@@ -15,5 +15,6 @@ namespace VinoVoyage.ViewModel
 
         public List<WishListModel> wishList { get; set; }
         public List<ProductModel> filter { get; set; }
+        public List<ShippingModel> shipping { get; set; }
     }
 }
