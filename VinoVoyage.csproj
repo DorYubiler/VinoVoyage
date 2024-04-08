@@ -294,6 +294,7 @@
     <Content Include="Views\Product\CartView.cshtml" />
     <Content Include="Views\Shared\_ProductsGrid.cshtml" />
     <Content Include="Views\Shared\_creitCart.cshtml" />
+    <Content Include="Views\Shared\_ShippingTrackerView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

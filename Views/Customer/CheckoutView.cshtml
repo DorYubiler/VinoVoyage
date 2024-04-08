@@ -22,13 +22,13 @@
         <!-- user info nav -->
         <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
         <div class="aDropdown">
-            <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
+            <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @Model.user.Username</a>
             <div class="dropContent">
                 <a href="#link1">profile</a>
                 <a href="@Url.Action("Logout", "Customer")">logout</a>
             </div>
         </div>
-        <a href="@Url.Action("CustomerHomeView", "Customer", Model.user)" class="split">Back Shopping <i class="fa fa-glass"></i></a>
+        <a href="@Url.Action("CustomerHomeView", "Customer",Model.user)" class="split">Back Shopping <i class="fa fa-glass"></i></a>
     </div>
     <div class="checkoutSideColor">
         <div class="centerCheckout">

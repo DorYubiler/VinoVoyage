@@ -93,9 +93,10 @@ namespace VinoVoyage.Controllers
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     // Return success and a redirect URL.
                     if (user.Role == "customer") {
-                        return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
+                        
+                        return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
                     }
-                    return Json(new { success = true, redirectUrl = Url.Action("AdminHomePage", "Admin") });
+                    return Json(new { success = true, redirectUrl = Url.Action("AdminHomePage", "Admin",user) });
 
                 }
                 else
@@ -106,6 +107,18 @@ namespace VinoVoyage.Controllers
             }
             // In case of model state invalid.
             return Json(new { success = false });
+        }
+
+        public ActionResult LoginGuest()
+        {
+            UserModel model= new UserModel();
+            Random rnd= new Random();
+            int num = rnd.Next(1,500);
+            model.Username = "guest"+num.ToString();
+            model.Password = "123456";
+            model.Email = "guest@guest.com";
+            return RedirectToAction("CustomerHomeView", "Customer", model);
+            
         }
     }
 

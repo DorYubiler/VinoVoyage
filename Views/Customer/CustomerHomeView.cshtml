@@ -120,6 +120,7 @@
                     color: white;
                     margin: 0 4px 0 0;
                 }
+
                 td .name {
                     color: blue;
                 }
@@ -163,7 +164,7 @@
                     total price: @(Session["cartTotal"]) ₪
                 </div>
                 @{ TempData["UserVieModel"] = Model; }
-                <a href="@Url.Action("CheckoutView", "Customer", Model.user)" class="cartActionsBtn">checkout</a>
+                <a href="@Url.Action("CheckoutView", "Customer",Model.user)" class="cartActionsBtn">checkout</a>
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
         </div>
@@ -238,18 +239,18 @@
                 </div>
             </div>
 
-                <div id="Whites" class="tabcontent">
-                    <select class="sortselect" id="sortWhite" data-wine-color="Whites">
-                        <option value="">Sort by</option>
-                        <option value="PLH">Price: Low-High</option>
-                        <option value="PHL">Price: High-Low</option>
-                        <option value="popular">by popularity</option>
-                    </select>
-                    <h1 class="titles">Whites</h1>
-                    <div class="prodGrid">
+            <div id="Whites" class="tabcontent">
+                <select class="sortselect" id="sortWhite" data-wine-color="Whites">
+                    <option value="">Sort by</option>
+                    <option value="PLH">Price: Low-High</option>
+                    <option value="PHL">Price: High-Low</option>
+                    <option value="popular">by popularity</option>
+                </select>
+                <h1 class="titles">Whites</h1>
+                <div class="prodGrid">
 
-                        @Html.Partial("_ProductsGrid",Model.products.Where(p=>p.Type.ToString()=="white"))
-                    </div>
+                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
+                </div>
 
             </div>
 
@@ -292,11 +293,11 @@
 
                 </div>
             </div>
-            <div id="searchdiv" class="tabcontent" >
+            <div id="searchdiv" class="tabcontent">
                 <h1 class="titles">Search results:</h1>
-                <div  id="prodgrid" class="prodGrid">
-                   
-                    
+                <div id="prodgrid" class="prodGrid">
+
+
                 </div>
             </div>
         </div>
@@ -608,17 +609,17 @@
         <!-- bring them back now -->
         <div id="bthn" lang="en"></div>
         <script>
-                (function () {
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
-                    script.setAttribute(
-                        "integrity",
-                        "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
-                    );
-                    script.setAttribute("crossorigin", "anonymous");
-                    document.getElementsByTagName("head")[0].appendChild(script);
-                })();
+            (function () {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
+                script.setAttribute(
+                    "integrity",
+                    "sha384-jQVW0E+wZK5Rv1fyN+b89m7cYY8txH4s3uShzHf1T51hdBTPo7yKL6Yizgr+Gp8C"
+                );
+                script.setAttribute("crossorigin", "anonymous");
+                document.getElementsByTagName("head")[0].appendChild(script);
+            })();
 
 
             function notifymsg() {
