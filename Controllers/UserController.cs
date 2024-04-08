@@ -46,9 +46,9 @@ namespace VinoVoyage.Controllers
                     return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
 
                 }
-                return Json(new { success = false });
+                return Json(new { success = false, errorMsg = "invalid password" });
             }
-            return Json(new { success = false });
+            return Json(new { success = false, errorMsg = "username is alreday taken" });
         }
 
         /* public ActionResult Login(LoginModel model)

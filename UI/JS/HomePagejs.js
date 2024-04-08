@@ -198,7 +198,7 @@ function checkSignup(event) {
                 window.location.href = response.redirectUrl;
             } else {
                 // If login fails, keep the popup open and show error messages.
-                $("#registervalidationErrors").html("Invalid username or password").show();
+                $("#registervalidationErrors").html(response.errorMsg).show();
             }
         },
         error: function () {
