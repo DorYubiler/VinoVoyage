@@ -28,9 +28,10 @@
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
             </div>
-
-            <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
-
+            @if (!(Model.user.Username.Contains("guest")))
+            {
+                <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
+            }
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
             <a class="split" href="#wines" onclick="openSide()"><i class="fa fa-glass"></i> WINES</a>
             <div class="search-container">

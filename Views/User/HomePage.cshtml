@@ -13,12 +13,10 @@
 <body>
     <!-- top navigation bar -->
     <div class="topnav" id="myTopnav">
-        <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
+        <a href="@Url.Action("HomePage","User")"><i class="fa fa-home"></i> VINOVOYAGE</a>
         <a onclick="toggleSignupPopup()"><i class="fa fa-user-plus"></i> REGISTER</a>
         <a onclick="togglePopup()"><i class="fa fa-sign-in"></i> LOGIN</a>
-        <a href="@Url.Action("LoginGuest","User")"> CONTINUE AS GUEST</a>
-        <a href="#wishlist"><i class="fa fa-heart"></i></a>
-        @*<input type="text" placeholder="SEARCH...">*@
+        <a href="@Url.Action("LoginGuest","User")"><i class="fa fa-user-times" aria-hidden="true"></i> CONTINUE AS GUEST</a>
     </div>
 
     <!-- photo slideshow -->
@@ -63,44 +61,40 @@
         <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         @using (Html.BeginForm("Login", "User", FormMethod.Post, new {@id="loginForm", }))
         {
-            <h1>VINOVOYAGE</h1>
-            <h2>LOGIN TO JOIN OUR VOYAGE</h2>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <p>USERNAME</p>
-                <input type="text" id="username" name="UserName" placeholder="" required />
-            </div>
-            <div class="form-group">
-                <p>PASSWORD</p>
-                <input type="password" id="password" name="Password" placeholder="" required />
-            </div>
-            <button class="popUpButton" id="showLoginForm" type="submit" >Login</button>
-        }
-        <div id="LoginValidationErrors"></div>
-    </div>
+            <div class="popup-container">
+                <div class="popup-colCenter">
+                    <div class="titles" style="text-align:start;">VINOVOYAGE</div>
+                    <h3>login</h3>
+                    <h3></h3>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="hometTitles">USERNAME</div>
+                    <input type="text" id="username" name="UserName" placeholder="" required />
+                    <div class="hometTitles">PASSWORD</div>
+                    <input type="password" id="password" name="Password" placeholder="" required />
+                    <button class="popUpButton" id="showLoginForm" type="submit" style="margin: 13px 0 0 0;">Login</button>
+                    <div id="LoginValidationErrors" class="errorMsg"></div>
+                </div></div>}</div>
 
-<div id="SignupPopup" class="popup">
-    <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-    @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {@id="signupForm" }))
-    {
-        <h1> VINOVOYAGE </h1>
-        <h2> LOGIN TO JOIN OUR VOYAGE</h2>
-        <div class="form-group">
-            <p>Username</p>
-            <input type="text" id="Regusername" name="UserName" placeholder="" required />
-        </div>
-        <div class="form-group">
-            <p>Password</p>
-            <input type="password" id="Regpassword" name="Password" placeholder="" required />
-        </div>
-        <div class="form-group">
-            <p>Email</p>
-            <input type="email" id="Regemail" name="Email" placeholder="example@gmil.com" required />
-        </div>
-        <button class="popUpButton"  type="submit">Signup</button>
-    }
-    <div id="registervalidationErrors"></div>
-</div>
+    <div id="SignupPopup" class="popup">
+        <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new {@id="signupForm" }))
+        {
+            <div class="popup-container">
+                <div class="popup-colCenter">
+                    <div class="titles" style="text-align:start;">VINOVOYAGE</div>
+                    <h3>start your voyage with us</h3>
+                    <div class="hometTitles">USERNAME</div>
+                    <input type="text" id="Regusername" name="UserName" placeholder="3-10 characters" required />
+                    <div class="hometTitles">PASSWORD</div>
+                    <input type="password" id="Regpassword" name="Password" placeholder="6-10 characters" required />
+                    <div class="hometTitles">Email</div>
+                    <input type="email" id="Regemail" name="Email" placeholder="example@gmil.com" required />
+                    <button class="popUpButton" type="submit" style="margin: 13px 0 0 0;">Signup</button>
+                    <div id="registervalidationErrors" class="errorMsg"></div>
+                </div>
+            </div>
+        }
+    </div>
 
 
 

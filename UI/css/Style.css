@@ -45,48 +45,6 @@ p, .custom-label {
 /* --------------------------------------------------------------- */
 /* --------------- dropdown for top navigation bar --------------- */
 
-
-
-
-
-/*.topnav .aDropdown .dropA {
-    color: black;
-    min-width: 107px;
-}*/
-/*.topnav .aDropdown:hover .dropA {
-    color: black;
-    background-color: #bc5a45;
-    z-index: 1000;
-}*/
-/*.topnav .aDropdown:hover .dropContent {
-    display: flex;
-    background-color: #bc5a45;
-    color: black;
-}*/
-/*.topnav .aDropdown .dropContent:hover {
-    display: flex;
-    color: white;
-}*/
-/*.topnav .aDropdown .dropContent {
-    display: none;
-    background-color: #f9f9f9;
-    margin: 0 0 0 250px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1000000;
-    width: fit-content;
-    height: 29px;
-    padding: 2px;
-}*/
-/*.topnav .aDropdown .dropContent a {
-    float: none;
-    color: black;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    padding: 3px;
-    margin: 3px;
-    width: 100px;
-}*/
 .dropdown {
     float: left;
     overflow: hidden;
@@ -188,8 +146,7 @@ p, .custom-label {
         }
 
 .dropdown-content a:hover {
-    background-color: black;
-    color:white;
+
 }
 
 .show {
@@ -229,11 +186,11 @@ p, .custom-label {
     font-size: 14px;
     cursor: pointer;
 }
-/*
-        .topnav a:hover, .aDropdown:hover {
-            color: #bc5a45;
-        }
-*/
+.topnav a:hover {
+    color: #bc5a45;
+
+}
+
         .topnav a:active {
             background-color: #bc5a45;
             color: white;
@@ -327,6 +284,7 @@ button {
     padding: 8px 0 8px 0;
     font-family: 'Lucida Console';
     font-size: 14px;
+    ;
 }
 
     button:hover {
@@ -347,8 +305,9 @@ button {
     right: 25px;
     top: 0;
     color: #000;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
+    margin: 5px 0 0 0;
 }
 
     .close:hover, .close:focus {
@@ -370,16 +329,19 @@ button {
     box-shadow: 0 0 30px rgba(0, 0, 1, 0.9);
     z-index: 9999;
     text-align: center;
-    width: 600px;
+    
 }
 
-    .popup h3 {
-        color: black;
-        font-size: 14px;
-        font-family: 'Verdana';
-        text-transform: uppercase;
-        font-weight: 600;
-    }
+.popup-colCenter {
+    width: 260px;
+}
+.popup h3 {
+    color: black;
+    font-size: 14px;
+    font-family: 'Verdana';
+    text-transform: uppercase;
+    font-weight: 500;
+}
 
     .popup .paymentTitles {
         color: black;
@@ -1060,7 +1022,9 @@ button {
     flex-flow: row;
     text-align: left;
     margin: 0 0 0 30px;
+    min-height: 300px;
 }
+
 
 .popupTotal {
     color: black;
@@ -1224,4 +1188,34 @@ button {
     }
 .row.justify-content-between {
     display: flex;
+}
+
+.titles {
+    font-family: 'Lucida Console';
+    font-size: 22px;
+    font-weight: revert;
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    background-color: #f4e1d2;
+}
+
+.errorMsg {
+    font-family: 'Verdana';
+    font-size: 12px;
+    color: #bc5a45;
+    text-transform: lowercase;
+    margin: 10px 0 0 0;
+    font-weight: bolder;
+}
+
+.popup .hometTitles {
+    color: black;
+    font-size: 13px;
+    font-family: 'Verdana';
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 0 0 3px 0;
+    margin: 13px 0 4px 0;
 }
