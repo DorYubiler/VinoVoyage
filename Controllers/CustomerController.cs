@@ -71,11 +71,11 @@ namespace VinoVoyage.Controllers
             allorders.Clear();
             Session["userCart"] = allorders;
 
-            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
+            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer")});
         }
-        public ActionResult CheckoutView()
+        public ActionResult CheckoutView(UserModel user)
         {
-            var user = db.Users.Find("shanik");
+            //var user = db.Users.Find("shanik");
             Session["userinfo"] = user as UserModel;
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;

@@ -18,32 +18,30 @@
 </head>
 <body>
     <div id="main" class="window">
-        <!-- top navigation bar -->
         <div class="topnav" id="myTopnav">
-            <form id="searchForm" class="searchForm">
-                <input type="text" placeholder="Search.." id="search" />
-                <button type="submit" class="searchButton" onclick="openWindow(event, 'searchdiv')"><i class="fa fa-search"></i></button>
-            </form>
-            <!-- user info nav -->
             <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
-            @*<a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-        </a>*@
-            @*<a href="#user"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username </a>*@
-            <div class="aDropdown">
-                <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
-                <div class="dropContent">
-                    <a href="#link1">profile</a>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+                <div class="dropdown-content">
+                    <a href="#link1">update info</a>
+                    <a href="#">track shipping</a>
                     <a href="@Url.Action("Logout", "Customer")">logout</a>
                 </div>
             </div>
 
-            <a href="#wines" onclick="openSide()" class="split"><i class="fa fa-glass"></i> WINES</a>
-            <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-            <a class="split" onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
-        </div>
-        
+            <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
 
+            <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+            <a class="split" href="#wines" onclick="openSide()"><i class="fa fa-glass"></i> WINES</a>
+            <div class="search-container">
+                <form id="searchForm" class="searchForm">
+                    <input type="text" placeholder="Search.." id="search" />
+                    <button type="submit" class="searchButton" onclick="openWindow(event, 'searchdiv')"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+
+        </div>
         <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
             <style>
@@ -162,10 +160,10 @@
             </div>
             <div class="cartActions">
                 <div class="cartTotal">
-                    total price: @(Session["cartTotal"])
+                    total price: @(Session["cartTotal"]) ₪
                 </div>
                 @{ TempData["UserVieModel"] = Model; }
-                <a href="@Url.Action("Checkout", "Customer")" class="cartActionsBtn">checkout</a>
+                <a href="@Url.Action("CheckoutView", "Customer", Model.user)" class="cartActionsBtn">checkout</a>
                 <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
             </div>
         </div>
