@@ -24,7 +24,7 @@
             <div class="dropdown">
                 <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
                 <div class="dropdown-content">
-                    <a href="#link1">update info</a>
+                    <a onclick="changesInfotogglePopup()">update info</a>
                     <a onclick="toggleTrackPopup()">track shipping</a>
                     <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
                 </div>
@@ -34,7 +34,7 @@
                 <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
             }
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-            
+
             <div class="search-container">
                 <form id="searchForm" class="searchForm">
                     <input type="text" placeholder="Search.." id="search" />
@@ -223,7 +223,7 @@
             </div>
         </div>
 
-        
+
         <div class="main-content" id="main-content">
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
@@ -435,6 +435,34 @@
 
         </div>
 
+        <div id="updateInfoPopup" class="popup">
+            <span onclick="document.getElementById('updateInfoPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            @using (Html.BeginForm("UpdateInfo", "Customer", FormMethod.Post, new { @id = "updateinfoForm", }))
+            {
+                <div class="popup-container">
+                    <div class="popup-colCenter">
+                        <div class="titles" style="text-align:start; margin-left:0px;">VINOVOYAGE</div>
+                        <h3>Update info- here you can change your password or email</h3>
+                        <h3></h3>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="text" style="display:none;" id="usname">@Model.user.Username</div>
+                        <div class="hometTitles">EMAIL</div>
+                        <input type="email" id="Cemail" name="email" placeholder="example@gmail.com" />
+                        <div class="hometTitles">PASSWORD</div>
+                        <input type="password" id="Cpassword" name="Password" placeholder="" />
+                        <div class="hometTitles">RE-WRITE PASSWORD</div>
+                        <input type="password" id="password2" name="Password2" placeholder="" />
+                        <button class="popUpButton" id="showLoginForm" type="submit" style="margin: 13px 0 0 0;">Change</button>
+                        <div id="changeValidationErrors" class="errorMsg"></div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="changesConfPopup" class="popup" style="width:600px;"> 
+            <span onclick="document.getElementById('changesConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Product ordered successfully</p>
+        </div>
+        
         <script>
              function plusBtn(button) {
                  var row = $(button).closest('tr');

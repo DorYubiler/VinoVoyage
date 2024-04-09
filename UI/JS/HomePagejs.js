@@ -74,7 +74,11 @@ function checkLogin(event) {
         success: function (response) {
             if (response.success) {
                 startCustogglePopup("LoginConfPopup");
-                window.location.href = response.redirectUrl;
+
+                setTimeout(function () {
+                    window.location.href = response.redirectUrl;
+                }, 2000);
+                
             } else {
                 // If login fails, keep the popup open and show error messages.
                 $("#LoginValidationErrors").html("Invalid username or password").show();

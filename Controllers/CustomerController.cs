@@ -452,6 +452,19 @@ namespace VinoVoyage.Controllers
             return PartialView("_ProductsGrid", filteredProducts);
         }
 
-        
+        public JsonResult UpdateInfo(String username,String password,String email)
+        {
+            UserModel model = db.Users.Find(username);
+            if(model != null)
+            {
+                model.Password = password;
+                model.Email = email;
+                db.SaveChanges();
+                return Json(new { success = true });
+
+            }
+            return Json(new { success = false });
+
+        }
     }
 }
