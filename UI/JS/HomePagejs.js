@@ -63,7 +63,7 @@ function checkLogin(event) {
     // Assuming 'username' and 'password' are the IDs of the input fields
     var uname = $('#username').val(); // Use jQuery to get the value
     var pass = $('#password').val(); // Use jQuery to get the value
-
+    startCustogglePopup("LoginConfPopup");
     $.ajax({
         type: "POST",
         url: "/User/Login",
@@ -184,6 +184,7 @@ function checkSignup(event) {
         $("#registervalidationErrors").html("Invalid email").show();
         return;
     }
+    startCustogglePopup("SignUConfPopup");
 
     $.ajax({
         type: "POST",
@@ -207,3 +208,33 @@ function checkSignup(event) {
         }
     });
 }
+
+function redirectToBlank() {
+    window.location.href = 'https://www.disney.com/';
+
+}
+//---------------signup confirm popup---------------------------------------
+function startCustogglePopup(divId) {
+    closePopups();
+    var popup = document.getElementById((divId));
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
+//------------------------------Age verification---------------------------
+
+function getIn() {
+    document.getElementById('welcomePopup').style.display = 'none';
+}
+
+function startCustomer(divId) {
+    document.getElementById(divId).style.display = 'none';
+
+}
+
+window.onload = function () {
+    if (!localStorage.getItem('welcomePopupShown')) {
+        document.getElementById('welcomePopup').style.display = 'block';
+        localStorage.setItem('welcomePopupShown', 'true');
+    }
+}
+
+
