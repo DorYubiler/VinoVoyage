@@ -11,7 +11,7 @@ function showSlides(n = slideIndex) {
 
     // Reset the interval every time showSlides is called to ensure consistent timing
     clearInterval(slideInterval);
-    slideInterval = setInterval(function () { plusSlides(1); }, 3000);
+    slideInterval = setInterval(function () { plusSlides(1); }, 7000);
 
     if (n > slides.length) { slideIndex = 1 }
     if (n < 1) { slideIndex = slides.length }
