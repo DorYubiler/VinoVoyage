@@ -9,6 +9,12 @@
     <title>VinoVoyage</title>
     <link rel="stylesheet" href="~/UI/css/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .popup {
+            display: none; /* Ensure it's hidden by default */
+            /* Add more styling as necessary */
+        }
+    </style>
 </head>
 <body>
     <!-- top navigation bar -->
@@ -16,7 +22,12 @@
         <a href="@Url.Action("HomePage","User")"><i class="fa fa-home"></i> VINOVOYAGE</a>
         <a onclick="toggleSignupPopup()"><i class="fa fa-user-plus"></i> REGISTER</a>
         <a onclick="togglePopup()"><i class="fa fa-sign-in"></i> LOGIN</a>
-        <a href="@Url.Action("LoginGuest","User")"><i class="fa fa-user-times" aria-hidden="true"></i> CONTINUE AS GUEST</a>
+        <a onclick="startCustogglePopup('guestConPopup')"> CONTINUE AS GUEST</a>
+        <a href="#wishlist"><i class="fa fa-heart"></i></a>
+    </div>
+    <div id="LoginConfPopup" class="popup">
+        <span onclick="document.getElementById('LoginConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <p>Welcome back to VV </p><i class="fa fa-heart"></i>
     </div>
     <div id="loginPopup" class="popup">
         <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -38,7 +49,17 @@
             </div>
         }
     </div>
-
+    @* -----------confirm guest-------------------*@
+    <div id="guestConPopup" class="popup">
+        <span onclick="document.getElementById('guestConPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <p>You better signup. Come be Part of the Vvoyage</p>
+        <button href="@Url.Action("LoginGuest","User")">Prefer to stay guest </button>
+        <button onclick="toggleSignupPopup()">SignUp now!</button>
+    </div>
+    <div id="SignUConfPopup" class="popup">
+        <span onclick="document.getElementById('SignUConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <p>Thank you for joining us, soon we will start our voyage</p>
+    </div>
     <div id="SignupPopup" class="popup">
         <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { @id = "signupForm" }))
@@ -142,11 +163,21 @@
             </div>
         </div>
 
-
-        @*< !--bring them back now -->*@
-        <div id="bthn" lang="en"></div>
-        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-        <script src="~/UI/JS/HomePagejs.js"></script>
+    <div id="welcomePopup" class="popup" >
+        <span onclick="document.getElementById('welcomePopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <p>Welcome to VinoVoyage. Please verify you are above legal drinking age to enter.</p>
+        <button onclick="redirectToBlank()">I haven't turned 18 yet</button>
+        <button onclick="console.log('Welcome in!'); getIn()">I'm over 18. Let's go!</button>
     </div>
+
+
+
+
+    <div id="bthn" lang="en"></div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/UI/JS/HomePagejs.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

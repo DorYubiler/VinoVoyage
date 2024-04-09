@@ -382,6 +382,7 @@ function ProductValidateForm(event) {
     event.stopPropagation();
     $('#productValidationErrors').empty();
     var productName = $('#productName').val();
+    console.log(productName);
     if (productName.length < 4 || productName.length > 30) {
         $("#productValidationErrors").html("Invalid product name").show();
         return;
