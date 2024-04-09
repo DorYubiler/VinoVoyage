@@ -217,7 +217,7 @@ function redirectToBlank() {
 function startCustogglePopup(divId) {
     closePopups();
     var popup = document.getElementById((divId));
-    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    popup.style.display = (popup.style.display === "none") ? "table" : "none";
 }
 //------------------------------Age verification---------------------------
 
