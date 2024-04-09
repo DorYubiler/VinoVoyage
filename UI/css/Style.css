@@ -722,20 +722,17 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: #dbcabd;
     padding: 10px 0 40px 0;
 }
 .home-text-content {
     font-family: 'Lucida Console';
     font-weight: 900;
-    font-size: 40px;
+    font-size: 30px;
     color: #f4e1d2;
     text-transform: uppercase;
-    margin: 30px 0 0 0;
-    padding: 50px 0 10px 0;
+    padding: 30px 0 10px 0;
     text-align: center;
-    text-shadow: 0 4px 10px rgba(0.1, 0, 0, 0.9);
-    background-color: #dbcabd;
+    text-shadow: 0 4px 10px rgba(0.1, 0, 0, 0.9);  
 }
 .home-prodCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
@@ -750,25 +747,33 @@ button {
     width: 70%;
 }
 .homegap {
-    height: 100px;
+    height: 40px;
 }
 .content-img {
     width: 250px;
 }
 .home-description {
     font-family: 'Verdana';
-    font-size: 18px;
+    font-size: 14px;
+    line-height: 1.9;
     color: black;
     text-transform: initial;
     text-align: center;
+    font-weight: 500;
 }
-.first-contentTransperent {
+.second-content {
     display: flex;
     flex-direction: row;
     justify-content: center;
     background-color: transparent;
     padding: 10px 0 40px 0;
     color: black;
+}
+.home-descriptionContainer {
+    position: relative;
+    display: flow;
+    width: 300px;
+    margin: 0 70px 0 0;
 }
 /* --------------------------------------------------------------- */
 /* --------------------------  slideshow ------------------------- */
@@ -805,7 +810,7 @@ button {
 .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 23%;
+    top: 200px;
     width: auto;
     margin-top: -22px;
     padding: 16px;
@@ -815,6 +820,7 @@ button {
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
+
 }
 
 .next {
