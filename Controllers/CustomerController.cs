@@ -110,6 +110,7 @@ namespace VinoVoyage.Controllers
             List<UserModel> users = db.Users.Where(u => u.Username.Contains("guest")).ToList();
             db.Users.RemoveRange(users);
             return RedirectToAction("HomePage", "User");
+
             
 
         }
