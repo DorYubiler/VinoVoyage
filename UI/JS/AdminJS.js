@@ -35,7 +35,7 @@ function editRowUser(button) {
     deleteButton.disabled = true; // Hide the delete button
     // Start looping from the 1st index to skip the UserName field
     row.find('td:not(:last-child)').each(function (index) {
-        if (index > 0) { // Skip the first column (Username)
+        if (index > 0 &&index!=2) { // Skip the first column (Username)
             var text = $(this).text();
             $(this).html('<input type="text" value="' + text + '" />');
         }
@@ -56,17 +56,7 @@ function saveRowUser(button) {
         showmessage("password must be at least 6 letters and not more then 10!");
         return;
     }
-    var role = row.find('td:eq(2) input').val();
-    if (role == 'Customer') {
-        role = 'customer';
-    }
-    if (role == 'Admin') {
-        role = 'admin';
-    }
-    if (role != 'customer' && role != 'admin') {
-        showmessage("role must be 'customer' or 'admin'. try again.")
-        return;
-    }
+    var role = row.find('td:eq(2) input').text();
     var email = row.find('td:eq(3) input').val();
     var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
     const re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -74,10 +64,7 @@ function saveRowUser(button) {
         showmessage("The email is not valid. It must be in the format name@domain.co.il or name@domain.com");
         return;
     }
-    //if (!re.test(String(email).toLowerCase())) {
-    //    showmessage("email written wrong! try again.")
-    //    return;
-    //}
+    
 
     var userData = {
         UserName: username,
@@ -118,13 +105,9 @@ function saveRowUser(button) {
 }
 
 function deleteRowUser(button) {
-    if (confirm('Are you sure you want to delete this user?')) {
         var row = button.closest('tr')
         var usernameTd = row.querySelector('td');
         var username = usernameTd.innerHTML;
-
-
-
 
         $.ajax({
             url: 'DeleteUser',
@@ -141,19 +124,15 @@ function deleteRowUser(button) {
             },
             error: function (xhr, status, error) { }
         });
-    }
+    
 }
 
 function deleteRowProduct(button) {
-    if (confirm('Are you sure you want to delete this product?')) {
         var row = button.closest('tr');
-
         var prodidTd = row.querySelector('td');
         var prodid = prodidTd.innerHTML;
         var prodnameTd = row.querySelector('td:nth-child(2)');
         var prodname = prodnameTd.innerHTML;
-
-
 
         $.ajax({
             url: 'DeleteProduct',
@@ -171,7 +150,7 @@ function deleteRowProduct(button) {
             },
             error: function (xhr, status, error) { }
         });
-    }
+    
 }
 
 function editRowProduct(button) {
@@ -307,8 +286,10 @@ function sendOrder() {
         alert('Please fill in at least one quantity with a number greater than 0.');
         return;
     }
-    alert("Your order has been submitted successfully!\n delivery time: 12 business days.");
-    window.location.reload();
+    toggleConfirmPopup('orderproductPopup');
+    setTimeout(function () {
+        window.location.reload();
+    }, 3000);
 
 }
 
@@ -356,8 +337,12 @@ function UservalidateForm(event) {
 
         success: function (respones) {
             if (respones.success) {
-                confirm("user add successfully")
-                window.location.href = '/Admin/AdminHomePage';
+                toggleConfirmPopup('adduserPopup');
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 3000);
+                
             }
             else {
                 $("#uservalidationErrors").html("Invalid inputs").show();
@@ -436,11 +421,15 @@ formData.append('ProductImage', $('#productImage')[0].files[0]);
         data: formData,
         processData: false,
         contentType:false,
-
+        
         success: function (respones) {
             if (respones.success) {
-                confirm("Product added successfully")
-                window.location.href = '/Admin/AdminHomePage';
+                toggleConfirmPopup('addproductPopup');
+                
+                setTimeout(function () {
+                    window.location.reload();
+                }, 3000);
+                
             }
             else {
                 $("#productValidationErrors").html("Invalid inputs").show();
@@ -455,4 +444,21 @@ formData.append('ProductImage', $('#productImage')[0].files[0]);
     });
 }
 
+function closeAllPopups() {
+    var popups = document.getElementsByClassName("popup");
+    for (var i = 0; i < popups.length; i++) {
+        popups[i].style.display = "none";
+    }
+}
+
+function toggleConfirmPopup(divId) {  
+    closeAllPopups();
+    var popup = document.getElementById(divId);
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
+function deleteuser(button) {
+    closeAllPopups();
+    var popup = document.getElementById('deleteuserPopup');
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
  

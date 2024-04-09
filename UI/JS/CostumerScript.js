@@ -193,3 +193,69 @@ function getIn(divId) {
 function logout() {
     window.location.href = "/Customer/Logout";
 }
+
+$(document).ready(function () {
+    // Assuming your form has an ID 'loginForm'
+    $('#updateinfoForm').on('submit', checkChanges);
+});
+
+function checkChanges(event) {
+    event.preventDefault(); // Correctly call preventDefault on the event object
+    $("#changeValidationErrors").empty();
+    // Optionally, re-enable the submit button if disabled
+    // Assuming 'username' and 'password' are the IDs of the input fields
+    var uname = $('#usname').text();
+    var mail = $('#Cemail').val(); // Use jQuery to get the value
+    var pass1 = $('#Cpassword').val(); // Use jQuery to get the value
+    var pass2 = $('#password2').val();
+    if (mail.length < 12 || mail.length > 30 ) {
+        $("#changeValidationErrors").html("Invalid email").show();
+        return;
+    }
+    if (pass1 != pass2) {
+        $("#changeValidationErrors").html("Passwords do not match").show();
+        return;
+    }
+    if (pass1.length < 6 || pass1.length > 10) {
+        $("#changeValidationErrors").html("Invalid password").show();
+        return;
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "/Customer/UpdateInfo",
+        data: {
+            username: uname,
+            password: pass1, // Make sure the variable is correctly spelled here
+            email: mail,
+
+        },
+        success: function (response) {
+            if (response.success) {
+                startCustogglePopup("changesConfPopup");
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2000);
+
+            } else {
+                // If login fails, keep the popup open and show error messages.
+                $("#changeValidationErrors").html("Somthing went wrong.").show();
+            }
+        },
+        error: function () {
+            // Handle any errors that occur during the request.
+            $("#changeValidationErrors").html("An error occurred. Please try again.").show();
+        }
+    });
+
+}
+
+function changesInfotogglePopup() {
+    closePopups();
+    var popup = document.getElementById('updateInfoPopup');
+    popup.style.display = (popup.style.display === "none") ? "table" : "none";
+
+
+}
