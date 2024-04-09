@@ -19,7 +19,7 @@
 <body>
     <div id="main" class="window">
         <div class="topnav" id="myTopnav">
-            <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
+            <a onclick="openMainWindow()"><i class="fa fa-home"></i> VINOVOYAGE</a>
             <div class="dropdown">
                 <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
                 <div class="dropdown-content">
@@ -33,7 +33,7 @@
                 <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
             }
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-            <a class="split" href="#wines" onclick="openSide()"><i class="fa fa-glass"></i> WINES</a>
+            
             <div class="search-container">
                 <form id="searchForm" class="searchForm">
                     <input type="text" placeholder="Search.." id="search" />
@@ -222,7 +222,8 @@
             </div>
         </div>
 
-        <div class="main-content">
+        
+        <div class="main-content" id="main-content">
             <!-- side navigation bar -->
             <div class="tab" id="sideWineMenu">
                 <button class="tablinks" onclick="openWindow(event, 'AllWines')">All Wines</button>
@@ -230,7 +231,10 @@
                 <button class="tablinks" onclick="openWindow(event, 'Reds')">Red</button>
                 <button class="tablinks" onclick="openWindow(event, 'Roses')">Rose</button>
                 <button class="tablinks" onclick="openWindow(event, 'Sales')">On sale</button>
-                <button class="tablinks" onclick="closeSide()">close menu</button>
+            </div>
+
+            <div class="window" id="windowMain" style="top:10px;">
+                @Html.Partial("_home")
             </div>
 
             <div id="AllWines" class="tabcontent">
@@ -304,7 +308,6 @@
             <div id="searchdiv" class="tabcontent">
                 <h1 class="titles">Search results:</h1>
                 <div id="prodgrid" class="prodGrid">
-
 
                 </div>
             </div>
@@ -604,59 +607,56 @@
                 }
                 document.getElementById(wineName).style.display = "block";
                 evt.currentTarget.className += " active";
+                document.getElementById("windowMain").style.display = "none";
             }
 
-            function closeSide() {
-                //document.getElementById("sideWineMenu").style.visibility = "hidden";
-                document.getElementById("sideWineMenu").style.width = "0px";
-            }
-            function openSide() {
-                document.getElementById("sideWineMenu").style.visibility = "visible";
-                document.getElementById("sideWineMenu").style.width = "130px";
+            function openMainWindow() {
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
                 }
-
-
-
-                $(document).ready(function() {
-                    $('.sortselect').change(function() {
-                        var sortBy = $(this).val();
-                        var wineColor = $(this).data('wine-color'); // Used for identifying the correct div to update
-
-                        $.ajax({
-                            url: '@Url.Action("SortProducts", "Customer")', // Make sure this points to your actual controller and action
-                            type: 'GET',
-                            data: { sortBy: sortBy, wineColor: wineColor }, // wineColor is kept for client-side logic, not needed server-side
-                            success: function(data) {
-                                $('#' + wineColor + ' .prodGrid').html(data); // Updates the correct grid
-                            },
-                            error: function(error) {
-                                console.log('Error: ', error);
-                            }
-                        });
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById("windowMain").style.display = "flex";
+            }
+            $(document).ready(function () {
+                $('.sortselect').change(function() {
+                    var sortBy = $(this).val();
+                    var wineColor = $(this).data('wine-color'); // Used for identifying the correct div to update
+                    $.ajax({
+                        url: '@Url.Action("SortProducts", "Customer")', // Make sure this points to your actual controller and action
+                        type: 'GET',
+                        data: { sortBy: sortBy, wineColor: wineColor }, // wineColor is kept for client-side logic, not needed server-side
+                        success: function(data) {
+                            $('#' + wineColor + ' .prodGrid').html(data); // Updates the correct grid
+                        },
+                        error: function(error) {
+                            console.log('Error: ', error);
+                        }
                     });
                 });
+            });
 
             $('#searchForm').submit(function(e) {
-  e.preventDefault(); // Prevent the form from submitting the traditional way
-  var searchField = $('#search').val();
+                e.preventDefault(); // Prevent the form from submitting the traditional way
+                var searchField = $('#search').val();
 
-  $.ajax({
-    url: '@Url.Action("SearchProducts", "Customer")', // Adjust the URL to your controller and action
-    type: 'GET',
-    data: { query: searchField },
-    success: function(data) {
-      // Replace the content of your products grid with the filtered products
-        $('#prodgrid').html(data);
-    },
-    error: function(xhr, status, error) {
-      // Handle any errors
-      console.error("Search error:", status, error);
-    }
-  });
-});
-
-
-;
+                $.ajax({
+                    url: '@Url.Action("SearchProducts", "Customer")', // Adjust the URL to your controller and action
+                    type: 'GET',
+                    data: { query: searchField },
+                    success: function(data) {
+                        // Replace the content of your products grid with the filtered products
+                        $('#prodgrid').html(data);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors
+                        console.error("Search error:", status, error);
+                    }
+                 });
+            });
         </script>
 
         <!-- bring them back now -->
