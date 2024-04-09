@@ -119,11 +119,16 @@ namespace VinoVoyage.Controllers
             {
                 ProductModel product = db.Products.Find(int.Parse(prod),prodn);
                 var tempCart = db.Orders.Where(order => order.ProductID == product.ProductID).ToList();
+                var wishlist = db.wishList.Where(item => item.ProductID == product.ProductID).ToList();
                 if (tempCart.Any())
                 {
                     db.Orders.RemoveRange(tempCart);
                 }
-                db.Products.Remove(product);
+                if (wishlist.Any())
+                {
+                    db.wishList.RemoveRange(wishlist);
+                }
+                db.Products.Remove(product);              
                 db.SaveChanges();
                 
                 return Json(new { success = true });
