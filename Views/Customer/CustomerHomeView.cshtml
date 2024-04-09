@@ -25,7 +25,7 @@
                 <div class="dropdown-content">
                     <a href="#link1">update info</a>
                     <a onclick="toggleTrackPopup()">track shipping</a>
-                    <a href="@Url.Action("Logout", "Customer")">logout</a>
+                    <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
                 </div>
             </div>
             @if (!(Model.user.Username.Contains("guest")))
@@ -173,7 +173,7 @@
                 </div>
                 @{ TempData["UserVieModel"] = Model; }
                 <a href="@Url.Action("CheckoutView", "Customer",Model.user)" class="cartActionsBtn">checkout</a>
-                <a onclick="emptyCart()" class="cartActionsBtn">empty cart</a>
+                <a onclick="toggleConfirmPopup('emptyCartPopup')" class="cartActionsBtn">empty cart</a>
             </div>
         </div>
 
@@ -218,7 +218,7 @@
             <div class="cartActions">
                 @{ TempData["UserVieModel"] = Model; }
                 <a onclick="addListToCart()" class="cartActionsBtn">add list to cart</a>
-                <a onclick="emptyList()" class="cartActionsBtn">empty list</a>
+                <a onclick="toggleConfirmPopup('emptylistPopup')" class="cartActionsBtn">empty list</a>
             </div>
         </div>
 
@@ -355,7 +355,81 @@
             }
             <div id="paymentValidationErrors"></div>
         </div>
+        @*---------------------------------buynow-----------------------------------------*@
+        <div id="buynowPopup" class="popup">
+            <span onclick="document.getElementById('buynowPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            @using (Html.BeginForm("Buynow", "Customer", FormMethod.Post, new { @id = "buynowForm" }))
+            {
 
+
+                <div class="popup-container">
+                    <div class="popup-col">
+                        <div class="popupTotal" id="popupTotal"> </div>
+                        <div class="adress-info">
+                            <h3>Shipping Address</h3>
+                            <div class="paymentTitles">Enter valid shipping adress</div>
+                            <div class="paymentTitles">Name</div>
+                            <input type="text" class="popup-input" id="busername" name="username" placeholder="Full Name" required>
+                            <div class="paymentTitles">street</div>
+                            <input type="text" class="popup-input" id="bcstreet" name="cstreet" placeholder="street" required>
+                            <div class="paymentTitles">city</div>
+                            <input type="text" class="popup-input" id="bcity" name="city" placeholder="city" required>
+                        </div>
+                    </div>
+                    <div class="popup-col">
+                        <div class="payment-info">
+                            <h3>Payment</h3>
+                            <div class="paymentTitles">Accepted Cards</div>
+                            <div class="icon-container">
+                                <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                            </div>
+                            <div class="paymentTitles">Credit card number</div>
+                            <input type="text" class="popup-input" id="bccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
+                            <div class="paymentTitles">Exp Date</div>
+                            <div class="dateCode">
+                                <input type="month" class="popup-input" style="text-transform:uppercase;" id="bexpDate" name="expDate" min="2024-04" onchange="validateMonth(this)" required>
+                                <input type="text" class="popup-inputCVV" style="text-transform:uppercase;" id="bcvv" name="cvv" placeholder="CVV" required>
+                                <div id="bexpDateError" style="display: none;">Please select a month from the current month forward.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" onclick="checkBuynow()">continue</button>
+            }
+            <div id="buynowValidationErrors"></div>
+        </div>
+
+        <div id="ShipConfPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('ShipConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>The order has been sent, delivery time up to two weeks </p>
+            <button onclick="getIn('ShipConfPopup')">ok</button>
+        </div>
+
+        <div id="emptyCartPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('emptyCartPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Are you sure you want to empty the cart?</p>
+            <button onclick="emptyCart(),closeAllPopups()">Yes</button>
+            <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
+
+        </div>
+        <div id="emptylistPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('emptylistPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Are you sure you want to empty the cart?</p>
+            <button onclick="emptyList(),closeAllPopups()">Yes</button>
+            <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
+
+        </div>
+
+        <div id="logoutPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('logoutPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Are you sure you want to logout?</p>
+            <button onclick="logout()">Yes,thank you</button>
+            <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No,I can't leave!'</button>
+
+        </div>
 
         <script>
              function plusBtn(button) {
@@ -413,8 +487,8 @@
              }
 
             function emptyList() {
-                let text = "Are you sure you want to delete all the products in your cart?";
-                if (confirm(text) == true) {
+
+
                     $.ajax({
                         url: '@Url.Action("EmptyList", "Customer")',
                         type: 'POST',
@@ -423,12 +497,12 @@
                         },
                         error: function (xhr, status, error) { }
                     });
-                }
+
             }
 
              function emptyCart() {
-                 let text = "Are you sure you want to delete all the products in your cart?";
-                 if (confirm(text) == true) {
+
+
                      $.ajax({
                          url: '@Url.Action("EmptyCart", "Customer")',
                          type: 'POST',
@@ -438,7 +512,7 @@
                          },
                          error: function (xhr, status, error) { }
                      });
-                 }
+
              }
 
              function addToList(ProductId) {

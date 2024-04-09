@@ -46,6 +46,31 @@ namespace VinoVoyage.Controllers
             return View("CustomerHomeView", uvm);
         }
 
+
+        [HttpPost]
+        public JsonResult Buynow(String CityAddress)
+        {
+            ShippingModel newShipping = new ShippingModel();
+            var user = Session["userinfo"] as UserModel;
+            DateTime today = DateTime.Today;
+            DateTime shipDay = today.AddDays(14);
+            newShipping.UserName = user.Username;
+            newShipping.OrderDate = today;
+            newShipping.ShippingDate = shipDay;
+            newShipping.Address = CityAddress;
+
+            db.ShippingList.Add(newShipping);
+            db.SaveChanges();
+            if (user.Username.Contains("guest"))
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Logout", "Customer", user) });
+            }
+            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer", user) });
+
+        }
+
+
+
         [HttpPost]
         public JsonResult Payment(String cityAddress)
         {

@@ -1,13 +1,13 @@
 ﻿// checkout functions
 $(document).ready(function () {
-    // Assuming your form has an ID 'loginForm'
+  
     console.log("jQuery is loaded");
     $('#paymentForm').on('submit.paymentForm', checkPayment);
 });
 
 function checkPayment(event) {
     event.preventDefault();
-    $("#registervalidationErrors").empty();
+    $("#paymentvalidationErrors").empty();
 
     var cvv = $('#cvv').val();
     var addressName = $('#username').val();
@@ -41,6 +41,7 @@ function checkPayment(event) {
         $("#paymentValidationErrors").html("Invalid city").show();
         return;
     }
+    toggleConfirmPopup('ShipConfPopup');
     $.ajax({
         type: "POST",
         url: "/Customer/Payment",
@@ -61,6 +62,69 @@ function checkPayment(event) {
     });
 
 }
+
+
+/*------------------------buynow----------------------------*/
+
+
+function checkBuynow() {
+   /* event.preventDefault();*/
+    $("#buynowvalidationErrors").empty();
+
+    var cvv = $('#bcvv').val();
+    var addressName = $('#busername').val();
+    var cardNumber = $('#bccnum').val();
+    var bcity = $('#bcity').val();
+    var street = $('#bcstreet').val();
+
+    var regexCvv = /^\d{3}$/;
+    var regexCardNumber = /^\d{16}$/;
+    var regexCity = /\d/;
+    var regexStreet = /^[a-zA-Z0-9\s]+$/;
+    var regexNames = /^[a-zA-Z\s]+$/;
+
+    if (!regexCvv.test(cvv)) {
+        $("#buynowvalidationErrors").html("Invalid CVV").show();
+        return;
+    }
+    if (!regexNames.test(addressName)) {
+        $("#buynowvalidationErrors").html("Invalid shipping name").show();
+        return;
+    }
+    if (!regexCardNumber.test(cardNumber)) {
+        $("#buynowvalidationErrors").html("Invalid card number").show();
+        return;
+    }
+    if (!regexStreet.test(street)) {
+        $("#buynowvalidationErrors").html("Invalid street").show();
+        return;
+    }
+    if (regexCity.test(city)) {
+        $("#buynowvalidationErrors").html("Invalid city").show();
+        return;
+    }
+    toggleConfirmPopup('ShipConfPopup');
+    $.ajax({
+        type: "POST",
+        url: "/Customer/Buynow",
+        data: {
+            CityAddress: bcity
+        },
+        success: function (response) {
+            if (response.success) {
+                window.location.href = response.redirectUrl;
+            } else {
+                $("#buynowvalidationErrors").html("Error at proccess payment.").show();
+            }
+        },
+        error: function () {
+            // Handle any errors that occur during the request.
+            $("#buynowvalidationErrors").html("An error occurred. Please try again.").show();
+        }
+    });
+
+}
+
 
 function validateMonth(input) {
     var currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
@@ -99,6 +163,14 @@ function closeAllPopups() {
         popups[i].style.display = "none";
     }
 }
+
+function toggleBuynow(proid, price) {
+    closeAllPopups();
+    var popup = document.getElementById("buynowPopup");
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    document.getElementById("popupTotal").innerText = 'Item price: ' + price;
+
+}
 function togglePaymentPopup() {
     closeAllPopups();
     var popup = document.getElementById("paymentPopup");
@@ -111,7 +183,16 @@ function toggleTrackPopup() {
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
 }
 localStorage.setItem('welcomePopupShown', 'false');
-//$(window).on('beforeunload', function () {
-//    // Making an async request to the server
-//    navigator.sendBeacon('/Customer/Logout');
-//});
+
+function toggleConfirmPopup(divId) {
+    closeAllPopups();
+    var popup = document.getElementById(divId);
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";
+}
+function getIn(divId) {
+    document.getElementById(divId).style.display = 'none';
+}
+
+function logout() {
+    window.location.href = "/Customer/Logout";
+}

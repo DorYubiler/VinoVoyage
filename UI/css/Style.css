@@ -247,7 +247,7 @@ button {
     padding: 8px 0 8px 0;
     font-family: 'Lucida Console';
     font-size: 14px;
-    ;
+    
 }
 
     button:hover {
@@ -1079,7 +1079,7 @@ button {
     padding: 5px;
 }
 
-.iconhttps://nanawine.com/store/-container {
+.icon-container {
     font-size: 24px;
     margin: 0 0 10px 0;
 }
@@ -1243,5 +1243,4 @@ confirmPopup {
     box-shadow: 0 0 30px rgba(0, 0, 1, 0.9);
     z-index: 9999;
     text-align: center;
-}
 }

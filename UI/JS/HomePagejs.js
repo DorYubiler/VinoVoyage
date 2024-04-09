@@ -63,7 +63,7 @@ function checkLogin(event) {
     // Assuming 'username' and 'password' are the IDs of the input fields
     var uname = $('#username').val(); // Use jQuery to get the value
     var pass = $('#password').val(); // Use jQuery to get the value
-    startCustogglePopup("LoginConfPopup");
+    
     $.ajax({
         type: "POST",
         url: "/User/Login",
@@ -73,6 +73,7 @@ function checkLogin(event) {
         },
         success: function (response) {
             if (response.success) {
+                startCustogglePopup("LoginConfPopup");
                 window.location.href = response.redirectUrl;
             } else {
                 // If login fails, keep the popup open and show error messages.
