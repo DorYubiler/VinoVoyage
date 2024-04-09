@@ -87,44 +87,7 @@ function checkLogin(event) {
 
 }
      
-//----------------------------------------------------------
-//--------------Register validation-------------------------
-/*function RegisterValidateForm() {
-    var errors = [];
 
-    // Validate username
-    var username = document.getElementById('Regusername').value;
-    if (!/^[a-zA-Z0-9]{3,10}$/.test(username)) {
-        errors.push("Username must be 3-10 letters or digits.");
-    }
-
-    // Validate password
-    var password = document.getElementById('Regpassword').value;
-    if (!/^[a-zA-Z0-9]{6,10}$/.test(password)) {
-        errors.push("Password must be 6-10 letters or digits.");
-    }
-
-    // Validate email
-    var email = document.getElementById('Regemail').value;
-    var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
-    if (!(regex.test(email)) || email.length < 12 || email.length > 30) {
-        errors.push("Email must be a valid format and 12-30 characters long.");
-    }
-
-    // Display errors or submit form
-    var errorsDiv = document.getElementById('registervalidationErrors');
-    errorsDiv.style.display = "block";
-    if (errors.length > 0) {
-        errorsDiv.innerHTML = '<p class="error">' + errors.join('<br>') + '</p>';
-        return false;
-    } else {
-        errorsDiv.innerHTML = '';
-        return true;
-    }
-    showmessage("Enjoy your voyage!");
-
-}*/
-//----------------------------------------------------
 (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -218,6 +181,8 @@ function startCustogglePopup(divId) {
     closePopups();
     var popup = document.getElementById((divId));
     popup.style.display = (popup.style.display === "none") ? "table" : "none";
+    
+    
 }
 //------------------------------Age verification---------------------------
 
@@ -231,10 +196,13 @@ function startCustomer(divId) {
 }
 
 window.onload = function () {
+    
     if (!localStorage.getItem('welcomePopupShown')) {
         document.getElementById('welcomePopup').style.display = 'block';
         localStorage.setItem('welcomePopupShown', 'true');
     }
 }
 
-
+function gotoGuest() {
+    window.location.href='/User/LoginGuest';
+}

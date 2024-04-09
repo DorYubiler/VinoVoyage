@@ -110,7 +110,7 @@ function toggleTrackPopup() {
     var popup = document.getElementById("trackPopup");
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
 }
-
+localStorage.setItem('welcomePopupShown', 'false');
 //$(window).on('beforeunload', function () {
 //    // Making an async request to the server
 //    navigator.sendBeacon('/Customer/Logout');

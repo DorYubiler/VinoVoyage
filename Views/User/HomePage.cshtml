@@ -23,9 +23,9 @@
         <a onclick="toggleSignupPopup()"><i class="fa fa-user-plus"></i> REGISTER</a>
         <a onclick="togglePopup()"><i class="fa fa-sign-in"></i> LOGIN</a>
         <a onclick="startCustogglePopup('guestConPopup')"> CONTINUE AS GUEST</a>
-        <a href="#wishlist"><i class="fa fa-heart"></i></a>
+
     </div>
-    <div id="LoginConfPopup" class="popup">
+    <div id="LoginConfPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('LoginConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>Welcome back to VV </p><i class="fa fa-heart"></i>
     </div>
@@ -50,13 +50,13 @@
         }
     </div>
     @* -----------confirm guest-------------------*@
-    <div id="guestConPopup" class="popup">
+    <div id="guestConPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('guestConPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>You better signup. Come be Part of the Vvoyage</p>
-        <button href="@Url.Action("LoginGuest","User")">Prefer to stay guest </button>
-        <button onclick="toggleSignupPopup()">SignUp now!</button>
+        <button onclick="gotoGuest()">Prefer to stay guest </button>
+        <button onclick="toggleSignupPopup()" style="width:40%; margin-left:30px;">SignUp now!</button>
     </div>
-    <div id="SignUConfPopup" class="popup">
+    <div id="SignUConfPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('SignUConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>Thank you for joining us, soon we will start our voyage</p>
     </div>
@@ -73,7 +73,7 @@
                     <div class="hometTitles">PASSWORD</div>
                     <input type="password" id="Regpassword" name="Password" placeholder="6-10 characters" required />
                     <div class="hometTitles">Email</div>
-                    <input type="email" id="Regemail" name="Email" placeholder="example@gmil.com" required />
+                    <input type="email" id="Regemail" name="Email" placeholder="example@gmail.com" required />
                     <button class="popUpButton" type="submit" style="margin: 13px 0 0 0;">Signup</button>
                     <div id="registervalidationErrors" class="errorMsg"></div>
                 </div>
@@ -280,10 +280,16 @@
         </div>
     </div>
     <div id="welcomePopup" class="popup" >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="welcomePopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('welcomePopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>Welcome to VinoVoyage. Please verify you are above legal drinking age to enter.</p>
         <button onclick="redirectToBlank()">I haven't turned 18 yet</button>
-        <button onclick="console.log('Welcome in!'); getIn()">I'm over 18. Let's go!</button>
+        <button onclick="getIn()" style="width:40%; margin-left:30px;">I'm over 18. Let's go!</button>
+
     </div>
 
     <div id="bthn" lang="en"></div>

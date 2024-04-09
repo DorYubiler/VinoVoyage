@@ -1235,3 +1235,19 @@ button {
 .row.justify-content-between {
     display: flex;
 }
+
+confirmPopup {
+    display:none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4e1d2;
+    padding: 20px;
+    border: 3px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 1, 0.9);
+    z-index: 9999;
+    text-align: center;
+}
+}

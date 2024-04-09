@@ -51,33 +51,8 @@ namespace VinoVoyage.Controllers
             return Json(new { success = false, errorMsg = "username is alreday taken" });
         }
 
-        /* public ActionResult Login(LoginModel model)
-         {*//* change the customerDal to db (importent!!! I created in line 16 db from VinoVoyageDb. we use it in every use of Db.) *//*
-             if (ModelState.IsValid)
-             {
 
-                 UserModel user = db.Users.FirstOrDefault(u => u.Username.ToString() == model.Username && u.Password.ToString() == model.Password);
-
-                 if (user != null)
-                 {
-                     Session["userinfo"] = user;
-
-                     FormsAuthentication.SetAuthCookie(model.Username, false);
-                     if (user.Role == "customer")
-                     {
-                         return RedirectToAction("CustomerHomeView", "Customer");
-                     }
-                     return RedirectToAction("AdminHomePage", "Admin");
-                 }
-                 else
-                 {
-                     ModelState.AddModelError("", "Inavalid username or password");
-
-                     return View("HomePage");
-                 }
-             }
-             return View();
-         }*/
+         
         [HttpPost]
         public JsonResult Login(String username, String password) 
         {
