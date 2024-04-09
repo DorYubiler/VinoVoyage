@@ -35,7 +35,7 @@ function editRowUser(button) {
     deleteButton.disabled = true; // Hide the delete button
     // Start looping from the 1st index to skip the UserName field
     row.find('td:not(:last-child)').each(function (index) {
-        if (index > 0) { // Skip the first column (Username)
+        if (index > 0 &&index!=2) { // Skip the first column (Username)
             var text = $(this).text();
             $(this).html('<input type="text" value="' + text + '" />');
         }
@@ -56,17 +56,17 @@ function saveRowUser(button) {
         showmessage("password must be at least 6 letters and not more then 10!");
         return;
     }
-    var role = row.find('td:eq(2) input').val();
-    if (role == 'Customer') {
-        role = 'customer';
-    }
-    if (role == 'Admin') {
-        role = 'admin';
-    }
-    if (role != 'customer' && role != 'admin') {
-        showmessage("role must be 'customer' or 'admin'. try again.")
-        return;
-    }
+    var role = row.find('td:eq(2) input').text();
+    //if (role == 'Customer') {
+    //    role = 'customer';
+    //}
+    //if (role == 'Admin') {
+    //    role = 'admin';
+    //}
+    //if (role != 'customer' && role != 'admin') {
+    //    showmessage("role must be 'customer' or 'admin'. try again.")
+    //    return;
+    //}
     var email = row.find('td:eq(3) input').val();
     var regex = /^[^\s@]+@[a-zA-Z]+\.(co\.il|com)$/;
     const re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -74,10 +74,7 @@ function saveRowUser(button) {
         showmessage("The email is not valid. It must be in the format name@domain.co.il or name@domain.com");
         return;
     }
-    //if (!re.test(String(email).toLowerCase())) {
-    //    showmessage("email written wrong! try again.")
-    //    return;
-    //}
+    
 
     var userData = {
         UserName: username,
@@ -455,6 +452,13 @@ formData.append('ProductImage', $('#productImage')[0].files[0]);
             console.error("Error - Status:", status, "Error:", error);
         }
     });
+}
+
+function closeAllPopups() {
+    var popups = document.getElementsByClassName("popup");
+    for (var i = 0; i < popups.length; i++) {
+        popups[i].style.display = "none";
+    }
 }
 
  

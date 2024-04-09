@@ -46,10 +46,11 @@
                 border-collapse: collapse;
                 width: 100%;
             }
+
             tr {
                 height: 40px;
-
             }
+
             td, th {
                 font-family: 'Verdana';
                 /*border: 1px solid #818181;*/
@@ -58,9 +59,11 @@
                 font-size: 14px;
                 width: 250px;
             }
+
             tr:nth-child(odd) {
                 background-color: #dbcabd;
             }
+
             .titles {
                 font-family: 'Verdana';
                 font-size: 18px;
@@ -71,6 +74,7 @@
                 text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
                 background-color: #f4e1d2
             }
+
             label {
                 font-family: 'Verdana';
                 font-size: 14px;
@@ -82,20 +86,23 @@
                 text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
                 margin-left: -170px;
             }
-                .subTitles {
-                    font-family: 'Verdana';
-                    font-size: 12px;
-                    font-weight: revert;
-                    color: black;
-                    text-transform: capitalize;
-                    text-align: center;
-                    background-color: #f4e1d2;
-                }
+
+            .subTitles {
+                font-family: 'Verdana';
+                font-size: 12px;
+                font-weight: revert;
+                color: black;
+                text-transform: capitalize;
+                text-align: center;
+                background-color: #f4e1d2;
+            }
+
             .tableBtn {
                 align-items: center;
                 display: flex;
                 justify-content: center;
             }
+
                 .tableBtn button {
                     border: none;
                     outline: 0;
@@ -111,6 +118,7 @@
                     display: inline-block;
                     margin: 0 10px 0 0;
                 }
+
             input {
                 font-size: 14px;
                 background-color: transparent;
@@ -121,41 +129,47 @@
                 border-top: none;
                 outline: none;
             }
-                    input:focus {
-                        border-top: none;
-                        border-left: none;
-                        border-right: none;
-                        border-bottom: 3px solid #bc5a45;
-                    }
+
+                input:focus {
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: 3px solid #bc5a45;
+                }
+
             .twoColumns {
                 align-items: center;
                 display: flex;
                 justify-content: center;
             }
+
             .tdHeader {
                 text-align: center;
                 padding-left: 160px;
             }
+
             select {
                 font-size: 14px;
                 outline: none;
                 width: 174px;
                 text-align: center;
             }
+
             option {
                 font-size: 14px;
-                margin: inherit;             
+                margin: inherit;
             }
-            option:hover {
-                background-color: #ca8a7d;
-            }
+
+                option:hover {
+                    background-color: #ca8a7d;
+                }
+
             .error {
                 color: red;
             }
-
         </style>
-        
-        <div id="EditRemoveUsers" class="tabcontent">           
+
+        <div id="EditRemoveUsers" class="tabcontent">
             <table>
                 <tr><th colspan="5" class="titles">user manegment: edit or remove user</th></tr>
                 <tr><th colspan="5" class="subTitles">edit or delete a user. when deleteing a user, be reminded that all relative data will be lost</th></tr>
@@ -185,7 +199,7 @@
         <div id="AddUsers" class="tabcontent">
             <h1 class="titles">Add user</h1>
             <h1 class="subTitles">create accounts for new users. modify role to 'Admin' to grant access to Admin portal</h1>
-            @using(Html.BeginForm("AddUser","Admin",FormMethod.Post,new {@id="addUserForm"}))
+            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { @id = "addUserForm" }))
             {
                 <table>
                     <tbody>
@@ -218,15 +232,15 @@
                             <td><button type="submit">Add user</button></td>
                         </tr>
                     </tbody>
-                </table>               
+                </table>
             }
             <div id="uservalidationErrors"></div>
         </div>
 
         <div id="EditRemoveProducts" class="tabcontent">
             <table>
-            <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
-            <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr> 
+                <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
+                <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr>
                 <tr>
                     <th>Product ID</th>
                     <th>Product name</th>
@@ -264,7 +278,7 @@
 
 
         <div id="OrderProducts" class="tabcontent">
-            
+
             <form id="orderform">
                 <table>
                     <tr><th colspan="5" class="titles">order products</th></tr>
@@ -296,9 +310,9 @@
 
             <h1 class="titles">Add product</h1>
             <h1 class="subTitles">create a new product to be displayed in the site.be reminded that the product name cannot be changed after creation. you can edit other information regarding the product at any time in 'edit/remove products' tab </h1>
-          
 
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data"  }))
+
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data" }))
             {
                 <table>
                     <tbody>
@@ -358,6 +372,23 @@
             }
             <div id="productValidationErrors"></div>
         </div>
+
+        <div id="deleteuserPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('deleteuserPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Are you sure you want to delete this user?</p>
+            <button onclick="logout()">Yes</button>
+            <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
+
+        </div>
+
+        <div id="deleteProductPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('deleteProductPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>Are you sure you want to delete this product?</p>
+            <button onclick="logout()">Yes</button>
+            <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
+
+        </div>
+
     </div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
