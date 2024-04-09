@@ -181,13 +181,10 @@ function editRowProduct(button) {
     var deleteButton = document.getElementById('ProductDeleteButton' + productID); // Assuming you've added a 'deleteButton' class to your delete buttons
     deleteButton.disabled = true;
 
-
-
-
     row.find('td:not(:last-child)').each(function (index) {
         if (index > 1) { 
             var text = $(this).text();
-            $(this).html('<input type="text" value="' + text + '" />');
+            $(this).html('<input  type="text" class="small-input" value="' + text + '" />');
         }
     });
 
@@ -214,6 +211,7 @@ function saveRowProduct(button) {
         showmessage('The type input is incorrect');
         return;
     }
+    // שיניתי לטקסט ארה
     var description = row.find('td:eq(4) input').val();
     if (description.length < 4 || description.length > 500) {
         showmessage('The description input is incorrect')

@@ -15,9 +15,9 @@
 <body>
     <div class="topnav">
         <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
-        <div class="aDropdown">
-            <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</a>
-            <div class="dropContent">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+            <div class="dropdown-content">
                 <a href="@Url.Action("Logout", "Admin")">logout</a>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 /*border: 1px solid #818181;*/
                 text-align: left;
                 padding: 8px;
-                font-size: 14px;
+                font-size: 11px;
                 width: 250px;
             }
             tr:nth-child(odd) {
@@ -112,7 +112,7 @@
                     margin: 0 10px 0 0;
                 }
             input {
-                font-size: 14px;
+                font-size: 11px;
                 background-color: transparent;
                 border-bottom: 1px solid black;
                 margin: inherit;
@@ -120,6 +120,11 @@
                 border-left: none;
                 border-top: none;
                 outline: none;
+                min-width: 70px;
+                min-height: 20px;
+            }
+            .small-input {
+                width: 15px;
             }
                     input:focus {
                         border-top: none;
@@ -152,7 +157,9 @@
             .error {
                 color: red;
             }
-
+            .tableCel {
+                display: block;
+            }
         </style>
         
         <div id="EditRemoveUsers" class="tabcontent">           
@@ -164,7 +171,7 @@
                     <th>Password</th>
                     <th>Role</th>
                     <th>Email</th>
-                    <th>Action</th>
+                    <th style="text-align:center;">Action</th>
                 </tr>
                 @foreach (VinoVoyage.Models.UserModel us in Model.users)
                 {
@@ -183,24 +190,21 @@
         </div>
 
         <div id="AddUsers" class="tabcontent">
-            <h1 class="titles">Add user</h1>
-            <h1 class="subTitles">create accounts for new users. modify role to 'Admin' to grant access to Admin portal</h1>
-            @using(Html.BeginForm("AddUser","Admin",FormMethod.Post,new {@id="addUserForm"}))
+            @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { @id = "addUserForm" }))
             {
+                <h1 class="titles">Add user</h1>
+                <h1 class="subTitles">create accounts for new users. modify role to 'Admin' to grant access to Admin portal</h1>
                 <table>
                     <tbody>
                         <tr>
-                            @*<td><label for="username">Username:</label></td>*@
                             <td class="tdHeader">username:</td>
                             <td><input type="text" id="username" name="username" required></td>
                         </tr>
                         <tr>
-                            @*<td><label for="password">Password:</label></td>*@
                             <td class="tdHeader">password:</td>
                             <td><input type="password" id="password" name="password" required></td>
                         </tr>
                         <tr>
-                            @*<td><label for="role">Role</label></td>*@
                             <td class="tdHeader">role:</td>
                             <td>
                                 <select id="role" name="role" required>
@@ -210,56 +214,54 @@
                             </td>
                         </tr>
                         <tr>
-                            @*<td><label for="email">Email:</label></td>*@
                             <td class="tdHeader">email</td>
                             <td><input type="email" id="email" name="email" placeholder="exmaple@gmail.com" required></td>
                         </tr>
-                        <tr class="tableBtn">
-                            <td><button type="submit">Add user</button></td>
-                        </tr>
                     </tbody>
-                </table>               
+                </table>
+                <button type="submit" class="adminBtn">Add user</button>
             }
             <div id="uservalidationErrors"></div>
         </div>
 
         <div id="EditRemoveProducts" class="tabcontent">
-            <table>
-            <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
-            <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr> 
-                <tr>
-                    <th>Product ID</th>
-                    <th>Product name</th>
-                    <th>Winery</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Origin</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                    <th>New price</th>
-                    <th>Rating</th>
-                    <th>Action</th>
-                </tr>
-                @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
-                {
+                <table class="admin-table">
+                    <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
+                    <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr>
                     <tr>
-                        <td>@pr.ProductID</td>
-                        <td>@pr.ProductName</td>
-                        <td>@pr.Winery</td>
-                        <td>@pr.Type</td>
-                        <td>@pr.Description</td>
-                        <td>@pr.Origin</td>
-                        <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
-                        <td>@pr.Price</td>
-                        <td>@pr.NewPrice</td>
-                        <td>@pr.Rating</td>
-                        <td class="tableBtn">
-                            <button id="ProductEditButton@(pr.ProductID)" onclick="editRowProduct(this)">Edit</button>
-                            <button id="ProductDeleteButton@(pr.ProductID)" onclick="deleteRowProduct(this)">Delete</button>
-                        </td>
+                        <th>Product ID</th>
+                        <th>Product name</th>
+                        <th>Winery</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Origin</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>New price</th>
+                        <th>Rating</th>
+                        <th style="text-align:center;">Action</th>
                     </tr>
-                }
-            </table>
+                    @foreach (VinoVoyage.Models.ProductModel pr in Model.products)
+                    {
+                        <tr>
+                            <td>@pr.ProductID</td>
+                            <td>@pr.ProductName</td>
+                            <td>@pr.Winery</td>
+                            <td>@pr.Type</td>
+                            <td>@pr.Description</td>
+                            <td>@pr.Origin</td>
+                            <td style="@(pr.Amount < 10 ? "background-color: #bc5a45;" : "")">@pr.Amount</td>
+                            <td>@pr.Price</td>
+                            <td>@pr.NewPrice</td>
+                            <td>@pr.Rating</td>
+                            <td class="tableBtn">
+                                    <button id="ProductEditButton@(pr.ProductID)" onclick="editRowProduct(this)">Edit</button>
+                                    <button id="ProductDeleteButton@(pr.ProductID)" onclick="deleteRowProduct(this)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+ 
         </div>
 
 
@@ -283,12 +285,12 @@
                             <td>@pr.ProductID</td>
                             <td>@pr.ProductName</td>
                             <td>@pr.Winery</td>
-                            <td style="@(pr.Amount < 10 ? "background-color: red;" : "")">@pr.Amount</td>
+                            <td style="@(pr.Amount < 10 ? "background-color: #bc5a45;" : "")">@pr.Amount</td>
                             <td><input type="number" name="orderQuantity[@pr.ProductID]" min="0" value="0"></td>
                         </tr>
                     }
                 </table>
-                <button style="width:10%" type="button" id="sendorder">Send order</button>
+                <button class="adminBtn" type="button" id="sendorder" style="margin: 50px 0 0 500px;">Send order</button>
             </form>
         </div>
 

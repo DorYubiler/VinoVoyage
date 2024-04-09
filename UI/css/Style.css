@@ -861,7 +861,6 @@ button {
     padding: 8px 12px;
     position: absolute;
     top: 0;
-    left: 5%;
 }
 
 .dot {
@@ -1029,7 +1028,12 @@ button {
 
 /* maincontent div for the main div in admin page */
 .content {
-    padding-left: 150px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    top: 60px;
+    position: relative;
+
 }
 
 /* --------------------------------------------------------------- */
@@ -1228,10 +1232,25 @@ button {
         left: calc(-50% + 20px);
         z-index: 0;
     }
+.adminBtn {
+    width: 200px;
+    justify-content: center;
+    display: flex;
+    flex-flow: row;
+    position: relative;
+    margin: 50px 0 0 200px;
+}
 
-    .order-tracking:first-child:before {
-        display: none;
-    }
+.admin-table {
+    display: table;
+    margin: 0 0 0 130px;
+    position: relative;
+    width: 1090px;
+}
+
+.order-tracking:first-child:before {
+    display: none;
+}
 
     .order-tracking.completed:before {
         background-color: #27aa80;
