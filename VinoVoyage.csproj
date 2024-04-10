@@ -218,6 +218,10 @@
     <Compile Include="Migrations\202404070934260_ShippingModel.Designer.cs">
       <DependentUpon>202404070934260_ShippingModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404101311390_AddProducts.cs" />
+    <Compile Include="Migrations\202404101311390_AddProducts.Designer.cs">
+      <DependentUpon>202404101311390_AddProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -335,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404070934260_ShippingModel.resx">
       <DependentUpon>202404070934260_ShippingModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404101311390_AddProducts.resx">
+      <DependentUpon>202404101311390_AddProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

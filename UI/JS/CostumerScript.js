@@ -50,7 +50,11 @@ function checkPayment(event) {
         },
         success: function (response) {
             if (response.success) {
-                window.location.href = response.redirectUrl;
+                toggleConfirmPopup('ShipConfPopup');
+                setTimeout(function () {
+                    window.location.href = response.redirectUrl;
+                }, 3000);
+                
             } else {
                 $("#paymentValidationErrors").html("Error at proccess payment.").show();
             }
@@ -209,27 +213,32 @@ $(document).ready(function () {
 });
 
 function checkChanges(event) {
-    event.preventDefault(); // Correctly call preventDefault on the event object
+    event.preventDefault(); 
     $("#changeValidationErrors").empty();
-    // Optionally, re-enable the submit button if disabled
-    // Assuming 'username' and 'password' are the IDs of the input fields
     var uname = $('#usname').text();
-    var mail = $('#Cemail').val(); // Use jQuery to get the value
-    var pass1 = $('#Cpassword').val(); // Use jQuery to get the value
+    var mail = $('#Cemail').val(); 
+    var pass1 = $('#Cpassword').val(); 
     var pass2 = $('#password2').val();
-    if (mail.length < 12 || mail.length > 30 ) {
-        $("#changeValidationErrors").html("Invalid email").show();
+    if (mail.length != 0) {
+        if (mail.length < 12 || mail.length > 30) {
+            $("#changeValidationErrors").html("Invalid email").show();
+            return;
+        }
+    }
+    if (pass1.length != 0 && pass2 != 0) {
+        if (pass1 != pass2) {
+            $("#changeValidationErrors").html("Passwords do not match").show();
+            return;
+        }
+        if (pass1.length < 6 || pass1.length > 10) {
+            $("#changeValidationErrors").html("Invalid password").show();
+            return;
+        }
+    }
+    if (mail.length == 0 && pass1.length == 0 && pass2.length == 0) {
+        $("#changeValidationErrors").html("No input was entered").show();
         return;
     }
-    if (pass1 != pass2) {
-        $("#changeValidationErrors").html("Passwords do not match").show();
-        return;
-    }
-    if (pass1.length < 6 || pass1.length > 10) {
-        $("#changeValidationErrors").html("Invalid password").show();
-        return;
-    }
-
 
     $.ajax({
         type: "POST",

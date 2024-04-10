@@ -467,8 +467,8 @@ namespace VinoVoyage.Controllers
             UserModel model = db.Users.Find(username);
             if(model != null)
             {
-                model.Password = password;
-                model.Email = email;
+                if (password.Length!=0) { model.Password = password; }
+                if(email.Length!=0) { model.Email = email; }
                 db.SaveChanges();
                 return Json(new { success = true });
 
