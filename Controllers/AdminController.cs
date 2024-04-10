@@ -19,14 +19,15 @@ namespace VinoVoyage.Controllers
     public class AdminController : Controller
     {
         private VinoVoyageDb db = new VinoVoyageDb();
-       
+
 
 
         // GET: Admin
-        public ActionResult AdminHomePage(UserModel user)
+        
+        public ActionResult AdminHomePage(/*UserModel user*/)
         {
-            
-            Session["userinfo"]=user as UserModel;
+            var user = Session["userinfo"] as UserModel;
+            /*Session["userinfo"]=user as UserModel;*/
             UserViewModel uvm = new UserViewModel();
             //creating new uvm, copy all of the users and removing the current admin
             UserViewModel uvmA = new UserViewModel();

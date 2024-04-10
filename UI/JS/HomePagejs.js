@@ -202,10 +202,7 @@ function startCustomer(divId) {
 
 window.onload = function () {
     
-    if (!localStorage.getItem('welcomePopupShown')) {
-        document.getElementById('welcomePopup').style.display = 'block';
-        localStorage.setItem('welcomePopupShown', 'true');
-    }
+    document.getElementById('welcomePopup').style.display = 'block';
 }
 
 function gotoGuest() {

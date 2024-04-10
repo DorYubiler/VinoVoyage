@@ -17,12 +17,10 @@ namespace VinoVoyage.Controllers
     {
         private VinoVoyageDb db = new VinoVoyageDb();
         // GET: Customer
-        public ActionResult CustomerHomeView(UserModel user)
+        public ActionResult CustomerHomeView(/*UserModel user*/)
         {
-            
-    
-            Session["userinfo"] = user as UserModel;       
-             
+
+            var user = Session["userinfo"] as UserModel;   
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();

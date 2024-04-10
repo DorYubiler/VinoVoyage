@@ -57,8 +57,9 @@
             </div>
             @if (!(Model.user.Username.Contains("guest")))
             {
-                <div id="trackPopup" style="overflow-y: auto; max-height: 500px; border: 6px solid black;" class="popup">
+                <div id="trackPopup" style="overflow-y: auto; max-height: 500px; border: 6px solid black; min-width:300px;" class="popup">
                     <span onclick="document.getElementById('trackPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+                     
                     @Html.Partial("_ShippingTrackerView", Model.shipping)
                 </div>
             }

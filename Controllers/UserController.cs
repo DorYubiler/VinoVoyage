@@ -66,12 +66,13 @@ namespace VinoVoyage.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.Username, false);
+                    Session["userinfo"] = user as UserModel;
                     // Return success and a redirect URL.
                     if (user.Role == "customer") {
                         
-                        return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
+                        return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer"/*,user*/) });
                     }
-                    return Json(new { success = true, redirectUrl = Url.Action("AdminHomePage", "Admin",user) });
+                    return Json(new { success = true, redirectUrl = Url.Action("AdminHomePage", "Admin"/*,user*/) });
 
                 }
                 else
@@ -92,6 +93,7 @@ namespace VinoVoyage.Controllers
             model.Username = "guest"+num.ToString();
             model.Password = "123456";
             model.Email = "guest@guest.com";
+            Session["userinfo"]=model;
             return RedirectToAction("CustomerHomeView", "Customer", model);
             
         }
