@@ -185,7 +185,7 @@ function toggleConfirmPopup(divId) {
     closeAllPopups();
     var popup = document.getElementById(divId);
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
-}
+} 
 function getIn(divId) {
     document.getElementById(divId).style.display = 'none';
 }

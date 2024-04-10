@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="main" class="window">
-        
+
         <div class="topnav" id="myTopnav">
             <a onclick="openMainWindow()"><i class="fa fa-home"></i> VINOVOYAGE</a>
 
@@ -527,11 +527,17 @@
                 </div>
             }
         </div>
-        <div id="changesConfPopup" class="popup" style="width:600px;"> 
+        <div id="changesConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('changesConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>Product ordered successfully</p>
         </div>
-        
+
+        <div id="notifyPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('notifyPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <p>We will make sure to update you via email when the product is back in stock</p>
+            <button onclick="closeAllPopups()">OK</button>
+
+        </div>
         <script>
              function plusBtn(button) {
                  var row = $(button).closest('tr');
@@ -846,10 +852,6 @@
                 document.getElementsByTagName("head")[0].appendChild(script);
             })();
 
-
-            function notifymsg() {
-                confirm('We will make sure to update you via email when the product is back in stock');
-            }
         </script>
     </div>
 </body>
