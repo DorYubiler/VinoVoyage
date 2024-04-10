@@ -51,7 +51,6 @@ function myFunction() {
 //-------------------------------------------------------
 //------------------login validation----------------------
 $(document).ready(function () {
-    // Assuming your form has an ID 'loginForm'
     $('#loginForm').on('submit', checkLogin);
 });
 
@@ -59,17 +58,16 @@ function checkLogin(event) {
     event.preventDefault(); // Correctly call preventDefault on the event object
     $("#LoginValidationErrors").empty();
     $("#username, #password").removeClass("form-group");
-    // Optionally, re-enable the submit button if disabled
-    // Assuming 'username' and 'password' are the IDs of the input fields
-    var uname = $('#username').val(); // Use jQuery to get the value
-    var pass = $('#password').val(); // Use jQuery to get the value
+    
+    var uname = $('#username').val(); 
+    var pass = $('#password').val(); 
     
     $.ajax({
         type: "POST",
         url: "/User/Login",
         data: {
             username: uname,
-            password: pass // Make sure the variable is correctly spelled here
+            password: pass 
         },
         success: function (response) {
             if (response.success) {
