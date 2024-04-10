@@ -182,65 +182,69 @@ namespace VinoVoyage.Controllers
         {
             // find product in db and change amount
             ProductModel stockItems = db.Products.FirstOrDefault(p => p.ProductID == prodId);
-            if (stockItems == null)
+            if (stockItems.Amount > 0)
             {
-                return HttpNotFound();
-            }
-            stockItems.Amount -= 1;
-            db.SaveChanges();
-
-            // update cart total
-            var cartTotal = (int)Session["cartTotal"];
-            if (stockItems.NewPrice != 0)
-            {
-                cartTotal += stockItems.NewPrice;
-            }
-            else
-            {
-                cartTotal += stockItems.Price;
-            }
-            Session["cartTotal"] = cartTotal;
-
-            // get user info
-            var tempCart = Session["userCart"] as List<OrderModel>;
-            var user = Session["userinfo"] as UserModel;
-
-            // if user has cart
-            if (tempCart.Count > 0)
-            {
-                // check if product in the cart
-                bool containsProduct = tempCart.Any(item => item.ProductID == prodId);
-                if (containsProduct)
+                if (stockItems == null)
                 {
-                    // if so, incrase quantity of order in db and in cart
-                    var existingOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
-                    if (existingOrder != null)
+                    return HttpNotFound();
+                }
+                stockItems.Amount -= 1;
+                db.SaveChanges();
+
+                // update cart total
+                var cartTotal = (int)Session["cartTotal"];
+                if (stockItems.NewPrice != 0)
+                {
+                    cartTotal += stockItems.NewPrice;
+                }
+                else
+                {
+                    cartTotal += stockItems.Price;
+                }
+                Session["cartTotal"] = cartTotal;
+
+                // get user info
+                var tempCart = Session["userCart"] as List<OrderModel>;
+                var user = Session["userinfo"] as UserModel;
+                bool isGuest = user.Username.Contains("guest");
+                // if user has cart
+                if (tempCart.Count > 0)
+                {
+                    // check if product in the cart
+                    bool containsProduct = tempCart.Any(item => item.ProductID == prodId);
+                    if (containsProduct)
                     {
-                        existingOrder.Quantity += 1;
-                        db.SaveChanges();
-                        var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
-                        temp.Quantity += 1;
-                        Session["userCart"] = tempCart;
-                        return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity, prod = stockItems, total = Session["cartTotal"] });
+                        // if so, incrase quantity of order in db and in cart
+                        var existingOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
+                        if (existingOrder != null)
+                        {
+                            existingOrder.Quantity += 1;
+                            db.SaveChanges();
+                            var temp = tempCart.FirstOrDefault(item => item.ProductID == prodId);
+                            temp.Quantity += 1;
+                            Session["userCart"] = tempCart;
+                            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = temp.Quantity, prod = stockItems, total = Session["cartTotal"], guest = isGuest });
+                        }
                     }
                 }
+                // if cart is empty or product is not in the cart
+
+                // create a new order
+                OrderModel newOrder = new OrderModel();
+                newOrder.ProductID = prodId;
+                newOrder.Username = user.Username;
+                newOrder.Quantity = 1;
+
+                // add to cart
+                tempCart.Add(newOrder);
+
+                // add to db
+                db.Orders.Add(newOrder);
+                db.SaveChanges();
+                Session["userCart"] = tempCart;
+                return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1, prod = stockItems, total = Session["cartTotal"], guest = isGuest });
             }
-            // if cart is empty or product is not in the cart
-
-            // create a new order
-            OrderModel newOrder = new OrderModel();
-            newOrder.ProductID = prodId;
-            newOrder.Username = user.Username;
-            newOrder.Quantity = 1;
-
-            // add to cart
-            tempCart.Add(newOrder);
-
-            // add to db
-            db.Orders.Add(newOrder);
-            db.SaveChanges();
-            Session["userCart"] = tempCart;
-            return Json(new { success = true, message = "Product added to cart successfully.", newQuantity = 1, prod = stockItems, total = Session["cartTotal"] });
+            return Json(new { success = false, message = "Product is out of stock.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
         }
 
         [HttpPost]

@@ -13,27 +13,83 @@
 
         <div class="prodDesctiption">
             <h1>@prod.ProductName</h1>
+            <div class="productButtons">
+                @if (prod.Rating == 1)
+                {
+                    <div class="rating" style="font-size:13px;">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                    </div>
+                }
+                @if (prod.Rating == 2)
+                {
+                    <div class="rating" style="font-size:13px;">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star "></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                    </div>
+                }
+                @if (prod.Rating == 3)
+                {
+                    <div class="rating" style="font-size:13px;">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star unchecked"></span>
+                        <span class="fa fa-star unchecked"></span>
+                    </div>
+                }
+                @if (prod.Rating == 4)
+                {
+                    <div class="rating" style="font-size:13px;">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star unchecked"></span>
+                    </div>
+                }
+                @if (prod.Rating == 5)
+                {
+                    <div class="rating" style="font-size:13px;">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                }
+            </div>
+
             <div class="originPrice">
-                <h2>@prod.Origin</h2>
-                @if (prod.NewPrice != 0)
-                {
-                    
-                    <h2 style="text-decoration:line-through">@(prod.Price)₪</h2>
-                    <h2>@(prod.NewPrice)₪</h2>
-                }
-                else
-                {
-                    <h2>@(prod.Price)₪</h2>
-                    
-                }
+                <div class="oridigin">
+                    <h2>@prod.Winery, @prod.Origin</h2>
+                </div>
+                <div class="price">
+                    @if (prod.NewPrice != 0)
+                    {
+
+                        <h2 class="old-price">@(prod.Price)₪</h2>
+                        <h2>@(prod.NewPrice)₪ </h2>
+                    }
+                    else
+                    {
+                        <h2>@(prod.Price)₪</h2>
+                    }
+                </div>
             </div>
 
             @if (prod.Amount != 0)
             {
                 <div class="productButtons" data-product-available="@prod.ProductID">
-                    
+
                     <button class="addWineBtn" onclick="toggleBuynow(@prod.ProductID, @(prod.NewPrice != 0 ? prod.NewPrice : prod.Price))">Buy Now</button>
-<button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
+                    <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
                     <button class="addToCart" onclick="addToList('@prod.ProductID')"><i class="fa fa-heart"></i></button>
 
                 </div>

@@ -34,10 +34,7 @@ namespace VinoVoyage.Controllers
             uvm.user = user;
             List<UserModel> Users = new List<UserModel>();
             if (user != null)
-            {
-                
-
-                
+            {              
                 for(int i = 0; i < uvmA.users.Count; i++)
                 {
                     if (uvmA.users[i].Username != user.Username)
@@ -50,21 +47,21 @@ namespace VinoVoyage.Controllers
                 ViewBag.Username = user.Username;
                 return View(uvm);
             }
-                return View();
+            return View();
         }
+
         [HttpPost]
         public ActionResult UpdateUser(UserModel model)
         {
             try
             {
-             UserModel userUpdate= db.Users.Find(model.Username);
-             if (userUpdate != null) {
+                UserModel userUpdate= db.Users.Find(model.Username);
+                if (userUpdate != null) {
                     userUpdate.Password = model.Password;
                     userUpdate.Email = model.Email;
                     userUpdate.Role = model.Role;
                     db.SaveChanges();
-             }
-                
+                }
                 return Json(new { success = true });
             }
             catch
@@ -72,6 +69,7 @@ namespace VinoVoyage.Controllers
                 return Json(new { success = false });
             }
         }
+
         [HttpPost]
         public ActionResult DeleteUser(string usern)
         {
