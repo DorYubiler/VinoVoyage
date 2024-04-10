@@ -17,6 +17,7 @@
 
         protected override void Seed(VinoVoyage.Dal.VinoVoyageDb context)
         {
+
         }
     }
 }
