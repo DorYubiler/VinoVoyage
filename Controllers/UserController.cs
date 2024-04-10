@@ -48,7 +48,6 @@ namespace VinoVoyage.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Users.Add(user);
-                    Session["userinfo"] = user as UserModel;
                     db.SaveChanges();
                     Session["userinfo"] = user as UserModel;
                     return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });

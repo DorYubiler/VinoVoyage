@@ -1,0 +1,72 @@
+﻿@model VinoVoyage.ViewModel.UserViewModel
+@using VinoVoyage.Models
+
+
+@{
+    ViewBag.Title = "CartView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/UI/css/Style.css">
+</head>
+<body>
+    <div class="checkout">
+        <div class="centerCheckout">
+            <h1>@Model.user.Username</h1>
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    /*                    padding: 8px;*/
+                    font-size: 14px;
+                    white-space: nowrap;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+
+                table button {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background-color: grey;
+                    color: black;
+                    padding: 0 0 13px 0;
+                    cursor: pointer;
+                    font-size: 15px;
+                    font-weight: 200;
+                }
+
+                table h1 {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    color: black;
+                    padding: 0 0 13px 0;
+                    font-size: 15px;
+                    font-weight: 200;
+                }
+            </style>
+            <div class="cartList">
+                <div class="topCart">
+                    <h1>Shopping Cart</h1>
+                </div>
+                <table>
+                    <tbody class="checkoutItem">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

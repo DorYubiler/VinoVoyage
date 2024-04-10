@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<VinoVoyage.Models.ProductModel>
 
+
+
 @foreach (var prod in Model)
 {
     <div class="prodCard">
@@ -72,6 +74,7 @@
                 <div class="price">
                     @if (prod.NewPrice != 0)
                     {
+
                         <h2 class="old-price">@(prod.Price)₪</h2>
                         <h2>@(prod.NewPrice)₪ </h2>
                     }
@@ -85,9 +88,11 @@
             @if (prod.Amount != 0)
             {
                 <div class="productButtons" data-product-available="@prod.ProductID">
+
                     <button class="addWineBtn" onclick="toggleBuynow(@prod.ProductID, @(prod.NewPrice != 0 ? prod.NewPrice : prod.Price))">Buy Now</button>
                     <button class="addToCart" onclick="addToCart('@prod.ProductID')"><i class="fas fa-cart-plus"></i></button>
                     <button class="addToCart" onclick="addToList('@prod.ProductID')"><i class="fa fa-heart"></i></button>
+
                 </div>
             }
             else
@@ -98,6 +103,7 @@
                     </div>
                     <button class="addToCart" onclick="toggleConfirmPopup('notifyPopup')"><i class="fas fa-bell"></i></button>
                 </div>
+
             }
         </div>
     </div>
