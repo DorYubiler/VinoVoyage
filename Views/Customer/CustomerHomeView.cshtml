@@ -19,16 +19,30 @@
 </head>
 <body>
     <div id="main" class="window">
+        
         <div class="topnav" id="myTopnav">
             <a onclick="openMainWindow()"><i class="fa fa-home"></i> VINOVOYAGE</a>
-            <div class="dropdown">
-                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
-                <div class="dropdown-content">
-                    <a onclick="changesInfotogglePopup()">update info</a>
-                    <a onclick="toggleTrackPopup()">track shipping</a>
-                    <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
+
+            @if (!(Model.user.Username.Contains("guest")))
+            {
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+                    <div class="dropdown-content">
+                        <a onclick="changesInfotogglePopup()">update info</a>
+                        <a onclick="toggleTrackPopup()">track shipping</a>
+                        <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> guest</button>
+                    <div class="dropdown-content">
+                        <a onclick="toggleConfirmPopup('logoutPopup')">home page</a>
+                    </div>
+                </div>
+            }
             @if (!(Model.user.Username.Contains("guest")))
             {
                 <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
@@ -246,10 +260,21 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">all wines</h1>
-                <div class="prodGrid">
-                    @Html.Partial("_ProductsGrid", Model.products)
+                @if (!(Model.user.Username.Contains("guest")))
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products)
 
-                </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_GuestGrid", Model.products)
+
+                    </div>
+                }
+
             </div>
 
             <div id="Whites" class="tabcontent">
@@ -260,10 +285,20 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">Whites</h1>
-                <div class="prodGrid">
+                @if (!(Model.user.Username.Contains("guest")))
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
 
-                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
-                </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "white"))
+
+                    </div>
+                }
 
             </div>
 
@@ -275,11 +310,20 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">Reds</h1>
-                <div class="prodGrid">
+                @if (!(Model.user.Username.Contains("guest")))
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
 
-                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
-                </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "red"))
 
+                    </div>
+                }
             </div>
             <div id="Roses" class="tabcontent">
                 <select class="sortselect" id="sortRose" data-wine-color="Roses">
@@ -289,9 +333,20 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">Rose</h1>
-                <div class="prodGrid">
-                    @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
-                </div>
+                @if (!(Model.user.Username.Contains("guest")))
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
+
+                    </div>
+                }
+                else
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
+
+                    </div>
+                }
             </div>
             <div id="Sales" class="tabcontent">
                 <select class="sortselect" id="sortSales" data-wine-color="Sales">
@@ -301,6 +356,20 @@
                     <option value="popular">by popularity</option>
                 </select>
                 <h1 class="titles">On sale</h1>
+                @if (!(Model.user.Username.Contains("guest")))
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
+
+                    </div>
+                }
+                else
+                {
+                    <div class="prodGrid">
+                        @Html.Partial("_GuestGrid", Model.products.Where(p => p.NewPrice != 0))
+
+                    </div>
+                }
                 <div id="searchgrid" class="prodGrid">
                     @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
 
@@ -446,11 +515,11 @@
                         <h3></h3>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="text" style="display:none;" id="usname">@Model.user.Username</div>
-                        <div class="hometTitles">EMAIL</div>
+                        <div class="hometTitles">email</div>
                         <input type="email" id="Cemail" name="email" placeholder="example@gmail.com" />
-                        <div class="hometTitles">PASSWORD</div>
-                        <input type="password" id="Cpassword" name="Password" placeholder="" />
-                        <div class="hometTitles">RE-WRITE PASSWORD</div>
+                        <div class="hometTitles">password</div>
+                        <input type="password" id="Cpassword" name="Password" placeholder="6-10 characters" />
+                        <div class="hometTitles">confirm password</div>
                         <input type="password" id="password2" name="Password2" placeholder="" />
                         <button class="popUpButton" id="showLoginForm" type="submit" style="margin: 13px 0 0 0;">Change</button>
                         <div id="changeValidationErrors" class="errorMsg"></div>

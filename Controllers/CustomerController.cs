@@ -133,7 +133,10 @@ namespace VinoVoyage.Controllers
             
             Session.Clear();
             List<UserModel> users = db.Users.Where(u => u.Username.Contains("guest")).ToList();
+            List<WishListModel> wishListModels = db.wishList.Where(i => i.Username.Contains("guest")).ToList();
             db.Users.RemoveRange(users);
+            db.wishList.RemoveRange(wishListModels);
+            db.SaveChanges();
             return RedirectToAction("HomePage", "User");
 
             
@@ -446,9 +449,12 @@ namespace VinoVoyage.Controllers
             // Simulate fetching filtered products from database
             // Replace this with your actual database query using Entity Framework, Dapper, or another ORM
             var filteredProducts = db.Products.Where(p=> p.Type.ToString().Contains(query) || p.Winery.ToString().Contains(query) || p.ProductName.ToString().Contains(query) || p.Origin.ToString().Contains(query) || p.Description.ToString().Contains(query));
-            
-
-            // Return the Partial View with the filtered products
+            var user = Session["userinfo"] as UserModel;
+            if (user.Username.Contains("guest"))
+            {
+                // Return the Partial View with the filtered products
+                return PartialView("_GuestGrid", filteredProducts);
+            }
             return PartialView("_ProductsGrid", filteredProducts);
         }
 

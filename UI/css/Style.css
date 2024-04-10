@@ -321,7 +321,7 @@ button {
     color: black;
     font-size: 13px;
     font-family: 'Verdana';
-    text-transform: capitalize;
+    text-transform: initial;
     font-weight: 400;
     padding: 0 0 3px 0;
     margin: 13px 0 4px 0;
@@ -331,9 +331,9 @@ button {
 }
 .popup h3 {
     color: black;
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Verdana';
-    text-transform: uppercase;
+    text-transform: initial;
     font-weight: 500;
 }
 

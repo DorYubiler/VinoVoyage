@@ -152,10 +152,12 @@
             }
 
             select {
-                font-size: 14px;
+                font-size: 12px;
                 outline: none;
-                width: 174px;
+                min-width: 140px;
                 text-align: center;
+                text-transform: lowercase;
+                font-family: 'Verdana';
             }
 
             option {
@@ -240,8 +242,8 @@
 
         <div id="EditRemoveProducts" class="tabcontent">
                 <table class="admin-table">
-                    <tr><th colspan="10" class="titles">Edit or remove a product</th></tr>
-                    <tr><th colspan="10" class="subTitles">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr>
+                    <tr><th colspan="10" class="titles" style="padding: 0 0 0 100px;">Edit or remove a product</th></tr>
+                    <tr><th colspan="10" class="subTitles" style="padding: 0 0 0 129px;">easily update or remove products from the site. please note that deleted products cannot be restored</th></tr>
                     <tr>
                         <th>Product ID</th>
                         <th>Product name</th>
@@ -278,7 +280,6 @@
  
         </div>
 
-
         <div id="OrderProducts" class="tabcontent">
 
             <form id="orderform">
@@ -309,13 +310,10 @@
         </div>
 
         <div id="AddNewProduct" class="tabcontent">
-
-            <h1 class="titles">Add product</h1>
-            <h1 class="subTitles">create a new product to be displayed in the site.be reminded that the product name cannot be changed after creation. you can edit other information regarding the product at any time in 'edit/remove products' tab </h1>
-
-
-            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { @id = "addProductForm", enctype = "multipart/form-data", style = "margin: 0 0 0 80px; width: 900px;" }))
             {
+                <h1 class="titles">Add product</h1>
+                <h1 class="subTitles">create a new product to be displayed in the site.be reminded that the product name cannot be changed after creation. you can edit other information regarding the product at any time in 'edit/remove products' tab </h1>
                 <table>
                     <tbody>
                         <tr>
@@ -361,7 +359,7 @@
                             <td><input type="number" id="price" name="Price" value="1" min="1" required></td>
                         </tr>
                         <tr>
-                            <td class="tdHeader">Price after discount:</td>
+                            <td class="tdHeader">Price after discount (0 for no discount):</td>
                             <td><input type="number" id="newPrice" name="NewPrice" value="0" min="0" required></td>
                         </tr>
                         <tr>
@@ -370,7 +368,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit">Add Product</button>
+                <button type="submit" class="adminBtn" style="margin:20px 0 0 345px;">Add Product</button>
             }
             <div id="productValidationErrors"></div>
         </div>
