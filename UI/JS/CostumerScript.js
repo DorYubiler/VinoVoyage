@@ -1,14 +1,14 @@
 ﻿
 // Attaches a submit event listener to the payment form.
-$(document).ready(function () {
+/*$(document).ready(function () {
     $('#paymentForm').on('submit.paymentForm', checkPayment);
-});
+});*/
 
 // Validates the payment form fields before submission.
 // Extracts and validates form values against regular expressions.
 // Displays an error message for the first validation failure encountered.
 // On successful validation, triggers the payment confirmation popup and sends the form data to the server via AJAX.
-function checkPayment(event) {
+function checkPayment() {
     event.preventDefault();
     $("#paymentvalidationErrors").empty();
     var cvv = $('#cvv').val();
@@ -189,11 +189,23 @@ function toggleTrackPopup() {
 }
 localStorage.setItem('welcomePopupShown', 'false');
 
-function toggleConfirmPopup(divId) {
+/*function toggleConfirmPopup(divId) {
     closeAllPopups();
     var popup = document.getElementById(divId);
     popup.style.display = (popup.style.display === "none") ? "block" : "none";
-} 
+} */
+
+function toggleConfirmPopup(divId) {
+    // First, check if the element exists
+    var popup = document.getElementById(divId);
+    if (popup) {
+        // If the element exists, toggle its display style
+        popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    } else {
+        // Log an error or handle the absence of the element as appropriate
+        console.error('Element with ID "' + divId + '" not found.');
+    }
+}
 function getIn(divId) {
     document.getElementById(divId).style.display = 'none';
 }
