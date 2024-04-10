@@ -57,7 +57,7 @@
             </div>
             @if (!(Model.user.Username.Contains("guest")))
             {
-                <div id="trackPopup" class="popup">
+                <div id="trackPopup" style="overflow-y: auto; max-height: 600px;" class="popup">
                     <span onclick="document.getElementById('trackPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
                     @Html.Partial("_ShippingTrackerView", Model.shipping)
                 </div>
@@ -440,7 +440,7 @@
                         <div class="popupTotal" id="popupTotal"> </div>
                         <div class="adress-info">
                             <h3>Shipping Address</h3>
-                            <div class="paymentTitles">Enter valid shipping adress</div>
+                            <div class="paymentTitles">Enter valid shipping address</div>
                             <div class="paymentTitles">Name</div>
                             <input type="text" class="popup-input" id="busername" name="username" placeholder="Full Name" required>
                             <div class="paymentTitles">street</div>
@@ -478,7 +478,7 @@
         <div id="ShipConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('ShipConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>The order has been sent, delivery time up to two weeks </p>
-            <button onclick="getIn('ShipConfPopup')">ok</button>
+            
         </div>
 
         <div id="emptyCartPopup" class="popup" style="width:600px;">
@@ -529,7 +529,7 @@
         </div>
         <div id="changesConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('changesConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
-            <p>Product ordered successfully</p>
+            <p>Your information updated successfully</p>
         </div>
 
         <div id="notifyPopup" class="popup" style="width:600px;">

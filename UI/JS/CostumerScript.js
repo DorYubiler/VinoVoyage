@@ -68,7 +68,7 @@ function checkPayment(event) {
 
 
 function checkBuynow() {
-   /* event.preventDefault();*/
+    event.preventDefault();
     $("#buynowvalidationErrors").empty();
 
     var cvv = $('#bcvv').val();
@@ -83,27 +83,27 @@ function checkBuynow() {
     var regexStreet = /^[a-zA-Z0-9\s]+$/;
     var regexNames = /^[a-zA-Z\s]+$/;
 
-    if (!regexCvv.test(cvv)) {
+    if (!regexCvv.test(cvv)||cvv=='null'||cvv=='') {
         $("#buynowvalidationErrors").html("Invalid CVV").show();
         return;
     }
-    if (!regexNames.test(addressName)) {
+    if (!regexNames.test(addressName) || addressName == 'null' || addressName == '') {
         $("#buynowvalidationErrors").html("Invalid shipping name").show();
         return;
     }
-    if (!regexCardNumber.test(cardNumber)) {
+    if (!regexCardNumber.test(cardNumber) || cardNumber == 'null' || cardNumber == '') {
         $("#buynowvalidationErrors").html("Invalid card number").show();
         return;
     }
-    if (!regexStreet.test(street)) {
+    if (!regexStreet.test(street) || street == 'null' || street == '') {
         $("#buynowvalidationErrors").html("Invalid street").show();
         return;
     }
-    if (regexCity.test(city)) {
+    if (regexCity.test(city) || city == 'null' || city == '') {
         $("#buynowvalidationErrors").html("Invalid city").show();
         return;
     }
-    toggleConfirmPopup('ShipConfPopup');
+    
     $.ajax({
         type: "POST",
         url: "/Customer/Buynow",
@@ -112,7 +112,11 @@ function checkBuynow() {
         },
         success: function (response) {
             if (response.success) {
-                window.location.href = response.redirectUrl;
+                toggleConfirmPopup('ShipConfPopup');
+                setTimeout(function () {
+                    window.location.href = response.redirectUrl;
+                }, 3000);
+                
             } else {
                 $("#buynowvalidationErrors").html("Error at proccess payment.").show();
             }
