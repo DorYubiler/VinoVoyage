@@ -17,12 +17,14 @@ namespace VinoVoyage.Controllers
     {
         private VinoVoyageDb db = new VinoVoyageDb();
         // GET: Customer
-        public ActionResult CustomerHomeView(UserModel user)
+
+        /// <summary>
+        /// Displays the customer home view with their user information, cart, wishlist, and shipping details.
+        /// </summary>
+        /// <returns>A view populated with the customer's information and product details.</returns>
+        public ActionResult CustomerHomeView(/*UserModel user*/)
         {
-            
-    
-            Session["userinfo"] = user as UserModel;       
-             
+            var user = Session["userinfo"] as UserModel;   
             UserViewModel uvm = new UserViewModel();
             uvm.user = user;
             uvm.users = db.Users.ToList<UserModel>();
@@ -46,7 +48,11 @@ namespace VinoVoyage.Controllers
             return View("CustomerHomeView", uvm);
         }
 
-
+        /// <summary>
+        /// Processes a "buy now" action, adding shipping information for the current user's purchase and determining redirection based on user type.
+        /// </summary>
+        /// <param name="CityAddress">The shipping address for the current purchase.</param>
+        /// <returns>A JSON result indicating success and where to redirect the user.</returns>
         [HttpPost]
         public JsonResult Buynow(String CityAddress)
         {
@@ -70,7 +76,11 @@ namespace VinoVoyage.Controllers
         }
 
 
-
+        /// <summary>
+        /// Completes the payment process by adding shipping information and clearing the user's cart.
+        /// </summary>
+        /// <param name="cityAddress">The shipping address for the current purchase.</param>
+        /// <returns>A JSON result indicating success and where to redirect the user.</returns>
         [HttpPost]
         public JsonResult Payment(String cityAddress)
         {
@@ -106,6 +116,12 @@ namespace VinoVoyage.Controllers
             }
             return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
         }
+
+        /// <summary>
+        /// Displays the checkout view for the current user, populated with their cart and wishlist.
+        /// </summary>
+        /// <param name="user">The current user model.</param>
+        /// <returns>A view for the checkout process.</returns>
         public ActionResult CheckoutView(UserModel user)
         {
             /*var user = db.Users.Find("shanik");
@@ -128,9 +144,12 @@ namespace VinoVoyage.Controllers
             return View("CheckoutView", uvm);
         }
 
+        /// <summary>
+        /// Logs out the current user, clearing the session and removing guest user records from the database.
+        /// </summary>
+        /// <returns>A redirection to the home page.</returns>
         public ActionResult Logout()
         {
-            
             Session.Clear();
             List<UserModel> users = db.Users.Where(u => u.Username.Contains("guest")).ToList();
             List<WishListModel> wishListModels = db.wishList.Where(i => i.Username.Contains("guest")).ToList();
@@ -138,11 +157,12 @@ namespace VinoVoyage.Controllers
             db.wishList.RemoveRange(wishListModels);
             db.SaveChanges();
             return RedirectToAction("HomePage", "User");
-
-            
-
         }
 
+        /// <summary>
+        /// Displays the checkout view if there are items in the cart, otherwise redirects to the customer home view.
+        /// </summary>
+        /// <returns>A checkout view with user and cart information or a redirect to the customer home view.</returns>
         public ActionResult Checkout()
         {
 
@@ -157,6 +177,11 @@ namespace VinoVoyage.Controllers
             return View("CustomerHomeView");
         }
 
+        /// <summary>
+        /// Adds a specified product to the user's wishlist.
+        /// </summary>
+        /// <param name="prodId">The product ID to add to the wishlist.</param>
+        /// <returns>A JSON result indicating success or failure of adding the product to the wishlist.</returns>
         public ActionResult AddToList(int prodId)
         {
             ProductModel stockItems = db.Products.FirstOrDefault(p => p.ProductID == prodId);
@@ -177,6 +202,12 @@ namespace VinoVoyage.Controllers
             Session["userList"] = tempList;
             return Json(new { success = false, message = "Product already in cart.", prod = stockItems});
         }
+
+        /// <summary>
+        /// Adds a specified product to the user's cart, decrementing stock and updating the cart total.
+        /// </summary>
+        /// <param name="prodId">The product ID to add to the cart.</param>
+        /// <returns>A JSON result indicating success or failure, along with updated cart information.</returns>
         [HttpPost]
         public ActionResult AddToCart(int prodId)
         {
@@ -227,9 +258,7 @@ namespace VinoVoyage.Controllers
                         }
                     }
                 }
-                // if cart is empty or product is not in the cart
-
-                // create a new order
+                
                 OrderModel newOrder = new OrderModel();
                 newOrder.ProductID = prodId;
                 newOrder.Username = user.Username;
@@ -247,6 +276,10 @@ namespace VinoVoyage.Controllers
             return Json(new { success = false, message = "Product is out of stock.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
         }
 
+        /// <summary>
+        /// Clears all items from the user's wishlist.
+        /// </summary>
+        /// <returns>A JSON result indicating success of clearing the wishlist.</returns>
         [HttpPost]
         public ActionResult EmptyList()
         {
@@ -263,14 +296,16 @@ namespace VinoVoyage.Controllers
                     db.SaveChanges();
                 }
             }
-
-
             // reset user's cart session
             wishlist.Clear();
             Session["userList"] = wishlist;
             return Json(new { success = true, message = "All product deleted from list successfully." });
         }
 
+        /// <summary>
+        /// Clears all items from the user's cart, restocking items and resetting the cart total.
+        /// </summary>
+        /// <returns>A JSON result indicating success of emptying the cart.</returns>
         [HttpPost]
         public ActionResult EmptyCart()
         {
@@ -297,9 +332,14 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = 0;
             allorders.Clear();
             Session["userCart"] = allorders;
-
             return Json(new { success = true, message = "cart is empty" });
         }
+
+        /// <summary>
+        /// Deletes a specific product from the user's wishlist.
+        /// </summary>
+        /// <param name="prodId">The product ID to remove from the wishlist.</param>
+        /// <returns>A JSON result indicating success of the deletion.</returns>
         [HttpPost]
         public ActionResult DeleteFromList(int prodId)
         {
@@ -322,6 +362,10 @@ namespace VinoVoyage.Controllers
             return Json(new { success = true, message = "Product deleted from list successfully." });
         }
 
+        /// <summary>
+        /// Moves items from the wishlist to the cart, updating quantities and stock as needed.
+        /// </summary>
+        /// <returns>A JSON result indicating the success of adding wishlist items to the cart, along with a list of newly added items.</returns>
         [HttpPost]
         public ActionResult ReturnNewToCart()
         {
@@ -344,6 +388,12 @@ namespace VinoVoyage.Controllers
             }
             return Json(new { success = false, message = "Products added to cart successfully.", newItems = itemsAdded });
         }
+
+        /// <summary>
+        /// Deletes a specific product from the user's cart, restocking the item and updating the cart total.
+        /// </summary>
+        /// <param name="prodId">The product ID to remove from the cart.</param>
+        /// <returns>A JSON result indicating success of the deletion, along with updated cart information.</returns>
         [HttpPost]
         public ActionResult DeleteFromCart(int prodId)
         {
@@ -367,16 +417,11 @@ namespace VinoVoyage.Controllers
                 cartTotal -= stockItems.Price;
             }
             Session["cartTotal"] = cartTotal;
-
             // get user info
             var tempCart = Session["userCart"] as List<OrderModel>;
             var user = Session["userinfo"] as UserModel;
             OrderModel cartOrder = tempCart.FirstOrDefault(order => order.ProductID == prodId);
             var dbOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
-            //var dbOrder = db.Orders.FirstOrDefault(item => item.Username == user.Username && item.ProductID == prodId);
-
-
-
             // if user has more then 1 product
             if (cartOrder.Quantity > 1)
             {
@@ -386,18 +431,20 @@ namespace VinoVoyage.Controllers
                 Session["userCart"] = tempCart;
                 return Json(new { success = true, message = "Product deleted to cart successfully.", newQuantity = cartOrder.Quantity, prod = stockItems, total = Session["cartTotal"] });
             }
-
             else
             {
-
                 tempCart.RemoveAll(order => order.ProductID == cartOrder.ProductID);
                 db.Orders.Remove(dbOrder);
                 db.SaveChanges();
                 Session["userCart"] = tempCart;
                 return Json(new { success = true, message = "Product deleted to cart successfully.", newQuantity = 0, prod = stockItems, total = Session["cartTotal"] });
             }
-
         }
+
+        /// <summary>
+        /// Calculates the total cost of the user's cart based on product prices and quantities.
+        /// </summary>
+        /// <param name="userCart">The list of orders in the user's cart.</param>
         private void CalcCartTotal(List<OrderModel> userCart)
         {
             int total = 0;
@@ -419,6 +466,12 @@ namespace VinoVoyage.Controllers
             Session["cartTotal"] = total;
         }
 
+        /// <summary>
+        /// Sorts products based on the specified criteria and filters by wine color if provided.
+        /// </summary>
+        /// <param name="sortBy">The sorting criteria (e.g., price low to high).</param>
+        /// <param name="wineColor">The wine color to filter by.</param>
+        /// <returns>A partial view with the sorted and filtered products.</returns>
         public ActionResult SortProducts(string sortBy ,string wineColor)
         {
             wineColor = (wineColor.Substring(0, wineColor.Length - 1)).ToLower(); 
@@ -448,10 +501,12 @@ namespace VinoVoyage.Controllers
             return PartialView("_ProductsGrid", products);
         }
 
+        /// Searches for products based on a query string, including product type, winery, name, origin, or description.
+        /// </summary>
+        /// <param name="query">The search query.</param>
+        /// <returns>A partial view with products that match the search criteria.</returns>
         public ActionResult SearchProducts(string query)
         {
-            // Simulate fetching filtered products from database
-            // Replace this with your actual database query using Entity Framework, Dapper, or another ORM
             var filteredProducts = db.Products.Where(p=> p.Type.ToString().Contains(query) || p.Winery.ToString().Contains(query) || p.ProductName.ToString().Contains(query) || p.Origin.ToString().Contains(query) || p.Description.ToString().Contains(query));
             var user = Session["userinfo"] as UserModel;
             if (user.Username.Contains("guest"))
@@ -462,6 +517,13 @@ namespace VinoVoyage.Controllers
             return PartialView("_ProductsGrid", filteredProducts);
         }
 
+        /// <summary>
+        /// Updates user information such as password and email, based on provided values.
+        /// </summary>
+        /// <param name="username">The username of the user to update.</param>
+        /// <param name="password">The new password for the user. If empty, the password is not updated.</param>
+        /// <param name="email">The new email for the user. If empty, the email is not updated.</param>
+        /// <returns>A JSON result indicating the success of the update operation.</returns>
         public JsonResult UpdateInfo(String username,String password,String email)
         {
             UserModel model = db.Users.Find(username);
