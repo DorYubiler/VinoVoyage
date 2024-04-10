@@ -151,7 +151,7 @@ function checkSignup(event) {
         $("#registervalidationErrors").html("Invalid email").show();
         return;
     }
-    startCustogglePopup("SignUConfPopup");
+    
 
     $.ajax({
         type: "POST",
@@ -163,7 +163,10 @@ function checkSignup(event) {
         },
         success: function (response) {
             if (response.success) {
-                window.location.href = response.redirectUrl;
+                startCustogglePopup("SignUConfPopup");
+                setTimeout(function () {
+                    window.location.href = response.redirectUrl;
+                }, 2000);
             } else {
 
                 // If login fails, keep the popup open and show error messages.

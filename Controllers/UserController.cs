@@ -50,7 +50,8 @@ namespace VinoVoyage.Controllers
                     db.Users.Add(user);
                     Session["userinfo"] = user as UserModel;
                     db.SaveChanges();
-                    return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
+                    Session["userinfo"] = user as UserModel;
+                    return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
                 }
                 return Json(new { success = false, errorMsg = "invalid password" });
             }
