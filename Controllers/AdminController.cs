@@ -22,14 +22,17 @@ namespace VinoVoyage.Controllers
 
 
 
-        // GET: Admin
-        
-        public ActionResult AdminHomePage(/*UserModel user*/)
+
+        /// <summary>
+        /// Displays the admin home page with user and product information.
+        /// Retrieves the current user from the session, lists all users excluding the current admin, and displays all products.
+        /// </summary>
+        /// <returns>A view populated with user and product data for the admin.</returns>
+
+        public ActionResult AdminHomePage()
         {
             var user = Session["userinfo"] as UserModel;
-            /*Session["userinfo"]=user as UserModel;*/
             UserViewModel uvm = new UserViewModel();
-            //creating new uvm, copy all of the users and removing the current admin
             UserViewModel uvmA = new UserViewModel();
             uvmA.users = db.Users.ToList<UserModel>();
             uvm.user = user;
@@ -52,6 +55,11 @@ namespace VinoVoyage.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Updates an existing user's information in the database.
+        /// </summary>
+        /// <param name="model">The user model containing updated information.</param>
+        /// <returns>A JSON object indicating the success or failure of the update operation.</returns>
         [HttpPost]
         public ActionResult UpdateUser(UserModel model)
         {
@@ -71,6 +79,12 @@ namespace VinoVoyage.Controllers
                 return Json(new { success = false });
             }
         }
+
+        /// <summary>
+        /// Deletes a user from the database based on their username.
+        /// </summary>
+        /// <param name="usern">The username of the user to delete.</param>
+        /// <returns>A JSON object indicating the success or failure of the deletion.</returns>
 
         [HttpPost]
         public ActionResult DeleteUser(string usern)
