@@ -135,8 +135,7 @@ function checkSignup(event) {
     $("#registervalidationErrors").empty();
     // Updated IDs to match the HTML
 
-    var uname = $('#Regusername').val();
-    
+    var uname = $('#Regusername').val();    
     if (uname.length < 3 || uname.length > 10 || uname.includes("guest")) {
         $("#registervalidationErrors").html("Invalid username").show();
         return;
@@ -166,6 +165,7 @@ function checkSignup(event) {
             if (response.success) {
                 window.location.href = response.redirectUrl;
             } else {
+
                 // If login fails, keep the popup open and show error messages.
                 $("#registervalidationErrors").html(response.errorMsg).show();
             }
