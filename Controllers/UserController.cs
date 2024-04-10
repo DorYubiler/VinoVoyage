@@ -66,9 +66,9 @@ namespace VinoVoyage.Controllers
         /// <param name="password">The password of the user attempting to log in.</param>
         /// <returns>A JSON result indicating whether the login was successful and, if so, the URL to redirect to.</returns>
         [HttpPost]
-        public JsonResult Login(String username, String password) 
+        public JsonResult Login(String username, String password)
         {
-            LoginModel model= new LoginModel();
+            LoginModel model = new LoginModel();
             model.Username = username;
             model.Password = password;
             if (ModelState.IsValid)
@@ -78,7 +78,8 @@ namespace VinoVoyage.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     Session["userinfo"] = user as UserModel;
-                    if (user.Role == "customer") {
+                    if (user.Role == "customer")
+                    {
                         return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
                     }
                     return Json(new { success = true, redirectUrl = Url.Action("AdminHomePage", "Admin") });
@@ -90,7 +91,6 @@ namespace VinoVoyage.Controllers
             }
             return Json(new { success = false });
         }
-
         /// <summary>
         /// Logs in a guest user by creating a temporary user model and setting it into the session.
         /// Guest users are assigned a random username and a default password and email.
