@@ -22,7 +22,7 @@ namespace VinoVoyage.Controllers
         /// Displays the customer home view with their user information, cart, wishlist, and shipping details.
         /// </summary>
         /// <returns>A view populated with the customer's information and product details.</returns>
-        public ActionResult CustomerHomeView(/*UserModel user*/)
+        public ActionResult CustomerHomeView()
         {
             var user = Session["userinfo"] as UserModel;   
             UserViewModel uvm = new UserViewModel();
@@ -112,9 +112,9 @@ namespace VinoVoyage.Controllers
             Session["userCart"] = allorders;
             if (user.Username.Contains("guest"))
             {
-                return Json(new { success = true, redirectUrl = Url.Action("Logout", "Customer", user) });
+                return Json(new { success = true, redirectUrl = Url.Action("Logout", "Customer") });
             }
-            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer",user) });
+            return Json(new { success = true, redirectUrl = Url.Action("CustomerHomeView", "Customer") });
         }
 
         /// <summary>
