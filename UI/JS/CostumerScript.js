@@ -1,26 +1,26 @@
-﻿// checkout functions
+﻿
+// Attaches a submit event listener to the payment form.
 $(document).ready(function () {
-  
-    console.log("jQuery is loaded");
     $('#paymentForm').on('submit.paymentForm', checkPayment);
 });
 
+// Validates the payment form fields before submission.
+// Extracts and validates form values against regular expressions.
+// Displays an error message for the first validation failure encountered.
+// On successful validation, triggers the payment confirmation popup and sends the form data to the server via AJAX.
 function checkPayment(event) {
     event.preventDefault();
     $("#paymentvalidationErrors").empty();
-
     var cvv = $('#cvv').val();
     var addressName = $('#username').val();
     var cardNumber = $('#ccnum').val();
     var city = $('#city').val();
     var street = $('#cstreet').val();
-
     var regexCvv = /^\d{3}$/;
     var regexCardNumber = /^\d{16}$/;
     var regexCity = /\d/;
     var regexStreet = /^[a-zA-Z0-9\s]+$/;;
     var regexNames = /^[a-zA-Z\s]+$/;
-
     if (!regexCvv.test(cvv)) {
         $("#paymentValidationErrors").html("Invalid CVV").show();
         return;
@@ -41,7 +41,6 @@ function checkPayment(event) {
         $("#paymentValidationErrors").html("Invalid city").show();
         return;
     }
-    toggleConfirmPopup('ShipConfPopup');
     $.ajax({
         type: "POST",
         url: "/Customer/Payment",
@@ -54,7 +53,6 @@ function checkPayment(event) {
                 setTimeout(function () {
                     window.location.href = response.redirectUrl;
                 }, 3000);
-                
             } else {
                 $("#paymentValidationErrors").html("Error at proccess payment.").show();
             }
@@ -70,7 +68,9 @@ function checkPayment(event) {
 
 /*------------------------buynow----------------------------*/
 
-
+// Validates the 'Buy Now' form fields before submission.
+// Similar validation logic as checkPayment, tailored for the 'Buy Now' functionality.
+// ... Your existing validation and AJAX call logic ...
 function checkBuynow() {
     event.preventDefault();
     $("#buynowvalidationErrors").empty();
@@ -106,8 +106,7 @@ function checkBuynow() {
     if (regexCity.test(city) || city == 'null' || city == '') {
         $("#buynowvalidationErrors").html("Invalid city").show();
         return;
-    }
-    
+    } 
     $.ajax({
         type: "POST",
         url: "/Customer/Buynow",
@@ -130,38 +129,34 @@ function checkBuynow() {
             $("#buynowvalidationErrors").html("An error occurred. Please try again.").show();
         }
     });
-
 }
 
-
+// Validates the expiration date of a credit card against the current date.
 function validateMonth(input) {
-    var currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
-    var currentYear = new Date().getFullYear();    // Get current year
+    var currentMonth = new Date().getMonth() + 1; 
+    var currentYear = new Date().getFullYear();    
     var currentMonthFormatted = currentYear + "-" + (currentMonth < 10 ? "0" + currentMonth : currentMonth);
-
     var selectedDate = document.getElementById("expDate").value;
-
     if (selectedDate < currentMonthFormatted) {
-        // Display error message if the selected date is in the past
         document.getElementById("expDateError").style.display = "block";
     } else {
-        // Hide error message if the selected date is valid
         document.getElementById("expDateError").style.display = "none";
     }
 }
 
 
-// window to open, window to close 
+// Opens a side navigation panel and closes another.
 function openNav(idOpen, idColse) {
     document.getElementById(idOpen.id).style.width = "330px";
     document.getElementById(idColse.id).style.width = "0";
 }
 
-// window to close, window to open 
+// Closes a side navigation panel.
 function closeNav(idColse, idOpen) {
     document.getElementById(idColse.id).style.width = "0";
 }
 
+// Closes all popup modal windows.
 function closeAllPopups() {
     var popups = document.getElementsByClassName("popup");
     for (var i = 0; i < popups.length; i++) {
@@ -203,6 +198,7 @@ function getIn(divId) {
     document.getElementById(divId).style.display = 'none';
 }
 
+// Handles logout action.
 function logout() {
     window.location.href = "/Customer/Logout";
 }
@@ -212,6 +208,11 @@ $(document).ready(function () {
     $('#updateinfoForm').on('submit', checkChanges);
 });
 
+// Validates changes in user information before submission.
+// Validates user information fields (email, password) before submission.
+// Displays an error message for any validation failure.
+// On successful validation, sends the updated user information to the server via AJAX.
+// ... Your existing validation and AJAX call logic ...
 function checkChanges(event) {
     event.preventDefault(); 
     $("#changeValidationErrors").empty();
@@ -270,6 +271,7 @@ function checkChanges(event) {
 
 }
 
+// Toggles the visibility of the 'Update Information' popup window.
 function changesInfotogglePopup() {
     closePopups();
     var popup = document.getElementById('updateInfoPopup');

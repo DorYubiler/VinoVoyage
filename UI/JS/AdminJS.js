@@ -1,6 +1,7 @@
 ﻿
 
-//* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+// Toggles dropdown content visibility when a dropdown button is clicked.
+// Allows for multiple dropdowns to operate independently without conflict.
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
@@ -17,7 +18,8 @@ for (i = 0; i < dropdown.length; i++) {
 }
 
 
-
+// Shows a specific section and hides all other sections.
+// @param {string} sectionId - The ID of the section to display.
 function showSection(sectionId) {
     // Hide all sections
     document.querySelectorAll('.content div').forEach(function (div) {
@@ -28,24 +30,24 @@ function showSection(sectionId) {
     document.getElementById(sectionId).style.display = 'block';
 }
 
+// Transforms a user row into editable fields for in-place editing.
+// @param {HTMLElement} button - The Edit button associated with a user row.
 function editRowUser(button) {
     var row = $(button).closest('tr');
     var username = row.find('td:eq(0)').text();
-    var deleteButton = document.getElementById('userDeleteButton' + username); // Assuming you've added a 'deleteButton' class to your delete buttons
-    deleteButton.disabled = true; // Hide the delete button
-    // Start looping from the 1st index to skip the UserName field
+    var deleteButton = document.getElementById('userDeleteButton' + username); 
+    deleteButton.disabled = true; 
     row.find('td:not(:last-child)').each(function (index) {
-        if (index > 0 &&index!=2) { // Skip the first column (Username)
+        if (index > 0 &&index!=2) { 
             var text = $(this).text();
             $(this).html('<input type="text" value="' + text + '" />');
         }
     });
-
-    // Change "Edit" button to "Save"
     $(button).text('Save').attr('onclick', 'saveRowUser(this)');
-
 }
 
+// Saves the edited user information and sends it to the server.
+// @param {HTMLElement} button - The Save button associated with a user row.
 function saveRowUser(button) {
     var row = $(button).closest('tr');
     var username = row.find('td:eq(0)').text();
@@ -64,51 +66,40 @@ function saveRowUser(button) {
         showmessage("The email is not valid. It must be in the format name@domain.co.il or name@domain.com");
         return;
     }
-    
-
     var userData = {
         UserName: username,
         Password: password,
         Role: role,
         Email: email,
     };
-    console.log(userData);
-
     $.ajax({
         url: 'UpdateUser',
         type: 'POST',
         data: { model: userData },
-
         success: function (response) {
             if (response.success) {
-                // Convert input fields back to text for all but the first column
-
                 row.find('td:not(:last-child)').each(function (index) {
                     if (index > 0) {
                         var input = $(this).find('input');
                         $(this).text(input.val());
                     }
                 });
-
-                // Change "Save" button back to "Edit"
                 $(button).text('Edit').attr('onclick', 'editRowUser(this)');
             } else {
                 console.error("Server error: " + error);
                 alert("An error occurred. Please try again or contact support if the problem persists.");
-
             }
         },
-
         error: function (xhr, status, error) { }
     });
-
 }
 
+// Deletes a user row from the display and sends a delete request to the server.
+// @param {HTMLElement} button - The Delete button associated with a user row.
 function deleteRowUser(button) {
         var row = button.closest('tr')
         var usernameTd = row.querySelector('td');
         var username = usernameTd.innerHTML;
-
         $.ajax({
             url: 'DeleteUser',
             type: 'POST',
@@ -116,24 +107,22 @@ function deleteRowUser(button) {
             success: function (response) {
                 if (response.success) {
                     row.remove();
-
                 } else {
                     alert('Error deleting user.');
-
                 }
             },
             error: function (xhr, status, error) { }
         });
-    
 }
 
+// Deletes a product row from the display and sends a delete request to the server.
+// @param {HTMLElement} button - The Delete button associated with a product row.
 function deleteRowProduct(button) {
         var row = button.closest('tr');
         var prodidTd = row.querySelector('td');
         var prodid = prodidTd.innerHTML;
         var prodnameTd = row.querySelector('td:nth-child(2)');
         var prodname = prodnameTd.innerHTML;
-
         $.ajax({
             url: 'DeleteProduct',
             type: 'POST',
@@ -150,37 +139,32 @@ function deleteRowProduct(button) {
             },
             error: function (xhr, status, error) { }
         });
-    
 }
 
+// Transforms a product row into editable fields for in-place editing.
+// @param {HTMLElement} button - The Edit button associated with a product row.
 function editRowProduct(button) {
     var row = $(button).closest('tr');
-    // Start looping from the 1st index to skip the ProductID field
     var productID = row.find('td:eq(0)').text();
-    var deleteButton = document.getElementById('ProductDeleteButton' + productID); // Assuming you've added a 'deleteButton' class to your delete buttons
+    var deleteButton = document.getElementById('ProductDeleteButton' + productID); 
     deleteButton.disabled = true;
-
     row.find('td:not(:last-child)').each(function (index) {
         if (index > 1) { 
             var text = $(this).text();
             $(this).html('<input  type="text" class="small-input" value="' + text + '" />');
         }
     });
-
-    // Change "Edit" button to "Save"
     $(button).text('Save').attr('onclick', 'saveRowProduct(this)');
-
-
 }
 
-
+// Saves the edited product information and sends it to the server.
+// @param {HTMLElement} button - The Save button associated with a product row.
 function saveRowProduct(button) {
     var row = $(button).closest('tr');
     var productID = row.find('td:eq(0)').text();
     var deleteButton = document.getElementById('ProductDeleteButton' + productID);
     deleteButton.disabled = false;
     var productName = row.find('td:eq(1)').text();
-
     var winery = row.find('td:eq(2) input').val();
     if (winery.length < 2 || winery.length > 30) {
         showmessage('The winery input is incorrect');
@@ -190,7 +174,6 @@ function saveRowProduct(button) {
         showmessage('The type input is incorrect');
         return;
     }
-
     var description = row.find('td:eq(4) input').val();
     if (description.length < 4 || description.length > 500) {
         showmessage('The description input is incorrect')
@@ -232,37 +215,28 @@ function saveRowProduct(button) {
         NewPrice: newPrice,
         Rating: rating,
     };
-    console.log(prodData);
-
     $.ajax({
         url: 'UpdateProduct',
         type: 'POST',
         data: { pmodel: prodData },
-
         success: function (response) {
             if (response.success) {
-                // Convert input fields back to text for all but the first column
-
                 row.find('td:not(:last-child)').each(function (index) {
                     if (index > 0) {
                         var input = $(this).find('input');
                         $(this).text(input.val());
                     }
                 });
-
-                // Change "Save" button back to "Edit"
                 $(button).text('Edit').attr('onclick', 'editRowProduct(this)');
             } else {
-
                 alert("An error occurred. Please try again or contact support if the problem persists.");
-
             }
         },
         error: function (xhr, status, error) { }
     });
-
 }
 
+// Handles the order submission, validating the inputs before sending.
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sendorder').addEventListener('click', sendOrder);
 });
@@ -295,12 +269,14 @@ function sendOrder() {
 
 
 
-
+// Displays a message to the user.
+// @param {string} message - The message to display.
 function showmessage(message) {
     alert(message);
-
 }
 
+
+// Validates the add user form input before submission.
 $(document).ready(function () {
     $('#addUserForm').on('submit.addUserForm', UservalidateForm);
 });
@@ -329,20 +305,16 @@ function UservalidateForm(event) {
         Password: pass,
         Email: mail,
     };
-
     $.ajax({
         type: "POST",
         url: "/Admin/AddUser",
         data: { user: userData },
-
         success: function (respones) {
             if (respones.success) {
                 toggleConfirmPopup('adduserPopup');
-
                 setTimeout(function () {
                     window.location.reload();
                 }, 3000);
-                
             }
             else {
                 $("#uservalidationErrors").html("Invalid inputs").show();
@@ -356,7 +328,7 @@ function UservalidateForm(event) {
 }
 
     
-
+// Validates the add product form input before submission.
 $(document).ready(function () {
     $('#addProductForm').on('submit.addProductForm', ProductValidateForm);
 });
@@ -398,10 +370,7 @@ function ProductValidateForm(event) {
     if (newPrice < 0 ) {
         $("#productValidationErrors").html("Invalid new price").show();
     }
-    
-
     var image = $('#productImage').val();
-
     var formData = new FormData();
 formData.append('ProductName', $('#productName').val());
 formData.append('Winery', $('#winery').val());
@@ -411,29 +380,23 @@ formData.append('Origin', $('#origin').val());
 formData.append('Amount', $('#amount').val());
 formData.append('Price', $('#price').val());
 formData.append('NewPrice', $('#newPrice').val());
-// Assuming '#productImage' is the file input's ID
 formData.append('ProductImage', $('#productImage')[0].files[0]);
-
 
     $.ajax({
         type: "POST",
         url: "AddProduct",
         data: formData,
         processData: false,
-        contentType:false,
-        
+        contentType:false,  
         success: function (respones) {
             if (respones.success) {
-                toggleConfirmPopup('addproductPopup');
-                
+                toggleConfirmPopup('addproductPopup');    
                 setTimeout(function () {
                     window.location.reload();
-                }, 3000);
-                
+                }, 3000);  
             }
             else {
                 $("#productValidationErrors").html("Invalid inputs").show();
-                console.log("###########33");
             }
         },
         error: function (xhr, status, error) {
@@ -444,12 +407,16 @@ formData.append('ProductImage', $('#productImage')[0].files[0]);
     });
 }
 
+// Closes all open popup elements.
 function closeAllPopups() {
     var popups = document.getElementsByClassName("popup");
     for (var i = 0; i < popups.length; i++) {
         popups[i].style.display = "none";
     }
 }
+
+// Toggles the visibility of a confirmation popup.
+// @param {string} divId - The ID of the popup to toggle.
 
 function toggleConfirmPopup(divId) {  
     closeAllPopups();

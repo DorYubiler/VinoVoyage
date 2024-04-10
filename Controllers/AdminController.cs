@@ -243,6 +243,10 @@ namespace VinoVoyage.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Clears the current session and redirects the user to the home page.
+        /// </summary>
+        /// <returns>A redirect action to the home page view.</returns>
         public ActionResult Logout()
         {
             Session.Clear();
