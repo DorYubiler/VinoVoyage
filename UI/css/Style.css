@@ -522,7 +522,7 @@ button {
 
 .cartItem {
     overflow-y: scroll;
-    background-color: #c48a7d;
+    background-color: #B07C70;
 }
 
     .cartItem .prodCartImage {
@@ -614,7 +614,7 @@ button {
         font-weight: bolder;
         color: black;
         text-transform: uppercase;
-        margin: 30px 0 30px 0;
+        margin: 70px 0 30px 0;
         text-align: center;
         flex-flow: column;
     }
@@ -1044,25 +1044,23 @@ button {
     justify-content: center;
     align-items: baseline;
     background-color: #c48a7d;
-    margin: 66px 0 0 0;
 }
 
 .centerCheckout {
-    width: 600px; 
-    height: auto; 
+/*    width: 600px; 
+    height: auto; */
     background-color: #B07C70;
     text-align: center;
     box-shadow: 0px 20px 20px 0px rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0 0 0;
+    margin: 50px 0 30px 0;
 
 }
 
     .centerCheckout .tableCheckout {
-        width: 600px; 
-        height: 100vh; 
+        min-height: 470px;
     }
 
 .checkoutDescription {

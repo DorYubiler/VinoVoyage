@@ -20,28 +20,42 @@
     <div class="topnav" id="myTopnav">
 
         <!-- user info nav -->
-        <a href="#vinoVoyage"><i class="fa fa-home"></i> VINOVOYAGE</a>
-        <div class="aDropdown">
-            <a class="dropA"><i class="fa fa-user" aria-hidden="true"></i> @Model.user.Username</a>
-            <div class="dropContent">
-                <a href="#link1">profile</a>
-                <a href="@Url.Action("Logout", "Customer")">logout</a>
+        <a style = "cursor:auto;"><i class="fa fa-glass"></i> VINOVOYAGE</a>
+        @if (!(Model.user.Username.Contains("guest")))
+        {
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i> @ViewBag.Username</button>
+                <div class="dropdown-content">
+                    <a onclick="changesInfotogglePopup()">update info</a>
+                    <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
+                </div>
             </div>
-        </div>
-        <a href="@Url.Action("CustomerHomeView", "Customer",Model.user)" class="split">Back Shopping <i class="fa fa-glass"></i></a>
+        }
+        else
+        {
+            <div class="dropdown">
+                <button class="dropbtn" style="cursor:auto;"><i class="fa fa-user" aria-hidden="true"></i> guest</button>
+            </div>
+        }
+        <a href="@Url.Action("CustomerHomeView", "Customer",Model.user)" class="split"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back Shopping</a>
     </div>
     <div class="checkoutSideColor">
         <div class="centerCheckout">
             <div class="tableCheckout">
                 <div class="cartList">
                     <div class="cartTitle">
-                        <div class="titleText">@(Model.user.Username) Shopping Cart</div>
-                        <div class="cartTotal">total price: @(Session["cartTotal"])</div>
-                        <div class="productButtons">
+                        @if (!(Model.user.Username.Contains("guest")))
+                        {
+                            <div class="titleText">@(Model.user.Username) Shopping Cart</div>
+                        }
+                        else
+                        {
+                            <div class="titleText">Shopping Cart</div>
+                        }
+                        <div class="cartTotal">total price: @(Session["cartTotal"])₪</div>
+                        <div class="productButtons" style="margin: 15px 0 0 0;">
                             <button class="payment" onclick="togglePaymentPopup()">card</button>
-                            <button class="payPalBtn">PayPal</button>
                         </div>
-
                         <div id="paymentPopup" class="popup">
                             <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
                             @using (Html.BeginForm("Payment", "Customer", FormMethod.Post, new { @id = "paymentForm" }))
@@ -72,7 +86,7 @@
                                             </div>
                                             <div class="paymentTitles">Credit card number</div>
                                             <input type="text" class="popup-input" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
-                                            <div class="paymentTitles">Exp Date</div>                                         
+                                            <div class="paymentTitles">Exp Date</div>
                                             <div class="dateCode">
                                                 <input type="month" class="popup-input" style="text-transform:uppercase;" id="expDate" name="expDate" min="2024-04" onchange="validateMonth(this)" required>
                                                 <input type="text" class="popup-inputCVV" style="text-transform:uppercase;" id="cvv" name="cvv" placeholder="CVV" required>
@@ -86,117 +100,122 @@
                             <div id="paymentValidationErrors"></div>
                         </div>
                     </div>
-                    <div class="cartTable">
-                        <style>
 
-                            table {
-                                border-collapse: collapse;
-                                width: 100%;
-                                font-family: Lucida Console;
-                                font-weight: 200;
-                                font-size: 14px;
-                                font-weight: 300;
-                                color: black;
-                                text-transform: uppercase;
-                                overflow-y: auto;
-                            }
 
-                            td, th {
-                                text-align: center;
-                                font-size: 14px;
-                                white-space: nowrap;
-                                vertical-align: middle;
-                                width: 27%;
-                            }
-
-                            .cartRow {
-                                height: 200px;
-                            }
-
-                            td .prodCartImage {
-                                width: 60px;
-                            }
-
-                            tr:nth-child(even) {
-                                background-color: #C9958A;
-                            }
-
-                            table button {
-                                display: inline-block;
-                                width: 13px;
-                                height: 13px;
-                                background-color: black;
-                                color: #f4e1d2;
-                                padding: 0 0 0 0;
-                                cursor: pointer;
-                                font-size: 10px;
-                                font-weight: 400;
-                                margin: 0 3px 0 0;
-                            }
-
-                            table h1 {
-                                display: inline-block;
-                                width: 10px;
-                                height: 10px;
-                                color: black;
-                                padding: 0 0 0px 0;
-                                font-size: 13px;
-                                font-weight: 200;
-                                font-family: 'Lucida Console';
-                            }
-
-                            .info {
-                                white-space: pre-wrap;
-                            }
-
-                            .name {
-                                
-                            }
-
-                            .prodPrice {
-                            }
-
-                            .quantityC {
-                            }
-
-                            .titleText, .cartTotal {
-                                margin: 10px;
-                            }
-                        </style>
-                        <table>
-                            <tbody class="cartItem">
-                                @foreach (OrderModel order in Model.cart)
-                                {
-                                    var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
-
-                                    <tr data-productid="@order.ProductID">
-                                        <td></td>
-                                        <td>
-                                            <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" height="150" />
-                                        </td>
-
-                                        <td class="info">
-                                            <div class="name">@product.ProductName</div>
-                                            @if (product.NewPrice != 0)
-                                            {
-                                                <div class="prodPrice">@(product.NewPrice) ₪</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="prodPrice">@(product.Price) ₪</div>
-                                            }
-                                            <div class="quantityC">@order.Quantity</div>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
+                <div class="cartTable">
+                    <style>
+
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            font-family: Lucida Console;
+                            font-weight: 200;
+                            font-size: 14px;
+                            font-weight: 300;
+                            color: black;
+                            text-transform: uppercase;
+                            overflow-y: auto;
+                            margin: 60px 0 50px 0;
+                        }
+
+                        td, th {
+                            text-align: center;
+                            font-size: 14px;
+                            white-space: nowrap;
+                            vertical-align: middle;
+                            width: 150px;
+                        }
+
+                        .cartRow {
+                            height: 200px;
+                        }
+
+                        td .prodCartImage {
+                            width: 60px;
+                        }
+
+/*                        tr:nth-child(even) {
+                            background-color: #B07C70;
+                        }*/
+
+                        table button {
+                            display: inline-block;
+                            width: 13px;
+                            height: 13px;
+                            background-color: black;
+                            color: #f4e1d2;
+                            padding: 0 0 0 0;
+                            cursor: pointer;
+                            font-size: 10px;
+                            font-weight: 400;
+                            margin: 0 3px 0 0;
+                        }
+
+                        table h1 {
+                            display: inline-block;
+                            width: 10px;
+                            height: 10px;
+                            color: black;
+                            padding: 0 0 0px 0;
+                            font-size: 13px;
+                            font-weight: 200;
+                            font-family: 'Lucida Console';
+                        }
+
+                        .info {
+                            white-space: pre-wrap;
+                        }
+
+                        .name {
+                        }
+
+                        .prodPrice {
+                        }
+
+                        .quantityC {
+                        }
+
+                        .titleText, .cartTotal {
+                            margin: 10px;
+                        }
+                    </style>
+                    <table>
+                        <tbody class="cartItem">
+                            @foreach (OrderModel order in Model.cart)
+                            {
+                                var product = Model.products.FirstOrDefault(p => p.ProductID == order.ProductID);
+
+                                <tr data-productid="@order.ProductID">
+                                    <td></td>
+                                    <td class="prodCartImage">
+                                        <img src="~/UI/img/wines/@(product.ProductName)@(product.ProductID.ToString()).jpg" alt="wine" height="150" />
+                                    </td>
+
+                                    <td class="info">
+                                        <div class="name">@product.ProductName</div>
+                                        @if (product.NewPrice != 0)
+                                        {
+                                            <div class="prodPrice">@(product.NewPrice) ₪</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="prodPrice">@(product.Price) ₪</div>
+                                        }
+                                        <div class="quantityC">@order.Quantity</div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
+
+
 </body>
 </html>
 
