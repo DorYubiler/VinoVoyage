@@ -135,14 +135,14 @@
                 .outOfStockLayer {
                     opacity: 1;
                     max-width: 250px;
-                    font-size: 16px;
+                    font-size: 12px;
                     font-family: 'Lucida Console';
                     white-space: nowrap;
                     background-color: grey;
                     padding: 6px 15px;
                     border-radius: 1px;
                     color: white;
-                    margin: 0 4px 0 0;
+                    margin: 0 40px 0 0;
                 }
 
                 td .name {
@@ -371,7 +371,6 @@
 
                     </div>
                 }
-                
             </div>
             <div id="searchdiv" class="tabcontent">
                 <h1 class="titles">Search results:</h1>
@@ -476,7 +475,7 @@
         <div id="ShipConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('ShipConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>The order has been sent, delivery time up to two weeks </p>
-            
+
         </div>
 
         <div id="emptyCartPopup" class="popup" style="width:600px;">
@@ -534,8 +533,21 @@
             <span onclick="document.getElementById('notifyPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>We will make sure to update you via email when the product is back in stock</p>
             <button onclick="closeAllPopups()">OK</button>
-
         </div>
+
+        <div id="outOfStockPopup" class="popup" style="width:600px;">
+            <span onclick="document.getElementById('outOfStockPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
+            @if (Model.user.Username.Contains("guest"))
+            {
+                <p>we are sorry but this wine is out of stock at this moment. check back soon </p>
+            }
+            else
+            {
+                <p>we are sorry but this wine is out of stock at this moment </p>
+                <button onclick="toggleConfirmPopup('notifyPopup')">Tell me when it's back</button>
+            }
+        </div>
+
         <script>
              function plusBtn(button) {
                  var row = $(button).closest('tr');
@@ -545,10 +557,15 @@
                      type: 'POST',
                      data: { prodId: pID },
                      success: function (response) {
-                         var updatedAmount = response.newQuantity;
-                         var updatedTotalPrice = response.total;
-                         row.find('h1').text(updatedAmount);
-                         $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                         if (response.success) {
+                             var updatedAmount = response.newQuantity;
+                             var updatedTotalPrice = response.total;
+                             row.find('h1').text(updatedAmount);
+                             $('.cartTotal').text('total price: ' + updatedTotalPrice);
+                         }
+                         else {
+                             toggleOutOfStockPopup();
+                         }
                      },
                      error: function (xhr, status, error) { }
                  });
@@ -592,8 +609,6 @@
              }
 
             function emptyList() {
-
-
                     $.ajax({
                         url: '@Url.Action("EmptyList", "Customer")',
                         type: 'POST',
@@ -606,8 +621,6 @@
             }
 
              function emptyCart() {
-
-
                      $.ajax({
                          url: '@Url.Action("EmptyCart", "Customer")',
                          type: 'POST',
@@ -632,6 +645,7 @@
                      }, error: function (xhr, status, error) { }
                  });
             }
+
             function addListToCart() {
                 $.ajax({
                     url: '@Url.Action("ReturnNewToCart", "Customer")',
@@ -685,8 +699,9 @@
                                      addToCartButton.appendChild(icon);
                                      newElement.appendChild(outOfStockLayer);
                                      outOfStockLayer.appendChild(outOfStockText);
-                                     newElement.appendChild(addToCartButton);
-
+                                     if (!response.guest) {
+                                         newElement.appendChild(addToCartButton);
+                                     }
                                      // Replace availableBtn with the new element
                                      availableBtn.parentNode.replaceChild(newElement, availableBtn);
                                  }

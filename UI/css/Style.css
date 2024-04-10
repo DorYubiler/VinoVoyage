@@ -7,30 +7,28 @@ body {
 }
 
 h1 {
-    font-family: 'Lucida Console';
-    font-weight: 200;
-    font-size: 16px;
-    font-weight: 300;
+    font-family: 'Verdana';
+    font-size: 14px;
+    font-weight: 600;
     color: black;
     text-transform: uppercase;
     text-align: center;
 }
 
 h2 {
-    font-family: 'Lucida Console';
-    font-weight: 200;
+    font-family: 'Verdana';
     font-weight: 150;
-    font-size: 14px;
+    font-size: 13px;
     color: black;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 p, .custom-label {
-    font-family: 'Lucida Console';
+    font-family: 'Verdana';
     font-weight: 200;
     font-size: 14px;
     color: black;
-    text-transform: uppercase;
+    text-transform: lowercase;
 }
 
 /* --------------------------------------------------------------- */
@@ -894,12 +892,27 @@ button {
 }
 /* --------------------------------------------------------------- */
 /* ----------------------  products styles ----------------------- */
-
+.origin {
+    display: block;
+    max-width: 100px;
+}
+.price {
+    display: flex;
+    flex-flow: row;
+    max-width: 100px;
+}
+.old-price {
+    text-decoration:line-through;
+    margin: 11px 11px 0 0;
+    text-decoration-thickness: 2px;
+}
+.unchecked {
+    color: #a6a6a6;
+}
 .prodCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 250px;
-    min-width: 200px;
+    width: 220px;
+    margin: 5px 5px 5px 5px;
     display: flex;
     flex-direction: column;
 }
@@ -919,7 +932,7 @@ button {
 .productButtons button {
     border: none;
     outline: 0;
-    padding: 7px;
+    padding: 6px;
     color: white;
     background-color: #000;
     cursor: pointer;
@@ -1009,6 +1022,8 @@ button {
 
 .originPrice {
     display: flex;
+    position: relative;
+    flex-flow: row;
     justify-content: space-between;
     align-items: center;
 }

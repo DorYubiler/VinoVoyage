@@ -176,6 +176,11 @@ function toggleBuynow(proid, price) {
     document.getElementById("popupTotal").innerText = 'Item price: ' + price;
 
 }
+function toggleOutOfStockPopup() {
+    closeAllPopups();
+    var popup = document.getElementById("outOfStockPopup");
+    popup.style.display = (popup.style.display === "none") ? "block" : "none";    
+}
 function togglePaymentPopup() {
     closeAllPopups();
     var popup = document.getElementById("paymentPopup");

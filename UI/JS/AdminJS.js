@@ -190,7 +190,7 @@ function saveRowProduct(button) {
         showmessage('The type input is incorrect');
         return;
     }
-    // שיניתי לטקסט ארה
+
     var description = row.find('td:eq(4) input').val();
     if (description.length < 4 || description.length > 500) {
         showmessage('The description input is incorrect')
