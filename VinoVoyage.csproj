@@ -297,6 +297,7 @@
     <Content Include="Views\Shared\_ShippingTrackerView.cshtml" />
     <Content Include="Views\Shared\_home.cshtml" />
     <Content Include="Views\Shared\_GuestGrid.cshtml" />
+    <Content Include="Views\Shared\_homeAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

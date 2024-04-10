@@ -44,6 +44,7 @@ namespace VinoVoyage.Controllers
                 }
                 uvm.users = Users;
                 uvm.products=db.Products.ToList<ProductModel>();
+                uvm.shipping = db.ShippingList.ToList<ShippingModel>();
                 ViewBag.Username = user.Username;
                 return View(uvm);
             }
@@ -213,5 +214,7 @@ namespace VinoVoyage.Controllers
             Session.Clear();
             return RedirectToAction("HomePage", "User");
         }
+
+
     }
 }
