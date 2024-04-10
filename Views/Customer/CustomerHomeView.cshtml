@@ -20,9 +20,9 @@
 <body>
     <div id="main" class="window">
 
+        <!-- top menu with distinction between guest and a registered user -->
         <div class="topnav" id="myTopnav">
             <a onclick="openMainWindow()"><i class="fa fa-home"></i> VINOVOYAGE</a>
-
             @if (!(Model.user.Username.Contains("guest")))
             {
                 <div class="dropdown">
@@ -33,6 +33,7 @@
                         <a onclick="toggleConfirmPopup('logoutPopup')">logout</a>
                     </div>
                 </div>
+                <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
             }
             else
             {
@@ -43,12 +44,7 @@
                     </div>
                 </div>
             }
-            @if (!(Model.user.Username.Contains("guest")))
-            {
-                <a onclick="openNav(WishWindow, cartWindow)"><i class="fa fa-heart"></i></a>
-            }
             <a class="split"><span onclick="openNav(cartWindow, WishWindow)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-
             <div class="search-container">
                 <form id="searchForm" class="searchForm">
                     <input type="text" placeholder="Search.." id="search" />
@@ -62,9 +58,8 @@
                     @Html.Partial("_ShippingTrackerView", Model.shipping)
                 </div>
             }
-
-
         </div>
+
         <!-- cart window -->
         <div id="cartWindow" class="sidenavCart">
             <style>
@@ -180,7 +175,6 @@
                         }
                     </tbody>
                 </table>
-
             </div>
             <div class="cartActions">
                 <div class="cartTotal">
@@ -224,11 +218,9 @@
                                     </div>
                                 </td>
                             </tr>
-
                         }
                     </tbody>
                 </table>
-
             </div>
             <div class="cartActions">
                 @{ TempData["UserVieModel"] = Model; }
@@ -236,7 +228,6 @@
                 <a onclick="toggleConfirmPopup('emptylistPopup')" class="cartActionsBtn">empty list</a>
             </div>
         </div>
-
 
         <div class="main-content" id="main-content">
             <!-- side navigation bar -->
@@ -264,17 +255,14 @@
                 {
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products)
-
                     </div>
                 }
                 else
                 {
                     <div class="prodGrid">
                         @Html.Partial("_GuestGrid", Model.products)
-
                     </div>
                 }
-
             </div>
 
             <div id="Whites" class="tabcontent">
@@ -289,17 +277,14 @@
                 {
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "white"))
-
                     </div>
                 }
                 else
                 {
                     <div class="prodGrid">
                         @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "white"))
-
                     </div>
                 }
-
             </div>
 
             <div id="Reds" class="tabcontent">
@@ -314,14 +299,12 @@
                 {
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "red"))
-
                     </div>
                 }
                 else
                 {
                     <div class="prodGrid">
                         @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "red"))
-
                     </div>
                 }
             </div>
@@ -337,14 +320,12 @@
                 {
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
-
                     </div>
                 }
                 else
                 {
                     <div class="prodGrid">
                         @Html.Partial("_GuestGrid", Model.products.Where(p => p.Type.ToString() == "rose"))
-
                     </div>
                 }
             </div>
@@ -360,27 +341,23 @@
                 {
                     <div class="prodGrid">
                         @Html.Partial("_ProductsGrid", Model.products.Where(p => p.NewPrice != 0))
-
                     </div>
                 }
                 else
                 {
                     <div class="prodGrid">
                         @Html.Partial("_GuestGrid", Model.products.Where(p => p.NewPrice != 0))
-
                     </div>
                 }
             </div>
             <div id="searchdiv" class="tabcontent">
                 <h1 class="titles">Search results:</h1>
                 <div id="prodgrid" class="prodGrid">
-
                 </div>
             </div>
         </div>
 
-
-        @*----------------------------------------*@
+        <!-- payment popup -->
         <div id="paymentPopup" class="popup">
             <span onclick="document.getElementById('paymentPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             @using (Html.BeginForm("Payment", "Customer", FormMethod.Post, new { @id = "paymentForm" }))
@@ -424,13 +401,11 @@
             }
             <div id="paymentValidationErrors"></div>
         </div>
-        @*---------------------------------buynow-----------------------------------------*@
+        <!--buynow -->
         <div id="buynowPopup" class="popup">
             <span onclick="document.getElementById('buynowPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             @using (Html.BeginForm("Buynow", "Customer", FormMethod.Post, new { @id = "buynowForm" }))
             {
-
-
                 <div class="popup-container">
                     <div class="popup-col">
                         <div class="popupTotal" id="popupTotal"> </div>
@@ -471,35 +446,37 @@
             <div id="buynowValidationErrors"></div>
         </div>
 
+        <!-- shipping popup -->
         <div id="ShipConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('ShipConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>The order has been sent, delivery time up to two weeks </p>
-
         </div>
-
+        
+        <!-- empty cart popup -->
         <div id="emptyCartPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('emptyCartPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>Are you sure you want to empty the cart?</p>
             <button onclick="emptyCart(),closeAllPopups()">Yes</button>
             <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
-
         </div>
+
+        <!-- empty wishlist popup -->
         <div id="emptylistPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('emptylistPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>Are you sure you want to empty the list?</p>
             <button onclick="emptyList(),closeAllPopups()">Yes</button>
             <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No</button>
-
         </div>
 
+        <!-- logout popup -->
         <div id="logoutPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('logoutPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>Are you sure you want to logout?</p>
             <button onclick="logout()">Yes,thank you</button>
             <button onclick="closeAllPopups()" style="width:40%; margin-left:30px;">No,I can't leave!</button>
-
         </div>
 
+        <!-- user update info popup -->
         <div id="updateInfoPopup" class="popup">
             <span onclick="document.getElementById('updateInfoPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             @using (Html.BeginForm("UpdateInfo", "Customer", FormMethod.Post, new { @id = "updateinfoForm", }))
@@ -523,17 +500,21 @@
                 </div>
             }
         </div>
+
+        <!-- update success popup -->
         <div id="changesConfPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('changesConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>Your information updated successfully</p>
         </div>
 
+        <!-- notify success popup -->
         <div id="notifyPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('notifyPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             <p>We will make sure to update you via email when the product is back in stock</p>
             <button onclick="closeAllPopups()">OK</button>
         </div>
 
+        <!-- out of stock popup -->
         <div id="outOfStockPopup" class="popup" style="width:600px;">
             <span onclick="document.getElementById('outOfStockPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
             @if (Model.user.Username.Contains("guest"))

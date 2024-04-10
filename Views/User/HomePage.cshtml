@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .popup {
-            display: none; /* Ensure it's hidden by default */
-            /* Add more styling as necessary */
+            display: none;
         }
     </style>
 </head>
@@ -23,12 +22,15 @@
         <a onclick="toggleSignupPopup()"><i class="fa fa-user-plus"></i> REGISTER</a>
         <a onclick="togglePopup()"><i class="fa fa-sign-in"></i> LOGIN</a>
         <a onclick="startCustogglePopup('guestConPopup')"> CONTINUE AS GUEST</a>
-
     </div>
+
+    <!-- successful login popup -->
     <div id="LoginConfPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('LoginConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>Welcome back to VV </p><i class="fa fa-heart"></i>
     </div>
+
+    <!-- login popup -->
     <div id="loginPopup" class="popup">
         <span onclick="document.getElementById('loginPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @id = "loginForm", }))
@@ -49,17 +51,22 @@
             </div>
         }
     </div>
-    @* -----------confirm guest-------------------*@
+
+    <!-- confirm guest popup -->
     <div id="guestConPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('guestConPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>You better signup. Come be Part of the Vvoyage</p>
         <button onclick="gotoGuest()">Prefer to stay a guest </button>
         <button onclick="toggleSignupPopup()" style="width:40%; margin-left:30px;">Signup now!</button>
     </div>
+
+    <!-- confirm signup popup -->
     <div id="SignUConfPopup" class="popup" style="width:600px;">
         <span onclick="document.getElementById('SignUConfPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         <p>Thank you for joining us, soon we will start our voyage</p>
     </div>
+
+    <!-- signup popup -->
     <div id="SignupPopup" class="popup">
         <span onclick="document.getElementById('SignupPopup').style.display='none'" class="close" title="Close Modal">&times;</span>
         @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { @id = "signupForm" }))
@@ -80,10 +87,10 @@
             </div>
         }
     </div>
+
     <!-- main window -->
     <div class="window">
-        <div class="homepage-container">
-            
+        <div class="homepage-container">          
             <!-- photo slideshow -->
             <div class="slideshow-container">
                 <div class="mySlides fade">
@@ -91,7 +98,6 @@
                     <div class="element">
                         <img src="~/UI/img/slideshow/hebrewmistakes.jpeg" alt="Slide Image">
                     </div>
-
                 </div>
                 <div class="mySlides fade">
                     <div class="numbertext">2 / 3</div>
@@ -123,7 +129,7 @@
             <!-- content -->
             <div class="home-content">
 
-                <!-- section 1 - IDF -->
+                <!-- section 1 -->
                 <div class="home-text-content" style="background-color: #dbcabd; font-size: 60px; margin: 0">VINO VOYAGE</div>
                 <div class="home-text-content" style="background-color: #dbcabd;">we stand with IDF</div>
                 <div class="second-content" style="background-color: #dbcabd;">
@@ -136,7 +142,7 @@
                 </div>
                 <div class="homegap"></div>
 
-                <!-- section 2 - best sellers -->
+                <!-- section 2 -->
                 <div class="home-text-content">best sellers</div>
                 <div class="first-content">
                     <div class="home-prodCard">
@@ -163,7 +169,6 @@
                             <h1>Desert Blush</h1>
                         </div>
                     </div>
-
                 </div>
                 <div class="first-content">
                     <div class="home-prodCard">
@@ -191,8 +196,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- section 3 - Kings Landing -->
+                <!-- section 3 -->
                 <div class="home-text-content">Kings Collection</div>
                 <div class="first-content">
                     <div class="home-prodCard">
@@ -220,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- section 4 - voyage in the zoo -->
+                <!-- section 4 -->
                 <div class="home-text-content">voyage in the wild</div>
                 <div class="first-content">
                     <div class="home-prodCard">
@@ -250,32 +254,27 @@
                 </div>
                 <div class="homegap"></div>
 
-                <!-- section 5 - coming soon -->
-                <div class="home-text-content"; style="background-color: #dbcabd; font-size: 40px;">Comming soon!</div>
-                <div class="home-text-content"; style="background-color: #dbcabd; font-size: 20px;">Choose your favorite wine and create your own label. <br /><br />big things to come!</div>
+                <!-- section 5 -->
+                <div class="home-text-content" ; style="background-color: #dbcabd; font-size: 40px;">Comming soon!</div>
+                <div class="home-text-content" ; style="background-color: #dbcabd; font-size: 20px;">Choose your favorite wine and create your own label. <br /><br />big things to come!</div>
                 <div class="first-content" style="background-color: #dbcabd;">
                     <div class="home-prodCard">
                         <div class="imageContainer">
                             <img src="~/UI/img/wines/Blanca Cádiz14.jpg" alt="wine" style="width:100%" class="prodImage" />
                         </div>
-
                     </div>
                     <div class="home-prodCard">
                         <div class="imageContainer">
                             <img src="~/UI/img/home/empty_bottle.jpg" alt="wine" style="width:100%" class="prodImage" />
                         </div>
-
                     </div>
                     <div class="home-prodCard">
                         <div class="imageContainer">
                             <img src="~/UI/img/home/brushes.jpg" alt="wine" style="width:100%" class="prodImage" />
                         </div>
-
                     </div>
-
                 </div>
                 <div class="homegap"></div>
-
             </div>
         </div>
     </div>
@@ -284,7 +283,6 @@
         <p>Welcome to VinoVoyage. Please verify you are above legal drinking age to enter.</p>
         <button onclick="redirectToBlank()">I haven't turned 18 yet</button>
         <button onclick="getIn()" style="width:40%; margin-left:30px;">I'm over 18. Let's go!</button>
-
     </div>
 
     <div id="bthn" lang="en"></div>

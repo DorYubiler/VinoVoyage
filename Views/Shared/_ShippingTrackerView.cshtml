@@ -3,24 +3,24 @@
 <div class="container">
     <div class="row">
         @foreach (var ship in Model)
-            {
-                <p style="font-weight: bold; font-size: larger; margin-top: 50px; ">Order Number @ship.ShippingID :</p>
-        <div class="col-12 col-md-10 hh-grayBox pt45 pb20">
-            <div class="row justify-content-between">
-                <div class="order-tracking completed">
-                    <span class="is-complete"></span>
-                    <p>Ordered<br><span>@ship.OrderDate.ToString("yyyy-MM-dd")</span></p>
-                </div>
-                <div class="order-tracking completed">
-                    <span class="is-complete"></span>
-                    <p>Shipped<br><span>@ship.ShippingDate.ToString("yyyy-MM-dd")</span></p>
-                </div>
-                <div class="order-tracking">
-                    <span class="is-complete"></span>
-                    <p>Delivered<br><span>Soon to be delivered!</span></p>
+        {
+            <p style="font-weight: bold; font-size: larger; margin-top: 50px; ">Order Number @ship.ShippingID :</p>
+            <div class="col-12 col-md-10 hh-grayBox pt45 pb20">
+                <div class="row justify-content-between">
+                    <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>Ordered<br><span>@ship.OrderDate.ToString("yyyy-MM-dd")</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>Shipped<br><span>@ship.ShippingDate.ToString("yyyy-MM-dd")</span></p>
+                    </div>
+                    <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>Delivered<br><span>Soon to be delivered!</span></p>
+                    </div>
                 </div>
             </div>
-        </div>
         }
     </div>
 </div>
