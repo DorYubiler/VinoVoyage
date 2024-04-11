@@ -91,7 +91,7 @@ function checkLogin(event) {
 }
      
 
-(function () {
+/*(function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://bringthemhomenow.net/1.0.8/hostages-ticker.js";
@@ -101,7 +101,7 @@ function checkLogin(event) {
     );
     script.setAttribute("crossorigin", "anonymous");
     document.getElementsByTagName("head")[0].appendChild(script);
-})();
+})();*/
 //----------------------------------------------------------------
 // ------JavaScript function to close all popups------------------
 function closePopups() {
